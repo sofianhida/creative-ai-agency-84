@@ -51,11 +51,11 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <a href="#home" className="flex items-center gap-2">
-            <div className="h-10 w-10 rounded-full bg-purple flex items-center justify-center">
+            <div className="h-10 w-10 rounded-full bg-purple flex items-center justify-center overflow-hidden">
               <img 
                 src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
                 alt="WeVersAI Logo" 
-                className="h-8 w-8"
+                className="h-8 w-8 rounded-full"
               />
             </div>
             <span className="font-display font-bold text-xl">WeVersAI</span>

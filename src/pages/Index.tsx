@@ -11,7 +11,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Index = () => {
   useEffect(() => {
-    document.title = "Neko AI | Solusi Kecerdasan Buatan Terbaik";
+    document.title = "WeVersAI | Solusi Kecerdasan Buatan Terbaik";
     
     // Add scroll reveal effect
     const observerOptions = {
