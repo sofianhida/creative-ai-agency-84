@@ -1,5 +1,7 @@
+
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { ArrowLeft } from "lucide-react";
 
 const NotFound = () => {
   const location = useLocation();
@@ -12,12 +14,27 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
+        <div className="mb-8 bg-purple inline-flex rounded-full p-4">
+          <div className="h-16 w-16 rounded-full bg-purple flex items-center justify-center">
+            <img 
+              src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
+              alt="Neko AI Logo" 
+              className="h-12 w-12"
+            />
+          </div>
+        </div>
+        <h1 className="text-6xl font-bold font-display mb-4">404</h1>
+        <p className="text-xl text-foreground/70 mb-8 max-w-md mx-auto">
+          Oops! Halaman yang Anda cari tidak ditemukan. Mungkin halaman telah dipindahkan atau dihapus.
+        </p>
+        <a 
+          href="/" 
+          className="inline-flex items-center btn-primary gap-2"
+        >
+          <ArrowLeft size={18} />
+          Kembali ke Beranda
         </a>
       </div>
     </div>
