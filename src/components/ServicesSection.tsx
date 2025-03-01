@@ -1,6 +1,5 @@
-
 import { 
-  BrainCircuit, Robot, LineChart, Database, Search, Globe, Code, Lightbulb 
+  BrainCircuit, Bot, LineChart, Database, Search, Globe, Code, Lightbulb 
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -35,7 +34,7 @@ const ServicesSection = () => {
     {
       title: "AI Chatbot",
       description: "Chatbot pintar untuk meningkatkan layanan pelanggan dan mengotomatisasi komunikasi.",
-      icon: <Robot size={32} />,
+      icon: <Bot size={32} />,
       delay: "animate-delay-100"
     },
     {
