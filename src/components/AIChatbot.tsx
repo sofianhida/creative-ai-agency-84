@@ -5,7 +5,7 @@ import { toast } from '@/components/ui/use-toast';
 
 // Gemini API key
 const GEMINI_API_KEY = 'AIzaSyBoxVz22n162WFv53J1JiSksObxCamSBOg';
-const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent';
 
 const WELCOME_MESSAGE = "Halo! Saya adalah AI Assistant dari WeVersAI. Apa yang bisa saya bantu tentang layanan AI kami?";
 const SYSTEM_CONTEXT = `
@@ -59,12 +59,14 @@ const AIChatbot = () => {
     setIsLoading(true);
 
     try {
-      // Simplify the request structure to fix network errors
+      // Updated request format for Gemini API v1 (not v1beta)
       const requestBody = {
         contents: [
           {
+            role: "user",
             parts: [
-              { text: `${SYSTEM_CONTEXT}\n\nUser: ${input}` }
+              { text: SYSTEM_CONTEXT },
+              { text: input }
             ]
           }
         ],
@@ -92,11 +94,14 @@ const AIChatbot = () => {
 
       const data = await response.json();
       
-      // Check the structure of the response and extract the text content
+      // Extract the response text from the updated Gemini API v1 format
       let assistantResponse = "Maaf, terjadi kesalahan dalam memproses pesan Anda.";
       
-      if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
-        assistantResponse = data.candidates[0].content.parts[0].text;
+      if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
+        const content = data.candidates[0].content;
+        if (content.parts && content.parts.length > 0) {
+          assistantResponse = content.parts[0].text;
+        }
       }
       
       setMessages(prev => [
