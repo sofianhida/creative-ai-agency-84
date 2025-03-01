@@ -45,7 +45,7 @@ const AboutSection = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className={`space-y-6 ${inView ? 'animate-fade-in' : 'opacity-0'}`}>
             <div className="inline-flex items-center space-x-2 bg-purple/10 rounded-full px-4 py-2 text-sm text-purple-dark">
-              <span>Tentang Neko AI</span>
+              <span>Tentang WeVersAI</span>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold font-display leading-tight">
@@ -54,7 +54,7 @@ const AboutSection = () => {
             </h2>
             
             <p className="text-foreground/80">
-              Neko AI adalah agensi AI terdepan yang berfokus pada pengembangan solusi AI yang dapat 
+              WeVersAI adalah agensi AI terdepan yang berfokus pada pengembangan solusi AI yang dapat 
               membantu bisnis Anda mencapai efisiensi maksimal dan keunggulan kompetitif. Kami percaya 
               bahwa teknologi AI adalah kunci untuk transformasi digital yang sukses.
             </p>

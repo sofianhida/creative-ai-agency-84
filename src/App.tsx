@@ -25,7 +25,7 @@ const App = () => {
     }
 
     // Update document title
-    document.title = "Neko AI | Solusi Kecerdasan Buatan";
+    document.title = "WeVersAI | Solusi Kecerdasan Buatan";
   }, []);
 
   return (

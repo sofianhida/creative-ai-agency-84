@@ -50,7 +50,7 @@ const HeroSection = () => {
             <div className="relative bg-gradient-to-br from-purple-light to-purple rounded-2xl aspect-square max-w-md mx-auto overflow-hidden shadow-glow-lg">
               <img 
                 src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
-                alt="Neko AI Logo" 
+                alt="WeVersAI Logo" 
                 className="absolute inset-0 h-full w-full object-contain p-12 animate-float"
               />
             </div>

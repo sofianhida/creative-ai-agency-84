@@ -54,11 +54,11 @@ const Navbar = () => {
             <div className="h-10 w-10 rounded-full bg-purple flex items-center justify-center">
               <img 
                 src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
-                alt="Neko AI Logo" 
+                alt="WeVersAI Logo" 
                 className="h-8 w-8"
               />
             </div>
-            <span className="font-display font-bold text-xl">Neko AI</span>
+            <span className="font-display font-bold text-xl">WeVersAI</span>
           </a>
           
           {/* Desktop Navigation */}

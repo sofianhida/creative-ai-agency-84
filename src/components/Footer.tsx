@@ -13,14 +13,14 @@ const Footer = () => {
               <div className="h-10 w-10 rounded-full bg-purple flex items-center justify-center">
                 <img 
                   src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
-                  alt="Neko AI Logo" 
+                  alt="WeVersAI Logo" 
                   className="h-8 w-8"
                 />
               </div>
-              <span className="font-display font-bold text-xl">Neko AI</span>
+              <span className="font-display font-bold text-xl">WeVersAI</span>
             </div>
             <p className="text-foreground/70 mb-6 max-w-md">
-              Neko AI adalah agensi AI yang berfokus pada pengembangan solusi kecerdasan buatan untuk 
+              WeVersAI adalah agensi AI yang berfokus pada pengembangan solusi kecerdasan buatan untuk 
               membantu bisnis berkembang di era digital.
             </p>
             <div className="flex space-x-4">
@@ -68,7 +68,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-foreground/60 text-sm">
-              &copy; {currentYear} Neko AI. All rights reserved.
+              &copy; {currentYear} WeVersAI. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-foreground/60 hover:text-purple text-sm underline-animation">Privacy Policy</a>

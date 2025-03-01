@@ -7,12 +7,12 @@ import { toast } from '@/components/ui/use-toast';
 const GEMINI_API_KEY = 'AIzaSyBoxVz22n162WFv53J1JiSksObxCamSBOg';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
-const WELCOME_MESSAGE = "Halo! Saya adalah AI Assistant dari Neko AI. Apa yang bisa saya bantu tentang layanan AI kami?";
+const WELCOME_MESSAGE = "Halo! Saya adalah AI Assistant dari WeVersAI. Apa yang bisa saya bantu tentang layanan AI kami?";
 const SYSTEM_CONTEXT = `
-Kamu adalah asisten AI dari Neko AI, sebuah agensi AI yang menyediakan solusi kecerdasan buatan terdepan.
+Kamu adalah asisten AI dari WeVersAI, sebuah agensi AI yang menyediakan solusi kecerdasan buatan terdepan.
 Layanan kami meliputi: AI Chatbot, Machine Learning, Analisis Data, Big Data Solution, Computer Vision, NLP & Text Analytics, Custom AI Solutions, dan AI Consultation.
-Kamu sangat membantu, profesional, dan selalu berusaha memberikan jawaban terbaik tentang layanan Neko AI.
-Jika ada pertanyaan di luar konteks layanan Neko AI, arahkan pengguna untuk menghubungi tim kami melalui WhatsApp di nomor 085183978011.
+Kamu sangat membantu, profesional, dan selalu berusaha memberikan jawaban terbaik tentang layanan WeVersAI.
+Jika ada pertanyaan di luar konteks layanan WeVersAI, arahkan pengguna untuk menghubungi tim kami melalui WhatsApp di nomor 085183978011.
 `;
 
 interface Message {
@@ -59,49 +59,45 @@ const AIChatbot = () => {
     setIsLoading(true);
 
     try {
-      // Prepare message history for Gemini API
-      const history = messages
-        .filter(msg => msg.role !== 'system')
-        .map(msg => ({
-          role: msg.role === 'assistant' ? 'model' : 'user',
-          parts: [{ text: msg.content }]
-        }));
+      // Simplify the request structure to fix network errors
+      const requestBody = {
+        contents: [
+          {
+            parts: [
+              { text: `${SYSTEM_CONTEXT}\n\nUser: ${input}` }
+            ]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 1024,
+        },
+      };
 
-      // Add the new user message
-      history.push({
-        role: 'user',
-        parts: [{ text: input }]
-      });
-
-      // Prepare request for Gemini API
       const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: 'user',
-              parts: [{ text: SYSTEM_CONTEXT }]
-            },
-            ...history
-          ],
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
-          },
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        const errorData = await response.text();
+        console.error('Gemini API error:', errorData);
+        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
-      const assistantResponse = data.candidates[0].content.parts[0].text;
+      
+      // Check the structure of the response and extract the text content
+      let assistantResponse = "Maaf, terjadi kesalahan dalam memproses pesan Anda.";
+      
+      if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
+        assistantResponse = data.candidates[0].content.parts[0].text;
+      }
       
       setMessages(prev => [
         ...prev, 
@@ -157,7 +153,7 @@ const AIChatbot = () => {
                 <div className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center">
                   <Bot size={18} />
                 </div>
-                {!isMinimized && <span className="font-medium">Neko AI Assistant</span>}
+                {!isMinimized && <span className="font-medium">WeVersAI Assistant</span>}
               </div>
               <div className="flex items-center gap-1">
                 <button onClick={toggleMinimize} className="p-1 hover:bg-white/10 rounded" aria-label={isMinimized ? "Maximize" : "Minimize"}>
