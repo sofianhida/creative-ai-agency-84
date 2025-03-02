@@ -23,25 +23,25 @@ const HeroSection = () => {
           <div className={`space-y-6 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
             <div className="inline-flex items-center space-x-2 bg-purple/10 rounded-full px-4 py-2 text-sm text-purple-dark">
               <Sparkles size={16} className="text-purple" />
-              <span>Solusi AI Terbaik untuk Bisnis Anda</span>
+              <span>Best AI Solutions for Your Business</span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display leading-tight">
-              Transformasi Digital <br />
-              <span className="text-purple">dengan Kecerdasan Buatan</span>
+              Digital Transformation <br />
+              <span className="text-purple">with Artificial Intelligence</span>
             </h1>
             
             <p className="text-lg text-foreground/80 max-w-lg">
-              Kami membantu bisnis Anda berkembang dengan teknologi AI terdepan, 
-              memberikan solusi pintar yang mengoptimalkan proses dan meningkatkan produktivitas.
+              We help your business grow with cutting-edge AI technology,
+              providing smart solutions that optimize processes and improve productivity.
             </p>
             
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
               <a href="#services" className="btn-primary flex items-center justify-center gap-2">
-                Jelajahi Layanan
+                Explore Services
               </a>
               <a href="#contact" className="btn-outline flex items-center justify-center gap-2">
-                Konsultasi Gratis
+                Free Consultation
               </a>
             </div>
           </div>
@@ -61,7 +61,7 @@ const HeroSection = () => {
         
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
           <a href="#services" className="flex flex-col items-center text-foreground/50 hover:text-foreground">
-            <span className="text-sm mb-2">Gulir ke bawah</span>
+            <span className="text-sm mb-2">Scroll down</span>
             <ArrowDown size={20} className="arrow-down" />
           </a>
         </div>

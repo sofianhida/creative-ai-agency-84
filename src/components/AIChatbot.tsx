@@ -4,8 +4,8 @@ import { Bot, Send, X, Minimize2, Maximize2 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 
 // Gemini API key
-const GEMINI_API_KEY = 'AIzaSyCN1h8DpdeQ2jx-muifuy9b8HcN3npr-VI';
-const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+const GEMINI_API_KEY = 'AIzaSyBoxVz22n162WFv53J1JiSksObxCamSBOg';
+const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent';
 
 const WELCOME_MESSAGE = "Hello! I'm an AI Assistant from WeVersAI. How can I help you with our AI services?";
 const SYSTEM_CONTEXT = `
@@ -59,11 +59,13 @@ const AIChatbot = () => {
     setIsLoading(true);
 
     try {
-      // Simplified request structure for v1beta endpoint
+      // Updated request structure for v1 endpoint
       const requestBody = {
         contents: [
           {
+            role: "user",
             parts: [
+              { text: SYSTEM_CONTEXT },
               { text: input }
             ]
           }
@@ -94,6 +96,8 @@ const AIChatbot = () => {
         ]
       };
 
+      console.log("Sending request to Gemini:", API_URL);
+      
       const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: {
@@ -109,8 +113,9 @@ const AIChatbot = () => {
       }
 
       const data = await response.json();
+      console.log("Gemini API response:", data);
       
-      // Extract the response from the Gemini API v1beta format
+      // Extract the response from the Gemini API v1 format
       let assistantResponse = "Sorry, there was an error processing your message.";
       
       if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {

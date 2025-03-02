@@ -1,3 +1,4 @@
+
 import { 
   BrainCircuit, Bot, LineChart, Database, Search, Globe, Code, Lightbulb 
 } from 'lucide-react';
@@ -33,49 +34,49 @@ const ServicesSection = () => {
   const services = [
     {
       title: "AI Chatbot",
-      description: "Chatbot pintar untuk meningkatkan layanan pelanggan dan mengotomatisasi komunikasi.",
+      description: "Smart chatbots to enhance customer service and automate communications.",
       icon: <Bot size={32} />,
       delay: "animate-delay-100"
     },
     {
       title: "Machine Learning",
-      description: "Solusi prediktif dan analisis data untuk membantu pengambilan keputusan bisnis.",
+      description: "Predictive solutions and data analysis to help with business decision making.",
       icon: <BrainCircuit size={32} />,
       delay: "animate-delay-200"
     },
     {
-      title: "Analisis Data",
-      description: "Transformasi data mentah menjadi wawasan bisnis yang dapat ditindaklanjuti.",
+      title: "Data Analysis",
+      description: "Transform raw data into actionable business insights.",
       icon: <LineChart size={32} />,
       delay: "animate-delay-300"
     },
     {
       title: "Big Data Solution",
-      description: "Pengelolaan dan pengolahan data dalam skala besar untuk kebutuhan bisnis.",
+      description: "Management and processing of large-scale data for business needs.",
       icon: <Database size={32} />,
       delay: "animate-delay-100"
     },
     {
       title: "Computer Vision",
-      description: "Pengenalan gambar dan video untuk otomatisasi pengawasan dan QC.",
+      description: "Image and video recognition for automated surveillance and QC.",
       icon: <Search size={32} />,
       delay: "animate-delay-200"
     },
     {
       title: "NLP & Text Analytics",
-      description: "Pemahaman dan analisis bahasa alami untuk insight dari teks tidak terstruktur.",
+      description: "Understanding and analyzing natural language for insights from unstructured text.",
       icon: <Globe size={32} />,
       delay: "animate-delay-300"
     },
     {
       title: "Custom AI Solutions",
-      description: "Pengembangan solusi AI yang disesuaikan dengan kebutuhan spesifik bisnis Anda.",
+      description: "Development of AI solutions tailored to your specific business needs.",
       icon: <Code size={32} />,
       delay: "animate-delay-100"
     },
     {
       title: "AI Consultation",
-      description: "Konsultasi strategi implementasi AI untuk transformasi digital perusahaan.",
+      description: "Consultation on AI implementation strategy for digital transformation.",
       icon: <Lightbulb size={32} />,
       delay: "animate-delay-200"
     }
@@ -88,10 +89,10 @@ const ServicesSection = () => {
       <div className="absolute bottom-20 right-0 w-80 h-80 bg-purple/5 rounded-full filter blur-3xl -z-10"></div>
       
       <div className="section">
-        <h2 className="section-title">Layanan <span className="text-purple">Kami</span></h2>
+        <h2 className="section-title">Our <span className="text-purple">Services</span></h2>
         <p className="section-subtitle">
-          Kami menyediakan berbagai solusi AI dan machine learning yang dapat disesuaikan 
-          dengan kebutuhan bisnis Anda.
+          We provide various AI and machine learning solutions that can be customized
+          to your business needs.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">

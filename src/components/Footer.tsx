@@ -14,7 +14,7 @@ const Footer = () => {
                 <img 
                   src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
                   alt="WeVersAI Logo" 
-                  className="h-8 w-8 rounded-full"
+                  className="h-8 w-8 object-cover rounded-full"
                 />
               </div>
               <span className="font-display font-bold text-xl">WeVersAI</span>

@@ -29,18 +29,18 @@ const Navbar = () => {
 
   const contactUs = () => {
     toast({
-      title: "Hubungi Kami",
-      description: "Anda akan diarahkan ke WhatsApp",
+      title: "Contact Us",
+      description: "You will be redirected to WhatsApp",
     });
     window.open(`https://wa.me/6285183978011`, '_blank');
   };
 
   const navLinks = [
-    { name: 'Beranda', href: '#home' },
-    { name: 'Layanan', href: '#services' },
-    { name: 'Tentang', href: '#about' },
-    { name: 'Testimoni', href: '#testimonials' },
-    { name: 'Kontak', href: '#contact' },
+    { name: 'Home', href: '#home' },
+    { name: 'Services', href: '#services' },
+    { name: 'About', href: '#about' },
+    { name: 'Testimonials', href: '#testimonials' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -55,7 +55,7 @@ const Navbar = () => {
               <img 
                 src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
                 alt="WeVersAI Logo" 
-                className="h-8 w-8 rounded-full"
+                className="h-8 w-8 object-cover rounded-full"
               />
             </div>
             <span className="font-display font-bold text-xl">WeVersAI</span>
@@ -90,7 +90,7 @@ const Navbar = () => {
               onClick={contactUs}
               className="hidden md:block btn-primary"
             >
-              Hubungi Kami
+              Contact Us
             </button>
           </div>
         </div>
@@ -114,7 +114,7 @@ const Navbar = () => {
               onClick={contactUs}
               className="btn-primary w-full mt-4"
             >
-              Hubungi Kami
+              Contact Us
             </button>
           </div>
         </div>
