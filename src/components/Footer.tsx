@@ -10,18 +10,18 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-10 w-10 rounded-full bg-purple flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-purple flex items-center justify-center overflow-hidden">
                 <img 
                   src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
                   alt="WeVersAI Logo" 
-                  className="h-8 w-8"
+                  className="h-8 w-8 rounded-full"
                 />
               </div>
               <span className="font-display font-bold text-xl">WeVersAI</span>
             </div>
             <p className="text-foreground/70 mb-6 max-w-md">
-              WeVersAI adalah agensi AI yang berfokus pada pengembangan solusi kecerdasan buatan untuk 
-              membantu bisnis berkembang di era digital.
+              WeVersAI is an AI agency focused on developing artificial intelligence solutions to 
+              help businesses thrive in the digital era.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-foreground/60 hover:text-purple transition-colors" aria-label="Facebook">
@@ -43,7 +43,7 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="font-semibold text-lg mb-4">Layanan</h3>
+            <h3 className="font-semibold text-lg mb-4">Services</h3>
             <ul className="space-y-2">
               <li><a href="#" className="text-foreground/70 hover:text-purple underline-animation">AI Chatbot</a></li>
               <li><a href="#" className="text-foreground/70 hover:text-purple underline-animation">Machine Learning</a></li>
@@ -54,13 +54,13 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="font-semibold text-lg mb-4">Perusahaan</h3>
+            <h3 className="font-semibold text-lg mb-4">Company</h3>
             <ul className="space-y-2">
-              <li><a href="#about" className="text-foreground/70 hover:text-purple underline-animation">Tentang Kami</a></li>
-              <li><a href="#testimonials" className="text-foreground/70 hover:text-purple underline-animation">Testimoni</a></li>
+              <li><a href="#about" className="text-foreground/70 hover:text-purple underline-animation">About Us</a></li>
+              <li><a href="#testimonials" className="text-foreground/70 hover:text-purple underline-animation">Testimonials</a></li>
               <li><a href="#" className="text-foreground/70 hover:text-purple underline-animation">Blog</a></li>
-              <li><a href="#" className="text-foreground/70 hover:text-purple underline-animation">Karir</a></li>
-              <li><a href="#contact" className="text-foreground/70 hover:text-purple underline-animation">Kontak</a></li>
+              <li><a href="#" className="text-foreground/70 hover:text-purple underline-animation">Careers</a></li>
+              <li><a href="#contact" className="text-foreground/70 hover:text-purple underline-animation">Contact</a></li>
             </ul>
           </div>
         </div>
@@ -77,7 +77,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="mt-6 text-center text-xs text-foreground/50 flex items-center justify-center">
-            Dibuat dengan <Heart size={12} className="text-red-500 mx-1" /> dengan teknologi AI
+            Made with <Heart size={12} className="text-red-500 mx-1" /> with AI technology
           </div>
         </div>
       </div>

@@ -28,8 +28,8 @@ const ContactSection = () => {
     // Simulate form submission
     setTimeout(() => {
       toast({
-        title: "Pesan Terkirim!",
-        description: "Terima kasih atas pesan Anda. Tim kami akan segera menghubungi Anda.",
+        title: "Message Sent!",
+        description: "Thank you for your message. Our team will contact you shortly.",
       });
       setFormData({ name: '', email: '', message: '' });
       setIsSubmitting(false);
@@ -46,12 +46,12 @@ const ContactSection = () => {
     {
       icon: <Mail size={24} className="text-purple" />,
       title: "Email",
-      details: "info@nekoai.com",
-      action: () => window.location.href = "mailto:info@nekoai.com"
+      details: "weverseaaii@gmail.com",
+      action: () => window.location.href = "mailto:weverseaaii@gmail.com"
     },
     {
       icon: <MapPin size={24} className="text-purple" />,
-      title: "Lokasi",
+      title: "Location",
       details: "Jakarta, Indonesia",
       action: null
     }
@@ -63,15 +63,15 @@ const ContactSection = () => {
       
       <div className="section">
         <div className="max-w-5xl mx-auto">
-          <h2 className="section-title">Hubungi <span className="text-purple">Kami</span></h2>
+          <h2 className="section-title">Contact <span className="text-purple">Us</span></h2>
           <p className="section-subtitle">
-            Ada pertanyaan atau ingin memulai proyek? Jangan ragu untuk menghubungi tim kami.
+            Have questions or want to start a project? Don't hesitate to reach out to our team.
           </p>
           
           <div className="grid md:grid-cols-5 gap-8 mt-12">
             <div className="md:col-span-2 space-y-6">
               <div className="glass-card p-6">
-                <h3 className="text-xl font-bold mb-6">Informasi Kontak</h3>
+                <h3 className="text-xl font-bold mb-6">Contact Information</h3>
                 
                 <div className="space-y-6">
                   {contactMethods.map((method, index) => (
@@ -87,7 +87,7 @@ const ContactSection = () => {
                             onClick={method.action} 
                             className="text-purple hover:text-purple-dark flex items-center mt-1 underline-animation"
                           >
-                            Hubungi Kami <ArrowRight size={16} className="ml-1" />
+                            Contact Us <ArrowRight size={16} className="ml-1" />
                           </button>
                         )}
                       </div>
@@ -96,20 +96,20 @@ const ContactSection = () => {
                 </div>
                 
                 <div className="mt-8">
-                  <h4 className="font-semibold mb-3">Jam Operasional</h4>
-                  <p className="text-foreground/70">Senin - Jumat: 09:00 - 17:00</p>
-                  <p className="text-foreground/70">Sabtu: 09:00 - 13:00</p>
+                  <h4 className="font-semibold mb-3">Operating Hours</h4>
+                  <p className="text-foreground/70">Monday - Friday: 09:00 - 17:00</p>
+                  <p className="text-foreground/70">Saturday: 09:00 - 13:00</p>
                 </div>
               </div>
             </div>
             
             <div className="md:col-span-3">
               <form onSubmit={handleSubmit} className="glass-card p-6">
-                <h3 className="text-xl font-bold mb-6">Kirim Pesan</h3>
+                <h3 className="text-xl font-bold mb-6">Send Message</h3>
                 
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="name" className="block mb-2 font-medium">Nama</label>
+                    <label htmlFor="name" className="block mb-2 font-medium">Name</label>
                     <input
                       type="text"
                       id="name"
@@ -118,7 +118,7 @@ const ContactSection = () => {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg border border-border focus:border-purple focus:ring-2 focus:ring-purple/20 outline-none transition"
-                      placeholder="Nama Anda"
+                      placeholder="Your Name"
                     />
                   </div>
                   
@@ -132,12 +132,12 @@ const ContactSection = () => {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg border border-border focus:border-purple focus:ring-2 focus:ring-purple/20 outline-none transition"
-                      placeholder="email@perusahaan.com"
+                      placeholder="email@company.com"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block mb-2 font-medium">Pesan</label>
+                    <label htmlFor="message" className="block mb-2 font-medium">Message</label>
                     <textarea
                       id="message"
                       name="message"
@@ -146,7 +146,7 @@ const ContactSection = () => {
                       required
                       rows={5}
                       className="w-full px-4 py-3 rounded-lg border border-border focus:border-purple focus:ring-2 focus:ring-purple/20 outline-none transition"
-                      placeholder="Bagaimana kami dapat membantu Anda?"
+                      placeholder="How can we help you?"
                     ></textarea>
                   </div>
                   
@@ -155,7 +155,7 @@ const ContactSection = () => {
                     disabled={isSubmitting}
                     className="btn-primary w-full flex items-center justify-center"
                   >
-                    {isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                   </button>
                 </div>
               </form>

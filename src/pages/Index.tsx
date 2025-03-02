@@ -11,7 +11,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Index = () => {
   useEffect(() => {
-    document.title = "WeVersAI | Solusi Kecerdasan Buatan Terbaik";
+    document.title = "WeVersAI | Best AI Solutions";
     
     // Add scroll reveal effect
     const observerOptions = {

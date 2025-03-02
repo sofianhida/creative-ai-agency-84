@@ -25,7 +25,7 @@ const App = () => {
     }
 
     // Update document title
-    document.title = "WeVersAI | Solusi Kecerdasan Buatan";
+    document.title = "WeVersAI | Best AI Solutions";
   }, []);
 
   return (

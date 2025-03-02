@@ -31,12 +31,12 @@ const AboutSection = () => {
   ];
 
   const features = [
-    'Solusi AI yang disesuaikan dengan kebutuhan bisnis',
-    'Tim ahli dengan pengalaman di bidang AI dan machine learning',
-    'Penggunaan teknologi terbaru untuk hasil terbaik',
-    'Dukungan penuh selama dan setelah implementasi',
-    'Transparansi harga tanpa biaya tersembunyi',
-    'Jaminan kepuasan pelanggan'
+    'AI solutions tailored to business needs',
+    'Expert team with experience in AI and machine learning',
+    'Utilization of the latest technology for best results',
+    'Full support during and after implementation',
+    'Price transparency with no hidden fees',
+    'Customer satisfaction guarantee'
   ];
 
   return (
@@ -45,18 +45,18 @@ const AboutSection = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className={`space-y-6 ${inView ? 'animate-fade-in' : 'opacity-0'}`}>
             <div className="inline-flex items-center space-x-2 bg-purple/10 rounded-full px-4 py-2 text-sm text-purple-dark">
-              <span>Tentang WeVersAI</span>
+              <span>About WeVersAI</span>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold font-display leading-tight">
-              Memajukan Bisnis Anda <br />
-              <span className="text-purple">Dengan Kecerdasan Buatan</span>
+              Advancing Your Business <br />
+              <span className="text-purple">With Artificial Intelligence</span>
             </h2>
             
             <p className="text-foreground/80">
-              WeVersAI adalah agensi AI terdepan yang berfokus pada pengembangan solusi AI yang dapat 
-              membantu bisnis Anda mencapai efisiensi maksimal dan keunggulan kompetitif. Kami percaya 
-              bahwa teknologi AI adalah kunci untuk transformasi digital yang sukses.
+              WeVersAI is a leading AI agency focused on developing AI solutions that can
+              help your business achieve maximum efficiency and competitive advantage. We believe
+              that AI technology is the key to successful digital transformation.
             </p>
             
             <ul className="space-y-3">
@@ -70,7 +70,7 @@ const AboutSection = () => {
             
             <div className="pt-4">
               <a href="#contact" className="btn-primary">
-                Mulai Konsultasi
+                Start Consultation
               </a>
             </div>
           </div>
@@ -97,10 +97,10 @@ const AboutSection = () => {
             </div>
             
             <div className="relative bg-white rounded-2xl p-8 shadow-soft tilt-card">
-              <h3 className="text-xl font-bold mb-4">Visi Kami</h3>
+              <h3 className="text-xl font-bold mb-4">Our Vision</h3>
               <p className="text-foreground/80">
-                Menjadi partner terpercaya dalam transformasi digital, membantu bisnis dalam 
-                mengadopsi dan mengimplementasikan teknologi AI yang inovatif dan berkelanjutan.
+                To be a trusted partner in digital transformation, helping businesses
+                adopt and implement innovative and sustainable AI technology.
               </p>
             </div>
           </div>

@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { Bot, Send, X, Minimize2, Maximize2 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
@@ -6,12 +7,12 @@ import { toast } from '@/components/ui/use-toast';
 const GEMINI_API_KEY = 'AIzaSyCN1h8DpdeQ2jx-muifuy9b8HcN3npr-VI';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
-const WELCOME_MESSAGE = "Halo! Saya adalah AI Assistant dari WeVersAI. Apa yang bisa saya bantu tentang layanan AI kami?";
+const WELCOME_MESSAGE = "Hello! I'm an AI Assistant from WeVersAI. How can I help you with our AI services?";
 const SYSTEM_CONTEXT = `
-Kamu adalah asisten AI dari WeVersAI, sebuah agensi AI yang menyediakan solusi kecerdasan buatan terdepan.
-Layanan kami meliputi: AI Chatbot, Machine Learning, Analisis Data, Big Data Solution, Computer Vision, NLP & Text Analytics, Custom AI Solutions, dan AI Consultation.
-Kamu sangat membantu, profesional, dan selalu berusaha memberikan jawaban terbaik tentang layanan WeVersAI.
-Jika ada pertanyaan di luar konteks layanan WeVersAI, arahkan pengguna untuk menghubungi tim kami melalui WhatsApp di nomor 085183978011.
+You are an assistant for WeVersAI, a leading AI agency providing cutting-edge artificial intelligence solutions.
+Our services include: AI Chatbot, Machine Learning, Data Analysis, Big Data Solution, Computer Vision, NLP & Text Analytics, Custom AI Solutions, and AI Consultation.
+You are very helpful, professional, and always aim to provide the best answers about WeVersAI services.
+If there are questions outside the context of WeVersAI services, direct the user to contact our team via WhatsApp at 085183978011.
 `;
 
 interface Message {
@@ -58,12 +59,12 @@ const AIChatbot = () => {
     setIsLoading(true);
 
     try {
-      // Use the v1beta endpoint with proper formatting
+      // Simplified request structure for v1beta endpoint
       const requestBody = {
         contents: [
           {
             parts: [
-              { text: `${SYSTEM_CONTEXT}\n\nUser: ${input}` }
+              { text: input }
             ]
           }
         ],
@@ -73,6 +74,24 @@ const AIChatbot = () => {
           topP: 0.95,
           maxOutputTokens: 1024,
         },
+        safetySettings: [
+          {
+            category: "HARM_CATEGORY_HARASSMENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_HATE_SPEECH",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          }
+        ]
       };
 
       const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
@@ -91,8 +110,8 @@ const AIChatbot = () => {
 
       const data = await response.json();
       
-      // Extract the response text from the Gemini API v1beta format
-      let assistantResponse = "Maaf, terjadi kesalahan dalam memproses pesan Anda.";
+      // Extract the response from the Gemini API v1beta format
+      let assistantResponse = "Sorry, there was an error processing your message.";
       
       if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
         assistantResponse = data.candidates[0].content.parts[0].text;
@@ -106,12 +125,12 @@ const AIChatbot = () => {
       console.error('Error sending message to Gemini:', error);
       toast({
         title: "Error",
-        description: "Terjadi kesalahan saat menghubungi AI assistant. Silakan coba lagi nanti.",
+        description: "There was an error contacting the AI assistant. Please try again later.",
         variant: "destructive",
       });
       setMessages(prev => [
         ...prev, 
-        { role: 'assistant', content: "Maaf, terjadi kesalahan. Silakan coba lagi nanti atau hubungi kami melalui WhatsApp." }
+        { role: 'assistant', content: "Sorry, there was an error. Please try again later or contact us via WhatsApp." }
       ]);
     } finally {
       setIsLoading(false);
@@ -211,7 +230,7 @@ const AIChatbot = () => {
                     value={input}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    placeholder="Tanyakan sesuatu..." 
+                    placeholder="Ask something..." 
                     className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple"
                     disabled={isLoading}
                   />
