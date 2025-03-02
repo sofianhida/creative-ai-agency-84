@@ -125,10 +125,10 @@ const AIChatbot = () => {
 
   return (
     <>
-      {/* Chat button */}
+      {/* Chat button - moved higher from bottom */}
       <button
         onClick={toggleChat}
-        className={`fixed bottom-20 right-6 z-40 bg-purple text-white p-4 rounded-full shadow-glow transition-all duration-300 hover:bg-purple-dark hover:scale-105`}
+        className={`fixed bottom-24 right-6 z-40 bg-purple text-white p-3 rounded-full shadow-glow transition-all duration-300 hover:bg-purple-dark hover:scale-105`}
         aria-label="Chat with AI Assistant"
       >
         <Bot size={24} />
@@ -139,8 +139,8 @@ const AIChatbot = () => {
         <div 
           className={`fixed z-40 shadow-glow-lg transition-all duration-300 ease-in-out ${
             isMinimized 
-              ? 'bottom-20 right-6 w-72 h-14' 
-              : 'bottom-20 right-6 sm:right-6 w-full sm:w-96 h-[500px] max-h-[calc(100vh-150px)]'
+              ? 'bottom-24 right-6 w-72 h-14' 
+              : 'bottom-24 right-6 w-full max-w-[92vw] sm:max-w-[400px] h-[450px] max-h-[70vh]'
           }`}
         >
           <div className="flex flex-col h-full rounded-lg overflow-hidden border bg-background">
@@ -164,30 +164,30 @@ const AIChatbot = () => {
             
             {/* Chat messages */}
             {!isMinimized && (
-              <div className="flex-1 overflow-y-auto p-4 bg-background">
+              <div className="flex-1 overflow-y-auto p-3 bg-background">
                 {messages.filter(msg => msg.role !== 'system').map((message, index) => (
                   <div 
                     key={index}
-                    className={`mb-4 ${
+                    className={`mb-3 ${
                       message.role === 'assistant' 
                         ? 'flex justify-start' 
                         : 'flex justify-end'
                     }`}
                   >
                     <div 
-                      className={`max-w-[80%] p-3 rounded-lg ${
+                      className={`max-w-[85%] p-2.5 rounded-lg ${
                         message.role === 'assistant' 
                           ? 'bg-muted text-foreground' 
                           : 'bg-purple text-white'
                       }`}
                     >
-                      <p className="whitespace-pre-wrap">{message.content}</p>
+                      <p className="whitespace-pre-wrap text-sm">{message.content}</p>
                     </div>
                   </div>
                 ))}
                 {isLoading && (
-                  <div className="flex justify-start mb-4">
-                    <div className="max-w-[80%] p-3 rounded-lg bg-muted text-foreground">
+                  <div className="flex justify-start mb-3">
+                    <div className="max-w-[85%] p-2.5 rounded-lg bg-muted text-foreground">
                       <div className="flex space-x-2">
                         <div className="h-2 w-2 rounded-full bg-purple/50 animate-pulse"></div>
                         <div className="h-2 w-2 rounded-full bg-purple/50 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
@@ -202,7 +202,7 @@ const AIChatbot = () => {
             
             {/* Chat input */}
             {!isMinimized && (
-              <div className="p-3 border-t">
+              <div className="p-2 border-t">
                 <div className="flex items-center gap-2">
                   <input 
                     type="text" 
@@ -210,7 +210,7 @@ const AIChatbot = () => {
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     placeholder="Ask something..." 
-                    className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple"
+                    className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple text-sm"
                     disabled={isLoading}
                   />
                   <button 
@@ -218,7 +218,7 @@ const AIChatbot = () => {
                     disabled={isLoading || !input.trim()}
                     className={`p-2 rounded-md bg-purple text-white ${isLoading || !input.trim() ? 'opacity-50' : 'hover:bg-purple-dark'}`}
                   >
-                    <Send size={18} />
+                    <Send size={16} />
                   </button>
                 </div>
               </div>

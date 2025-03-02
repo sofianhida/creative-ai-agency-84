@@ -46,24 +46,24 @@ const Navbar = () => {
   return (
     <header 
       className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 
-                 ${scrolled ? 'glass py-3' : 'py-5 bg-transparent'}`}
+                 ${scrolled ? 'glass py-2' : 'py-3 bg-transparent'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <a href="#home" className="flex items-center gap-2">
-            <div className="h-10 w-10 rounded-full bg-purple flex items-center justify-center overflow-hidden">
+          <a href="#home" className="flex items-center gap-2 z-20">
+            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-purple flex items-center justify-center overflow-hidden">
               <img 
                 src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
                 alt="WeVersAI Logo" 
-                className="h-8 w-8 object-cover rounded-full"
+                className="h-6 w-6 sm:h-8 sm:w-8 object-cover rounded-full"
               />
             </div>
-            <span className="font-display font-bold text-xl">WeVersAI</span>
+            <span className="font-display font-bold text-lg sm:text-xl">WeVersAI</span>
           </a>
           
           {/* Desktop Navigation */}
           {!isMobile && (
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-6 lg:space-x-8">
               {navLinks.map((link) => (
                 <a 
                   key={link.name}
@@ -79,7 +79,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-4">
             <button 
-              className="md:hidden text-foreground" 
+              className="md:hidden text-foreground z-20" 
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
@@ -96,15 +96,15 @@ const Navbar = () => {
         </div>
       </div>
       
-      {/* Mobile menu */}
+      {/* Mobile menu - improved animation and styling */}
       {isMobile && isMenuOpen && (
-        <div className="md:hidden glass-dark animate-slide-down">
-          <div className="px-4 py-6 space-y-4">
+        <div className="md:hidden fixed inset-0 z-10 glass-dark animate-fade-in">
+          <div className="h-full flex flex-col justify-center items-center px-4 py-6 space-y-6">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="block py-2 font-medium text-foreground"
+                className="block py-2 text-xl font-medium text-foreground hover:text-purple transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.name}
@@ -112,7 +112,7 @@ const Navbar = () => {
             ))}
             <button 
               onClick={contactUs}
-              className="btn-primary w-full mt-4"
+              className="btn-primary w-full max-w-xs mt-8"
             >
               Contact Us
             </button>

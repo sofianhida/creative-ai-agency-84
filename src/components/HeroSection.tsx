@@ -10,7 +10,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section id="home" className="min-h-screen relative overflow-hidden flex items-center pt-20">
+    <section id="home" className="relative overflow-hidden flex items-center min-h-[calc(100vh-4rem)] py-12">
       {/* Background Gradient */}
       <div className="absolute inset-0 hero-gradient opacity-10 -z-10"></div>
       
@@ -19,24 +19,24 @@ const HeroSection = () => {
       <div className="absolute bottom-20 left-10 h-72 w-72 rounded-full bg-purple/10 filter blur-3xl"></div>
       
       <div className="section">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className={`space-y-6 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className={`space-y-4 md:space-y-6 text-center md:text-left ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
             <div className="inline-flex items-center space-x-2 bg-purple/10 rounded-full px-4 py-2 text-sm text-purple-dark">
               <Sparkles size={16} className="text-purple" />
               <span>Best AI Solutions for Your Business</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display leading-tight">
-              Digital Transformation <br />
-              <span className="text-purple">with Artificial Intelligence</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display leading-tight">
+              Digital Transformation 
+              <span className="text-purple block mt-1">with Artificial Intelligence</span>
             </h1>
             
-            <p className="text-lg text-foreground/80 max-w-lg">
+            <p className="text-base sm:text-lg text-foreground/80 max-w-lg mx-auto md:mx-0">
               We help your business grow with cutting-edge AI technology,
               providing smart solutions that optimize processes and improve productivity.
             </p>
             
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4 justify-center md:justify-start">
               <a href="#services" className="btn-primary flex items-center justify-center gap-2">
                 Explore Services
               </a>
@@ -46,8 +46,8 @@ const HeroSection = () => {
             </div>
           </div>
           
-          <div className={`relative ${isLoaded ? 'animate-fade-in animate-delay-200' : 'opacity-0'}`}>
-            <div className="relative bg-gradient-to-br from-purple-light to-purple rounded-2xl aspect-square max-w-md mx-auto overflow-hidden shadow-glow-lg">
+          <div className={`relative mt-8 md:mt-0 ${isLoaded ? 'animate-fade-in animate-delay-200' : 'opacity-0'}`}>
+            <div className="relative bg-gradient-to-br from-purple-light to-purple rounded-2xl aspect-square max-w-xs sm:max-w-sm mx-auto overflow-hidden shadow-glow-lg">
               <img 
                 src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
                 alt="WeVersAI Logo" 
