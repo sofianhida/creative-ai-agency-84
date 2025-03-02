@@ -59,31 +59,31 @@ const TestimonialsSection = () => {
 
   const testimonials = [
     {
-      quote: "Implementasi chatbot AI Neko pada website kami telah meningkatkan responsivitas customer service hingga 95% dan menghemat biaya operasional secara signifikan.",
+      quote: "The implementation of WeversAI chatbot on our website has increased customer service responsiveness by 95% and significantly reduced operational costs.",
       name: "Budi Santoso",
       title: "CTO",
       company: "TechSolve Indonesia"
     },
     {
-      quote: "Solusi analisis data yang dikembangkan Neko AI membantu kami mengidentifikasi pola konsumen dengan akurasi tinggi, meningkatkan penjualan hingga 30% dalam 3 bulan.",
+      quote: "The data analysis solution developed by WeversAI helped us identify consumer patterns with high accuracy, increasing sales by 30% in just 3 months.",
       name: "Sinta Wijaya",
       title: "Marketing Director",
       company: "Retail Prime"
     },
     {
-      quote: "Sistem prediksi stok dari Neko AI telah mengoptimalkan rantai pasok kami, mengurangi kelebihan stok hingga 40% dan meningkatkan ketersediaan produk hingga 25%.",
+      quote: "WeversAI's stock prediction system has optimized our supply chain, reducing excess stock by 40% and improving product availability by 25%.",
       name: "Agus Purnomo",
       title: "Supply Chain Manager",
       company: "Distribusi Utama"
     },
     {
-      quote: "Tim Neko AI sangat profesional dan responsif. Solusi AI custom yang mereka kembangkan tepat sasaran dan sesuai kebutuhan bisnis kami.",
+      quote: "The WeversAI team is very professional and responsive. The custom AI solutions they developed are on point and aligned with our business needs.",
       name: "Diana Putri",
       title: "CEO",
       company: "FinTech Solutions"
     },
     {
-      quote: "Penerapan computer vision untuk quality control di pabrik kami berhasil meningkatkan akurasi inspeksi menjadi 99.7%, jauh melebihi harapan awal kami.",
+      quote: "The implementation of computer vision for quality control in our factory has increased inspection accuracy to 99.7%, far exceeding our initial expectations.",
       name: "Hendra Laksono",
       title: "Operations Director",
       company: "Manufaktur Presisi"
@@ -146,10 +146,10 @@ const TestimonialsSection = () => {
       <div className="absolute bottom-20 left-20 w-64 h-64 bg-purple/5 rounded-full filter blur-3xl -z-10"></div>
       
       <div className="section">
-        <h2 className="section-title">Apa Kata <span className="text-purple">Klien Kami</span></h2>
+        <h2 className="section-title">What Our <span className="text-purple">Clients Say</span></h2>
         <p className="section-subtitle">
-          Dengarkan pengalaman bisnis yang telah bekerja sama dengan Neko AI dan 
-          bagaimana kami membantu mereka mencapai tujuan bisnis.
+          Hear from businesses that have worked with WeversAI and 
+          how we've helped them achieve their business goals.
         </p>
         
         <div className={`relative h-80 sm:h-64 mt-16 ${inView ? 'animate-fade-in' : 'opacity-0'}`}
