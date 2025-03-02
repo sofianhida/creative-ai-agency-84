@@ -2,10 +2,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { Bot, Send, X, Minimize2, Maximize2 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Gemini API key
 const GEMINI_API_KEY = 'AIzaSyBoxVz22n162WFv53J1JiSksObxCamSBOg';
-const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent';
 
 const WELCOME_MESSAGE = "Hello! I'm an AI Assistant from WeVersAI. How can I help you with our AI services?";
 const SYSTEM_CONTEXT = `
@@ -59,16 +59,25 @@ const AIChatbot = () => {
     setIsLoading(true);
 
     try {
-      // Updated request structure for v1 endpoint
-      const requestBody = {
-        contents: [
+      // Initialize the Generative AI with the API key
+      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+      
+      // Get the model - using the recommended free model
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash-latest"
+      });
+      
+      // Create a chat session
+      const chat = model.startChat({
+        history: [
           {
             role: "user",
-            parts: [
-              { text: SYSTEM_CONTEXT },
-              { text: input }
-            ]
-          }
+            parts: [{ text: SYSTEM_CONTEXT }],
+          },
+          {
+            role: "model",
+            parts: [{ text: "I understand. I'll act as the WeVersAI assistant with the guidelines you've provided." }],
+          },
         ],
         generationConfig: {
           temperature: 0.7,
@@ -76,51 +85,16 @@ const AIChatbot = () => {
           topP: 0.95,
           maxOutputTokens: 1024,
         },
-        safetySettings: [
-          {
-            category: "HARM_CATEGORY_HARASSMENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            category: "HARM_CATEGORY_HATE_SPEECH",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          }
-        ]
-      };
-
-      console.log("Sending request to Gemini:", API_URL);
-      
-      const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
       });
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error('Gemini API error:', errorData);
-        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log("Gemini API response:", data);
       
-      // Extract the response from the Gemini API v1 format
-      let assistantResponse = "Sorry, there was an error processing your message.";
+      console.log("Sending message to Gemini chat API");
       
-      if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
-        assistantResponse = data.candidates[0].content.parts[0].text;
-      }
+      // Send the user message and get the response
+      const result = await chat.sendMessage(input);
+      const response = await result.response;
+      const assistantResponse = response.text();
+      
+      console.log("Received response from Gemini:", assistantResponse);
       
       setMessages(prev => [
         ...prev, 
