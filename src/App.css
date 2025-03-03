@@ -1,3 +1,4 @@
+
 /* Reset some default styles that might be causing layout issues */
 #root {
   width: 100%;
@@ -140,4 +141,59 @@ input, textarea, select, button {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
+}
+
+/* Improved button styling */
+.btn-primary {
+  @apply bg-purple hover:bg-purple-dark text-white font-medium rounded-full 
+         transition-all duration-300 shadow-sm hover:shadow;
+}
+
+.btn-outline {
+  @apply border border-purple text-purple hover:bg-purple/5 font-medium 
+         rounded-full transition-all duration-300;
+}
+
+/* Modern glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(20, 20, 30, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced hover animations */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom scrollbar for a more modern feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(155, 135, 245, 0.6);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(155, 135, 245, 0.8);
 }

@@ -31,54 +31,56 @@ const AboutSection = () => {
   ];
 
   const features = [
-    'AI solutions tailored to business needs',
-    'Expert team with experience in AI and machine learning',
-    'Utilization of the latest technology for best results',
-    'Full support during and after implementation',
-    'Price transparency with no hidden fees',
-    'Customer satisfaction guarantee'
+    'Customized AI solutions for your business needs',
+    'Expert team with specialized AI knowledge',
+    'State-of-the-art ML models and algorithms',
+    'End-to-end implementation and support',
+    'Transparent pricing with no hidden costs',
+    '100% satisfaction guarantee'
   ];
 
   return (
-    <section id="about" className="py-20 relative overflow-hidden bg-purple/5">
+    <section id="about" className="py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-purple/5 via-transparent to-purple/5 -z-10"></div>
+      
       <div className="section">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className={`space-y-6 ${inView ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className={`space-y-6 md:space-y-8 ${inView ? 'animate-fade-in' : 'opacity-0'}`}>
             <div className="inline-flex items-center space-x-2 bg-purple/10 rounded-full px-4 py-2 text-sm text-purple-dark">
               <span>About WeVersAI</span>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold font-display leading-tight">
-              Advancing Your Business <br />
-              <span className="text-purple">With Artificial Intelligence</span>
+              Transforming Businesses <br />
+              <span className="text-purple">Through Artificial Intelligence</span>
             </h2>
             
-            <p className="text-foreground/80">
-              WeVersAI is a leading AI agency focused on developing AI solutions that can
-              help your business achieve maximum efficiency and competitive advantage. We believe
-              that AI technology is the key to successful digital transformation.
+            <p className="text-foreground/70 text-lg leading-relaxed">
+              WeVersAI is a leading AI solutions provider focused on helping businesses 
+              leverage artificial intelligence to drive innovation, efficiency, and growth. 
+              We combine technical expertise with business acumen to deliver results.
             </p>
             
-            <ul className="space-y-3">
+            <ul className="space-y-3 pt-2">
               {features.map((feature, index) => (
-                <li key={index} className="flex items-start gap-2">
+                <li key={index} className="flex items-start gap-3">
                   <CheckCircle2 size={20} className="text-purple mt-1 flex-shrink-0" />
-                  <span>{feature}</span>
+                  <span className="text-foreground/80">{feature}</span>
                 </li>
               ))}
             </ul>
             
             <div className="pt-4">
-              <a href="#contact" className="btn-primary">
-                Start Consultation
+              <a href="#contact" className="btn-primary py-3 px-6 inline-block">
+                Start Your AI Journey
               </a>
             </div>
           </div>
           
           <div className={`space-y-8 ${inView ? 'animate-fade-in animate-delay-200' : 'opacity-0'}`}>
             <div className="relative z-10">
-              <div className="bg-white rounded-2xl p-8 shadow-soft relative z-10 tilt-card">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-all duration-300 relative z-10">
+                <div className="grid grid-cols-3 gap-8">
                   {stats.map((stat, index) => (
                     <div key={index} className="text-center">
                       <div className="flex justify-center mb-3">
@@ -96,11 +98,12 @@ const AboutSection = () => {
               <div className="absolute -bottom-4 -left-4 h-24 w-24 bg-purple/10 rounded-full filter blur-xl -z-10"></div>
             </div>
             
-            <div className="relative bg-white rounded-2xl p-8 shadow-soft tilt-card">
+            <div className="relative bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-all duration-300">
               <h3 className="text-xl font-bold mb-4">Our Vision</h3>
-              <p className="text-foreground/80">
-                To be a trusted partner in digital transformation, helping businesses
-                adopt and implement innovative and sustainable AI technology.
+              <p className="text-foreground/80 leading-relaxed">
+                To be the premier partner for AI-powered digital transformation, 
+                helping businesses of all sizes harness the power of artificial intelligence 
+                to solve complex problems and create sustainable competitive advantages.
               </p>
             </div>
           </div>
