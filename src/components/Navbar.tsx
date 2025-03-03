@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
@@ -23,7 +22,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menu when window is resized to desktop size
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -35,7 +33,6 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -91,7 +88,6 @@ const Navbar = () => {
             <span className="font-display font-bold text-lg sm:text-xl">WeVersAI</span>
           </a>
           
-          {/* Desktop Navigation */}
           {!isMobile && (
             <nav className="hidden md:flex space-x-6 lg:space-x-8">
               {navLinks.map((link) => (
@@ -106,7 +102,6 @@ const Navbar = () => {
             </nav>
           )}
           
-          {/* Mobile Menu Button */}
           <div className="flex items-center gap-4">
             <button 
               className="md:hidden text-foreground z-50" 
@@ -126,35 +121,34 @@ const Navbar = () => {
         </div>
       </div>
       
-      {/* Mobile menu - improved animation and fixed positioning */}
       {isMobile && (
         <div className={`mobile-menu-container md:hidden fixed inset-0 z-40 glass-dark transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex flex-col justify-center items-center px-4 py-12 h-full">
-            {/* Safe area for status bar */}
-            <div className="w-full h-12"></div>
-            
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="block py-4 text-xl font-medium text-foreground hover:text-purple transition-colors"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavLinkClick(link.href);
+          <div className="flex flex-col items-center justify-center h-full">
+            <div className="flex flex-col items-center w-full py-6 gap-3">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="py-2.5 text-lg font-medium text-foreground hover:text-purple transition-colors w-40 text-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavLinkClick(link.href);
+                  }}
+                >
+                  {link.name}
+                </a>
+              ))}
+              
+              <button 
+                onClick={() => {
+                  contactUs();
+                  setIsMenuOpen(false);
                 }}
+                className="btn-primary mt-4 py-2.5 w-40 text-center text-base"
               >
-                {link.name}
-              </a>
-            ))}
-            <button 
-              onClick={() => {
-                contactUs();
-                setIsMenuOpen(false);
-              }}
-              className="btn-primary w-full max-w-xs mt-8"
-            >
-              Contact Us
-            </button>
+                Contact Us
+              </button>
+            </div>
           </div>
         </div>
       )}
