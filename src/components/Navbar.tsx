@@ -68,6 +68,11 @@ const Navbar = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
+  const handleNavLinkClick = (href: string) => {
+    setIsMenuOpen(false);
+    window.location.href = href;
+  };
+
   return (
     <header 
       className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 
@@ -104,7 +109,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-4">
             <button 
-              className="md:hidden text-foreground z-20" 
+              className="md:hidden text-foreground z-50" 
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
@@ -121,16 +126,22 @@ const Navbar = () => {
         </div>
       </div>
       
-      {/* Mobile menu - improved animation and styling with fixed positioning */}
-      {isMobile && isMenuOpen && (
-        <div className="mobile-menu-container md:hidden fixed inset-0 z-10 glass-dark animate-fade-in">
-          <div className="flex flex-col justify-center items-center px-4 py-6 space-y-6 h-full">
+      {/* Mobile menu - improved animation and fixed positioning */}
+      {isMobile && (
+        <div className={`mobile-menu-container md:hidden fixed inset-0 z-40 glass-dark transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex flex-col justify-center items-center px-4 py-12 h-full">
+            {/* Safe area for status bar */}
+            <div className="w-full h-12"></div>
+            
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="block py-2 text-xl font-medium text-foreground hover:text-purple transition-colors"
-                onClick={() => setIsMenuOpen(false)}
+                className="block py-4 text-xl font-medium text-foreground hover:text-purple transition-colors"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavLinkClick(link.href);
+                }}
               >
                 {link.name}
               </a>

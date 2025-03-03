@@ -105,13 +105,19 @@ input, textarea, select, button {
 
 /* Fix for navbar mobile menu issue */
 .mobile-menu-container {
-  height: 100dvh;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9;
+  z-index: 40;
   overflow-y: auto;
+  overscroll-behavior: contain; /* Prevent scroll bleed */
+}
+
+/* New setting to prevent mobile menu issues */
+.mobile-menu-container.translate-x-full {
+  display: none;
 }
 
 /* Ensure proper spacing between components */
@@ -122,5 +128,5 @@ input, textarea, select, button {
   right: 1rem;
   bottom: 1rem;
   gap: 1rem;
-  z-index: 50;
+  z-index: 30;
 }
