@@ -1,5 +1,5 @@
 
-import { Facebook, Instagram, Twitter, Linkedin, Github, Heart } from 'lucide-react';
+import { Facebook, Instagram, X, Linkedin, Heart } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -24,20 +24,17 @@ const Footer = () => {
               help businesses thrive in the digital era.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-foreground/60 hover:text-purple transition-colors" aria-label="Facebook">
+              <a href="https://www.facebook.com/profile.php?id=61573947502896" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-purple transition-colors" aria-label="Facebook">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-foreground/60 hover:text-purple transition-colors" aria-label="Instagram">
+              <a href="https://www.instagram.com/weversai?igsh=ZDNqZHA1bXc2bTN3" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-purple transition-colors" aria-label="Instagram">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-foreground/60 hover:text-purple transition-colors" aria-label="Twitter">
-                <Twitter size={20} />
+              <a href="https://x.com/WeverseAI?t=KimD49BVPRN_3dRpheaRZQ&s=09" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-purple transition-colors" aria-label="Twitter">
+                <X size={20} />
               </a>
               <a href="#" className="text-foreground/60 hover:text-purple transition-colors" aria-label="LinkedIn">
                 <Linkedin size={20} />
-              </a>
-              <a href="#" className="text-foreground/60 hover:text-purple transition-colors" aria-label="GitHub">
-                <Github size={20} />
               </a>
             </div>
           </div>
@@ -77,7 +74,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="mt-6 text-center text-xs text-foreground/50 flex items-center justify-center">
-            Made with <Heart size={12} className="text-red-500 mx-1" /> with AI technology
+            <span>Credit: WeverseAI</span>
           </div>
         </div>
       </div>

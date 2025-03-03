@@ -42,3 +42,63 @@
     padding-right: 1.5rem;
   }
 }
+
+/* Fix for mobile stacking issues */
+.ai-chatbot-container {
+  z-index: 10;
+  position: fixed;
+  bottom: 5rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+@media (max-width: 640px) {
+  .ai-chatbot-container {
+    bottom: 4.5rem;
+    right: 0.75rem;
+  }
+  
+  .ai-chatbot-container .chatbot-button {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .ai-chatbot-container .chatbot-panel {
+    width: calc(100vw - 2rem);
+    max-width: 350px;
+    right: 0;
+  }
+}
+
+/* Prevent fixed elements from overlapping */
+.whatsapp-button {
+  z-index: 20;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .whatsapp-button {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+/* Ensure no content gets cut off on smaller screens */
+section {
+  overflow-x: hidden;
+}
+
+/* Improve forms on mobile */
+input, textarea, select, button {
+  font-size: 16px !important; /* Prevents zoom on focus in iOS */
+}
+
+@media (min-width: 768px) {
+  input, textarea, select, button {
+    font-size: initial !important;
+  }
+}

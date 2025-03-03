@@ -46,8 +46,8 @@ const ContactSection = () => {
     {
       icon: <Mail size={24} className="text-purple" />,
       title: "Email",
-      details: "weverseaaii@gmail.com",
-      action: () => window.location.href = "mailto:weverseaaii@gmail.com"
+      details: "falco@falcotk.space",
+      action: () => window.location.href = "mailto:falco@falcotk.space"
     },
     {
       icon: <MapPin size={24} className="text-purple" />,
@@ -58,7 +58,7 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden bg-purple/5">
+    <section id="contact" className="py-16 md:py-20 relative overflow-hidden bg-purple/5">
       <div className="absolute top-0 right-0 w-80 h-80 bg-purple/10 rounded-full filter blur-3xl -z-10"></div>
       
       <div className="section">
@@ -68,26 +68,26 @@ const ContactSection = () => {
             Have questions or want to start a project? Don't hesitate to reach out to our team.
           </p>
           
-          <div className="grid md:grid-cols-5 gap-8 mt-12">
+          <div className="grid md:grid-cols-5 gap-6 md:gap-8 mt-10 md:mt-12">
             <div className="md:col-span-2 space-y-6">
-              <div className="glass-card p-6">
-                <h3 className="text-xl font-bold mb-6">Contact Information</h3>
+              <div className="glass-card p-4 md:p-6">
+                <h3 className="text-xl font-bold mb-4 md:mb-6">Contact Information</h3>
                 
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   {contactMethods.map((method, index) => (
-                    <div key={index} className="flex items-start space-x-4">
-                      <div className="bg-white p-3 rounded-lg shadow-soft">
+                    <div key={index} className="flex items-start space-x-3 md:space-x-4">
+                      <div className="bg-white p-2 md:p-3 rounded-lg shadow-soft flex-shrink-0">
                         {method.icon}
                       </div>
                       <div>
                         <p className="font-semibold">{method.title}</p>
-                        <p className="text-foreground/70">{method.details}</p>
+                        <p className="text-foreground/70 text-sm md:text-base">{method.details}</p>
                         {method.action && (
                           <button 
                             onClick={method.action} 
-                            className="text-purple hover:text-purple-dark flex items-center mt-1 underline-animation"
+                            className="text-purple hover:text-purple-dark flex items-center mt-1 text-sm underline-animation"
                           >
-                            Contact Us <ArrowRight size={16} className="ml-1" />
+                            Contact Us <ArrowRight size={14} className="ml-1" />
                           </button>
                         )}
                       </div>
@@ -95,21 +95,21 @@ const ContactSection = () => {
                   ))}
                 </div>
                 
-                <div className="mt-8">
-                  <h4 className="font-semibold mb-3">Operating Hours</h4>
-                  <p className="text-foreground/70">Monday - Friday: 09:00 - 17:00</p>
-                  <p className="text-foreground/70">Saturday: 09:00 - 13:00</p>
+                <div className="mt-6 md:mt-8">
+                  <h4 className="font-semibold mb-2 md:mb-3">Operating Hours</h4>
+                  <p className="text-foreground/70 text-sm md:text-base">Monday - Friday: 09:00 - 17:00</p>
+                  <p className="text-foreground/70 text-sm md:text-base">Saturday: 09:00 - 13:00</p>
                 </div>
               </div>
             </div>
             
             <div className="md:col-span-3">
-              <form onSubmit={handleSubmit} className="glass-card p-6">
-                <h3 className="text-xl font-bold mb-6">Send Message</h3>
+              <form onSubmit={handleSubmit} className="glass-card p-4 md:p-6">
+                <h3 className="text-xl font-bold mb-4 md:mb-6">Send Message</h3>
                 
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <div>
-                    <label htmlFor="name" className="block mb-2 font-medium">Name</label>
+                    <label htmlFor="name" className="block mb-1 md:mb-2 font-medium text-sm md:text-base">Name</label>
                     <input
                       type="text"
                       id="name"
@@ -117,13 +117,13 @@ const ContactSection = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-border focus:border-purple focus:ring-2 focus:ring-purple/20 outline-none transition"
+                      className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-border focus:border-purple focus:ring-2 focus:ring-purple/20 outline-none transition text-sm md:text-base"
                       placeholder="Your Name"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block mb-2 font-medium">Email</label>
+                    <label htmlFor="email" className="block mb-1 md:mb-2 font-medium text-sm md:text-base">Email</label>
                     <input
                       type="email"
                       id="email"
@@ -131,21 +131,21 @@ const ContactSection = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-border focus:border-purple focus:ring-2 focus:ring-purple/20 outline-none transition"
+                      className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-border focus:border-purple focus:ring-2 focus:ring-purple/20 outline-none transition text-sm md:text-base"
                       placeholder="email@company.com"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block mb-2 font-medium">Message</label>
+                    <label htmlFor="message" className="block mb-1 md:mb-2 font-medium text-sm md:text-base">Message</label>
                     <textarea
                       id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
                       required
-                      rows={5}
-                      className="w-full px-4 py-3 rounded-lg border border-border focus:border-purple focus:ring-2 focus:ring-purple/20 outline-none transition"
+                      rows={4}
+                      className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-border focus:border-purple focus:ring-2 focus:ring-purple/20 outline-none transition text-sm md:text-base"
                       placeholder="How can we help you?"
                     ></textarea>
                   </div>
@@ -153,7 +153,7 @@ const ContactSection = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="btn-primary w-full flex items-center justify-center"
+                    className="btn-primary w-full flex items-center justify-center text-sm md:text-base mt-2"
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                   </button>
