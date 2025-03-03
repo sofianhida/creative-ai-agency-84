@@ -54,6 +54,7 @@ const Index = () => {
         <ContactSection />
       </main>
       <Footer />
+      {/* WhatsApp button will be rendered with proper spacing */}
       <WhatsAppButton />
     </div>
   );

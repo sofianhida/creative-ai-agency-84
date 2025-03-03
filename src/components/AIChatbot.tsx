@@ -125,10 +125,10 @@ const AIChatbot = () => {
 
   return (
     <>
-      {/* Chat button - moved higher from bottom */}
+      {/* Chat button - repositioned for better spacing */}
       <button
         onClick={toggleChat}
-        className={`fixed bottom-24 right-6 z-40 bg-purple text-white p-3 rounded-full shadow-glow transition-all duration-300 hover:bg-purple-dark hover:scale-105`}
+        className={`fixed bottom-20 right-6 z-40 bg-purple text-white p-3 rounded-full shadow-glow transition-all duration-300 hover:bg-purple-dark hover:scale-105`}
         aria-label="Chat with AI Assistant"
       >
         <Bot size={24} />
@@ -139,8 +139,8 @@ const AIChatbot = () => {
         <div 
           className={`fixed z-40 shadow-glow-lg transition-all duration-300 ease-in-out ${
             isMinimized 
-              ? 'bottom-24 right-6 w-72 h-14' 
-              : 'bottom-24 right-6 w-full max-w-[92vw] sm:max-w-[400px] h-[450px] max-h-[70vh]'
+              ? 'bottom-20 right-6 w-72 h-14' 
+              : 'bottom-20 right-6 w-full max-w-[92vw] sm:max-w-[400px] h-[500px] sm:h-[450px] max-h-[70vh]'
           }`}
         >
           <div className="flex flex-col h-full rounded-lg overflow-hidden border bg-background">

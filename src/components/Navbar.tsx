@@ -23,6 +23,31 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close menu when window is resized to desktop size
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -96,10 +121,10 @@ const Navbar = () => {
         </div>
       </div>
       
-      {/* Mobile menu - improved animation and styling */}
+      {/* Mobile menu - improved animation and styling with fixed positioning */}
       {isMobile && isMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-10 glass-dark animate-fade-in">
-          <div className="h-full flex flex-col justify-center items-center px-4 py-6 space-y-6">
+        <div className="mobile-menu-container md:hidden fixed inset-0 z-10 glass-dark animate-fade-in">
+          <div className="flex flex-col justify-center items-center px-4 py-6 space-y-6 h-full">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -111,7 +136,10 @@ const Navbar = () => {
               </a>
             ))}
             <button 
-              onClick={contactUs}
+              onClick={() => {
+                contactUs();
+                setIsMenuOpen(false);
+              }}
               className="btn-primary w-full max-w-xs mt-8"
             >
               Contact Us
