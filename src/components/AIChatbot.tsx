@@ -1,8 +1,8 @@
-
 import { useState, useRef, useEffect } from 'react';
-import { Bot, Send, X, Minimize2, Maximize2 } from 'lucide-react';
+import { Bot, Send, X, Minimize2, Maximize2, Code } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import AISystems from './AISystems';
 
 // Gemini API key
 const GEMINI_API_KEY = 'AIzaSyBoxVz22n162WFv53J1JiSksObxCamSBOg';
