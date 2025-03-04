@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
@@ -8,8 +8,11 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import AISystemsAccess from '@/components/AISystemsAccess';
 
 const Index = () => {
+  const [showAIAccess, setShowAIAccess] = useState(false);
+  
   useEffect(() => {
     document.title = "WeVersAI | Best AI Solutions";
     
@@ -54,7 +57,8 @@ const Index = () => {
         <ContactSection />
       </main>
       <Footer />
-      {/* WhatsApp button will be rendered with proper spacing */}
+      {/* AISystemsAccess button will be fixed on the page */}
+      <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
       <WhatsAppButton />
     </div>
   );
