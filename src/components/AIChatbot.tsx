@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { Bot, Send, X, Minimize2, Maximize2, Code } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
@@ -15,6 +16,53 @@ You are very helpful, professional, and always aim to provide the best answers a
 If there are questions outside the context of WeVersAI services, direct the user to contact our team via WhatsApp at 085183978011.
 `;
 
+// System-specific contexts
+const SYSTEM_CONTEXTS = {
+  'general': SYSTEM_CONTEXT,
+  'content-generator': `
+    You are WeVersAI's Content Generator AI assistant. 
+    You specialize in creating high-quality content like articles, ads, social media captions, email copy, and marketing materials.
+    Focus on being creative, engaging, and tailoring content to specific audiences and platforms.
+    Always maintain the brand voice and address the user's specific content needs.
+  `,
+  'text-summarization': `
+    You are WeVersAI's Text Summarization AI assistant.
+    You specialize in creating concise, accurate summaries of articles, documents, reports, and other text content.
+    Focus on extracting key points, maintaining the original meaning, and delivering clear summaries of various lengths.
+    Help users understand the main ideas without reading the entire text.
+  `,
+  'translation': `
+    You are WeVersAI's Translation AI assistant.
+    You specialize in translating text between multiple languages while preserving meaning, context, and nuance.
+    You can handle various content types from casual conversations to technical documents.
+    Offer explanations about cultural nuances when relevant to ensure accurate communication.
+  `,
+  'data-analytics': `
+    You are WeVersAI's Data Analytics AI assistant.
+    You specialize in helping with data interpretation, business intelligence, trend analysis, and data-driven insights.
+    Focus on helping users understand patterns in their data, generate reports, and make data-driven decisions.
+    Offer guidance on data visualization and analytical approaches.
+  `,
+  'document-analyzer': `
+    You are WeVersAI's Document Analyzer AI assistant.
+    You specialize in extracting and analyzing information from documents like PDFs, Word files, images of documents, and spreadsheets.
+    Help users extract specific data points, convert documents to structured formats, and analyze document content.
+    Focus on accuracy and structure in document processing.
+  `,
+  'coding-assistant': `
+    You are WeVersAI's Coding Assistant AI.
+    You specialize in helping developers with programming tasks, debugging, code optimization, and learning new technologies.
+    Provide code snippets, explain programming concepts, and help troubleshoot issues across various programming languages.
+    Focus on clean, efficient, and maintainable code practices.
+  `,
+  'education': `
+    You are WeVersAI's Education AI assistant.
+    You specialize in creating educational content, lesson plans, study materials, and e-learning resources.
+    Help educators and students with explanations of complex topics, quiz generation, and personalized learning materials.
+    Focus on making learning engaging, accessible, and effective for various learning styles.
+  `
+};
+
 interface Message {
   role: 'user' | 'assistant' | 'system';
   content: string;
@@ -30,12 +78,40 @@ const AIChatbot = () => {
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [currentSystem, setCurrentSystem] = useState('general');
+  const [aiSystemsOpen, setAiSystemsOpen] = useState(false);
   
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
+
+  useEffect(() => {
+    // When system changes, update the context and welcome message
+    if (currentSystem !== 'general') {
+      const systemContext = SYSTEM_CONTEXTS[currentSystem as keyof typeof SYSTEM_CONTEXTS] || SYSTEM_CONTEXT;
+      const systemName = getSystemName(currentSystem);
+      
+      setMessages([
+        { role: 'system', content: systemContext },
+        { role: 'assistant', content: `Hello! I'm the ${systemName} AI. How can I assist you today?` }
+      ]);
+    }
+  }, [currentSystem]);
+
+  const getSystemName = (systemId: string): string => {
+    switch(systemId) {
+      case 'content-generator': return 'Content Generator';
+      case 'text-summarization': return 'Text Summarization';
+      case 'translation': return 'Translation';
+      case 'data-analytics': return 'Data Analytics';
+      case 'document-analyzer': return 'Document Analyzer';
+      case 'coding-assistant': return 'Coding Assistant';
+      case 'education': return 'Education';
+      default: return 'WeVersAI Assistant';
+    }
+  };
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -48,6 +124,14 @@ const AIChatbot = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
+  };
+
+  const handleSystemSelect = (systemId: string) => {
+    setCurrentSystem(systemId);
+    toast({
+      title: "AI System Changed",
+      description: `Switched to ${getSystemName(systemId)} AI`,
+    });
   };
 
   const sendMessage = async () => {
@@ -67,12 +151,15 @@ const AIChatbot = () => {
         model: "gemini-1.5-flash-latest"
       });
       
+      // Get the current system context
+      const systemContext = SYSTEM_CONTEXTS[currentSystem as keyof typeof SYSTEM_CONTEXTS] || SYSTEM_CONTEXT;
+      
       // Create a chat session
       const chat = model.startChat({
         history: [
           {
             role: "user",
-            parts: [{ text: SYSTEM_CONTEXT }],
+            parts: [{ text: systemContext }],
           },
           {
             role: "model",
@@ -125,6 +212,13 @@ const AIChatbot = () => {
 
   return (
     <>
+      {/* AI Systems selector button */}
+      <AISystems 
+        isOpen={aiSystemsOpen}
+        setIsOpen={setAiSystemsOpen}
+        onSelectSystem={handleSystemSelect}
+      />
+      
       {/* Chat button - repositioned for better spacing */}
       <button
         onClick={toggleChat}
@@ -150,7 +244,12 @@ const AIChatbot = () => {
                 <div className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center">
                   <Bot size={18} />
                 </div>
-                {!isMinimized && <span className="font-medium">WeVersAI Assistant</span>}
+                {!isMinimized && (
+                  <div className="flex flex-col">
+                    <span className="font-medium text-sm">WeVersAI Assistant</span>
+                    <span className="text-xs text-white/80">{getSystemName(currentSystem)}</span>
+                  </div>
+                )}
               </div>
               <div className="flex items-center gap-1">
                 <button onClick={toggleMinimize} className="p-1 hover:bg-white/10 rounded" aria-label={isMinimized ? "Maximize" : "Minimize"}>
