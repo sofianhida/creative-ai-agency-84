@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Lightbulb, X, Send, FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
@@ -15,49 +14,42 @@ const SYSTEM_CONTEXTS = {
     You specialize in creating high-quality content like articles, ads, social media captions, email copy, and marketing materials.
     Focus on being creative, engaging, and tailoring content to specific audiences and platforms.
     Always maintain the brand voice and address the user's specific content needs.
-    Do not use markdown formatting like asterisks (*) in your responses.
   `,
   'text-summarization': `
     You are WeVersAI's Text Summarization AI assistant.
     You specialize in creating concise, accurate summaries of articles, documents, reports, and other text content.
     Focus on extracting key points, maintaining the original meaning, and delivering clear summaries of various lengths.
     Help users understand the main ideas without reading the entire text.
-    Do not use markdown formatting like asterisks (*) in your responses.
   `,
   'translation': `
     You are WeVersAI's Translation AI assistant.
     You specialize in translating text between multiple languages while preserving meaning, context, and nuance.
     You can handle various content types from casual conversations to technical documents.
     Offer explanations about cultural nuances when relevant to ensure accurate communication.
-    Do not use markdown formatting like asterisks (*) in your responses.
   `,
   'data-analytics': `
     You are WeVersAI's Data Analytics AI assistant.
     You specialize in helping with data interpretation, business intelligence, trend analysis, and data-driven insights.
     Focus on helping users understand patterns in their data, generate reports, and make data-driven decisions.
     Offer guidance on data visualization and analytical approaches.
-    Do not use markdown formatting like asterisks (*) in your responses.
   `,
   'document-analyzer': `
     You are WeVersAI's Document Analyzer AI assistant.
     You specialize in extracting and analyzing information from documents like PDFs, Word files, images of documents, and spreadsheets.
     Help users extract specific data points, convert documents to structured formats, and analyze document content.
     Focus on accuracy and structure in document processing.
-    Do not use markdown formatting like asterisks (*) in your responses.
   `,
   'coding-assistant': `
     You are WeVersAI's Coding Assistant AI.
     You specialize in helping developers with programming tasks, debugging, code optimization, and learning new technologies.
     Provide code snippets, explain programming concepts, and help troubleshoot issues across various programming languages.
     Focus on clean, efficient, and maintainable code practices.
-    When providing code examples, do not use markdown formatting with asterisks, just provide the code directly.
   `,
   'education': `
     You are WeVersAI's Education AI assistant.
     You specialize in creating educational content, lesson plans, study materials, and e-learning resources.
     Help educators and students with explanations of complex topics, quiz generation, and personalized learning materials.
     Focus on making learning engaging, accessible, and effective for various learning styles.
-    Do not use markdown formatting like asterisks (*) in your responses.
   `
 };
 
@@ -210,11 +202,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       // Send the user message and get the response
       const result = await chat.sendMessage(input);
       const response = await result.response;
-      let assistantResponse = response.text();
-      
-      // Clean markdown formatting (remove asterisks for bold/italic)
-      assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
-      assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
+      const assistantResponse = response.text();
       
       console.log("Received response from Gemini:", assistantResponse);
       
@@ -248,7 +236,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       {/* AI Access Button */}
       <button
         onClick={toggleAIAccess}
-        className="ai-access-button bg-white text-purple border-2 border-purple hover:bg-purple/5"
+        className="fixed bottom-32 right-6 z-40 bg-white text-purple border-2 border-purple hover:bg-purple/5 p-3 rounded-full shadow-sm hover:shadow-md transition-all duration-300"
         aria-label="Access AI Systems"
       >
         <Lightbulb size={24} />
@@ -256,7 +244,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       
       {/* AI Systems Panel */}
       {showAIAccess && (
-        <div className="ai-systems-panel bg-white rounded-lg shadow-glow-lg border border-gray-200 overflow-hidden transition-all duration-300">
+        <div className="fixed z-30 bottom-44 right-6 w-full max-w-[92vw] sm:max-w-[400px] bg-white rounded-lg shadow-glow-lg border border-gray-200 overflow-hidden transition-all duration-300">
           <div className="flex items-center justify-between p-3 bg-purple text-white">
             <div className="flex items-center gap-2">
               {selectedSystem ? (

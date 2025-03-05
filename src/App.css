@@ -71,39 +71,40 @@
   }
 }
 
-/* New fixed AI controls container for better spacing */
-.fixed-ai-controls {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem; /* Increased spacing between buttons */
-  z-index: 50;
-}
-
-@media (max-width: 640px) {
-  .fixed-ai-controls {
-    bottom: 1rem;
-    right: 1rem;
-    gap: 1rem; /* Slightly reduced on mobile */
-  }
-}
-
 /* Prevent fixed elements from overlapping - adjusted positioning */
 .whatsapp-button {
   z-index: 20;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
 }
 
-/* AI systems access button positioning - now relative to container */
+@media (max-width: 640px) {
+  .whatsapp-button {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+/* AI systems access button positioning */
 .ai-systems-button {
+  position: fixed;
+  bottom: 32rem;
+  right: 1.5rem;
   z-index: 40;
+}
+
+@media (max-width: 640px) {
+  .ai-systems-button {
+    bottom: 30rem;
+    right: 1rem;
+  }
 }
 
 /* AI systems panel positioning */
 .ai-systems-panel {
   position: fixed;
-  bottom: 7.5rem; /* Positioned above both buttons */
+  bottom: 44rem;
   right: 1.5rem;
   z-index: 30;
   width: 400px;
@@ -116,7 +117,7 @@
 
 @media (max-width: 640px) {
   .ai-systems-panel {
-    bottom: 6.5rem;
+    bottom: 42rem;
     right: 1rem;
     width: calc(100vw - 2rem);
   }
@@ -237,7 +238,9 @@ input, textarea, select, button {
 .ai-buttons-stack {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Increased from 1rem for better spacing */
+  position: fixed;
+  right: 1.5rem;
+  gap: 1rem; /* Increased from 0.75rem for better spacing */
   z-index: 30;
 }
 
@@ -260,7 +263,7 @@ input, textarea, select, button {
 /* Make sure AI system buttons don't overlap on small screens */
 @media (max-width: 640px) {
   .ai-buttons-stack {
-    gap: 1.25rem; /* Slightly reduced on mobile but still spacious */
+    right: 1rem;
   }
 }
 
@@ -295,26 +298,4 @@ input, textarea, select, button {
   border-radius: 0.375rem;
   margin-right: 1rem;
   color: rgb(155, 135, 245);
-}
-
-/* New styles for better button separation */
-.ai-access-button {
-  width: 3.5rem;
-  height: 3.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin-bottom: 0.75rem;
-}
-
-.ai-access-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
-
-.ai-access-button:active {
-  transform: translateY(0);
 }

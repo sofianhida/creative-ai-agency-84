@@ -9,7 +9,6 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import AISystemsAccess from '@/components/AISystemsAccess';
-import AIChatbot from '@/components/AIChatbot';
 
 const Index = () => {
   const [showAIAccess, setShowAIAccess] = useState(false);
@@ -58,13 +57,9 @@ const Index = () => {
         <ContactSection />
       </main>
       <Footer />
-      
-      {/* AI components with fixed positioning */}
-      <div className="fixed-ai-controls">
-        <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
-        <AIChatbot />
-        <WhatsAppButton />
-      </div>
+      {/* AISystemsAccess button will be fixed on the page */}
+      <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
+      <WhatsAppButton />
     </div>
   );
 };
