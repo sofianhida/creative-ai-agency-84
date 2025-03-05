@@ -10,8 +10,6 @@ import NotFound from "./pages/NotFound";
 import AIMarketplace from "./pages/AIMarketplace";
 import AIBuilder from "./pages/AIBuilder";
 import MarketDashboard from "./components/MarketDashboard";
-import WhatsAppButton from "./components/WhatsAppButton";
-import AIChatbot from "./components/AIChatbot";
 
 const queryClient = new QueryClient();
 
@@ -45,9 +43,6 @@ const App = () => {
             <Route path="/dashboard" element={<MarketDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          
-          {/* Make sure AIChatbot is always rendered in the App */}
-          <AIChatbot />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

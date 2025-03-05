@@ -72,18 +72,8 @@ const Navbar = () => {
 
   const handleNavLinkClick = (href: string) => {
     setIsMenuOpen(false);
-    if (href.startsWith('/#')) {
-      const sectionId = href.substring(2);
-      if (location.pathname === '/') {
-        // If we're already on the homepage, use smooth scrolling
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        // If we're on another page, navigate to homepage + section
-        window.location.href = href;
-      }
+    if (href.startsWith('/#') && location.pathname === '/') {
+      window.location.href = href;
     }
   };
 

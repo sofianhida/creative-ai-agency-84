@@ -25,10 +25,10 @@ const WhatsAppButton = () => {
   return (
     <button
       onClick={openWhatsApp}
-      className="ai-circular-button green fixed left-6 bottom-24 z-50"
+      className="ai-circular-button green fixed left-6 bottom-6 z-50"
       aria-label="Chat on WhatsApp"
     >
-      <MessageSquare size={24} className="text-white" />
+      <MessageSquare size={24} className="animate-pulse-light" />
     </button>
   );
 };

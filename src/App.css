@@ -1,3 +1,4 @@
+
 /* Reset some default styles that might be causing layout issues */
 #root {
   width: 100%;
@@ -556,12 +557,12 @@ body.menu-open {
 /* New styles for the fixed AI button column */
 .ai-buttons-column {
   position: fixed;
-  left: 24px;
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   z-index: 50;
 }
 
@@ -574,7 +575,6 @@ body.menu-open {
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  border: 2px solid transparent;
 }
 
 .ai-circular-button:hover {
@@ -585,37 +585,17 @@ body.menu-open {
 .ai-circular-button.purple {
   background-color: #9b87f5;
   color: white;
-  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .ai-circular-button.light-purple {
   background-color: #b29ef5;
+  border: 1px solid #9b87f5;
   color: white;
-  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .ai-circular-button.green {
   background-color: #4CAF50;
   color: white;
-  border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* AI Chatbot positioning */
-.fixed-ai-chatbot {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 50;
-}
-
-/* Improved positioning for elements */
-@media (max-width: 640px) {
-  .ai-buttons-column {
-    left: 16px;
-  }
-  
-  .fixed-ai-chatbot {
-    right: 16px;
-    bottom: 16px;
-  }
-}
+/* ... keep existing code */

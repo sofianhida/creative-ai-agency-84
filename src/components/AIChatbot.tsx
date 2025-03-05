@@ -1,9 +1,9 @@
+
 import { useState, useRef, useEffect } from 'react';
-import { Bot, Send, X, Minimize2, Maximize2, MessageSquare, LightbulbIcon } from 'lucide-react';
+import { Bot, Send, X, Minimize2, Maximize2 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import AISystems from './AISystems';
-import WhatsAppButton from './WhatsAppButton';
 
 // Gemini API key
 const GEMINI_API_KEY = 'AIzaSyBoxVz22n162WFv53J1JiSksObxCamSBOg';
@@ -224,36 +224,21 @@ const AIChatbot = () => {
 
   return (
     <>
-      {/* Fixed column of AI buttons */}
-      <div className="ai-buttons-column">
-        {/* AI Systems Access Button - Purple outlined */}
-        <button 
-          onClick={() => setAiSystemsOpen(!aiSystemsOpen)}
-          className="ai-circular-button purple"
-          aria-label="Access AI Systems"
-        >
-          <LightbulbIcon size={24} className="text-white" />
-        </button>
-        
-        {/* WhatsApp Button - Green */}
-        <WhatsAppButton />
-        
-        {/* AI Chatbot Button - Purple */}
-        <button
-          onClick={toggleChat}
-          className="ai-circular-button purple"
-          aria-label="Chat with AI Assistant"
-        >
-          <Bot size={24} className="text-white" />
-        </button>
-      </div>
-      
-      {/* AI Systems panel */}
+      {/* AI Systems selector button */}
       <AISystems 
         isOpen={aiSystemsOpen}
         setIsOpen={setAiSystemsOpen}
         onSelectSystem={handleSystemSelect}
       />
+      
+      {/* Chat button - repositioned for better spacing */}
+      <button
+        onClick={toggleChat}
+        className={`fixed bottom-20 right-6 z-40 bg-purple text-white p-3 rounded-full shadow-glow transition-all duration-300 hover:bg-purple-dark hover:scale-105`}
+        aria-label="Chat with AI Assistant"
+      >
+        <Bot size={24} />
+      </button>
       
       {/* Chat window */}
       {isOpen && (
