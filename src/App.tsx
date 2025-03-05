@@ -9,7 +9,6 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AIMarketplace from "./pages/AIMarketplace";
 import AIBuilder from "./pages/AIBuilder";
-import MarketDashboard from "./components/MarketDashboard";
 
 const queryClient = new QueryClient();
 
@@ -40,7 +39,6 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/marketplace" element={<AIMarketplace />} />
             <Route path="/builder" element={<AIBuilder />} />
-            <Route path="/dashboard" element={<MarketDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
