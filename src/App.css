@@ -1,3 +1,4 @@
+
 /* Reset some default styles that might be causing layout issues */
 #root {
   width: 100%;
@@ -78,7 +79,7 @@
   right: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem; /* Increased spacing between buttons */
+  gap: 2rem; /* Increased spacing between buttons even more */
   z-index: 50;
 }
 
@@ -86,7 +87,7 @@
   .fixed-ai-controls {
     bottom: 1rem;
     right: 1rem;
-    gap: 1rem; /* Slightly reduced on mobile */
+    gap: 1.5rem; /* Slightly reduced on mobile, but still more space */
   }
 }
 
@@ -103,12 +104,12 @@
 /* AI systems panel positioning */
 .ai-systems-panel {
   position: fixed;
-  bottom: 7.5rem; /* Positioned above both buttons */
+  bottom: 9rem; /* Positioned above both buttons with more spacing */
   right: 1.5rem;
   z-index: 30;
   width: 400px;
   max-width: 92vw;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem; /* Increased border radius */
   overflow: hidden;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -116,7 +117,7 @@
 
 @media (max-width: 640px) {
   .ai-systems-panel {
-    bottom: 6.5rem;
+    bottom: 8rem; /* More space on mobile too */
     right: 1rem;
     width: calc(100vw - 2rem);
   }
@@ -311,8 +312,8 @@ input, textarea, select, button {
 }
 
 .ai-access-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .ai-access-button:active {
