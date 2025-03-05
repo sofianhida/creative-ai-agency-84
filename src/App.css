@@ -98,24 +98,14 @@
 
 /* Enhanced AI systems panel with modern styling */
 .ai-systems-panel {
-  position: fixed;
-  top: 4rem; /* Position below navbar */
-  right: 1rem;
+  position: relative;
   z-index: 40;
-  width: 450px;
-  max-width: 92vw;
+  width: 100%;
+  max-width: 100%;
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15), 0 4px 10px -5px rgba(155, 135, 245, 0.2);
   transition: all 0.3s ease;
-}
-
-@media (max-width: 640px) {
-  .ai-systems-panel {
-    top: 4rem;
-    right: 1rem;
-    width: calc(100vw - 2rem);
-  }
 }
 
 /* Ensure no content gets cut off on smaller screens */
@@ -174,15 +164,39 @@ input, textarea, select, button {
   }
 }
 
-/* Improved button styling */
-.btn-primary {
-  @apply bg-purple hover:bg-purple-dark text-white font-medium rounded-full 
-         transition-all duration-300 shadow-sm hover:shadow;
+/* Button with pulse animation */
+.btn-pulse {
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-outline {
-  @apply border border-purple text-purple hover:bg-purple/5 font-medium 
-         rounded-full transition-all duration-300;
+.btn-pulse::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
+}
+
+.btn-pulse:focus:not(:active)::after {
+  animation: ripple 1s ease-out;
 }
 
 /* Modern glass effect */
@@ -210,72 +224,31 @@ input, textarea, select, button {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* Custom scrollbar for a more modern feel */
-::-webkit-scrollbar {
-  width: 8px;
+/* AI Systems card hover effect */
+.ai-system-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(155, 135, 245, 0.6);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(155, 135, 245, 0.8);
+.ai-system-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(155, 135, 245, 0.2);
 }
 
 /* Animation for AI systems panel */
 .ai-systems-panel {
-  animation: fadeInDown 0.3s ease-out forwards;
+  animation: fadeInUp 0.5s ease-out forwards;
 }
 
-@keyframes fadeInDown {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* New styles for AI Systems Access panel */
-.ai-systems-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-
-.ai-system-card {
-  display: flex;
-  align-items: flex-start;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
-}
-
-.ai-system-card:hover {
-  background-color: rgba(155, 135, 245, 0.05);
-  transform: translateY(-2px);
-}
-
-.ai-system-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: rgba(155, 135, 245, 0.1);
-  border-radius: 0.375rem;
-  margin-right: 1rem;
-  color: rgb(155, 135, 245);
 }
 
 /* Shadow glow effect */
@@ -284,24 +257,6 @@ input, textarea, select, button {
               0 8px 10px -6px rgba(0, 0, 0, 0.1),
               0 0 0 1px rgba(155, 135, 245, 0.1),
               0 0 15px 2px rgba(155, 135, 245, 0.15);
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #9b87f5;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #7E69AB;
 }
 
 /* AI Navbar Button Styles */
@@ -325,4 +280,81 @@ input, textarea, select, button {
 
 .navbar-ai-button:active {
   transform: translateY(0);
+}
+
+/* Floating animation for decorative elements */
+@keyframes float-element {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-animation {
+  animation: float-element 5s ease-in-out infinite;
+}
+
+/* Added pulse animation for buttons */
+@keyframes button-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(155, 135, 245, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(155, 135, 245, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(155, 135, 245, 0);
+  }
+}
+
+.pulse-button {
+  animation: button-pulse 2s infinite;
+}
+
+/* Improved decorative elements */
+.decorative-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(178, 158, 245, 0.2) 0%, rgba(155, 135, 245, 0.1) 100%);
+  z-index: -1;
+}
+
+/* Animations for decorative dots */
+.dots-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(155, 135, 245, 0.2);
+}
+
+/* Advanced text animations */
+.text-gradient {
+  background: linear-gradient(135deg, #7E69AB 0%, #9b87f5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+/* 3D card effect */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+}
+
+.card-3d:hover {
+  transform: rotateX(5deg) rotateY(5deg);
 }

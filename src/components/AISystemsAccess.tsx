@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Lightbulb, X, Send, FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap } from 'lucide-react';
+import { Lightbulb, X, Send, FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, ChevronRight } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -91,43 +91,50 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       id: 'content-generator',
       name: 'AI Content Generator',
       description: 'Generate articles, ads, captions, emails and more',
-      icon: <FileText size={isMobile ? 20 : 24} />
+      icon: <FileText size={isMobile ? 20 : 24} />,
+      color: 'from-blue-400/20 to-blue-500/10'
     },
     {
       id: 'text-summarization',
       name: 'AI Text Summarization',
       description: 'Automatic summaries for articles & documents',
-      icon: <BookOpen size={isMobile ? 20 : 24} />
+      icon: <BookOpen size={isMobile ? 20 : 24} />,
+      color: 'from-green-400/20 to-green-500/10'
     },
     {
       id: 'translation',
       name: 'AI Translation',
       description: 'Translate text between languages',
-      icon: <Globe size={isMobile ? 20 : 24} />
+      icon: <Globe size={isMobile ? 20 : 24} />,
+      color: 'from-amber-400/20 to-amber-500/10'
     },
     {
       id: 'data-analytics',
       name: 'AI for Data Analytics',
       description: 'Business intelligence & data analysis',
-      icon: <BarChart size={isMobile ? 20 : 24} />
+      icon: <BarChart size={isMobile ? 20 : 24} />,
+      color: 'from-pink-400/20 to-pink-500/10'
     },
     {
       id: 'document-analyzer',
       name: 'AI Document Analyzer',
       description: 'Extract data from PDF, Word, and other documents',
-      icon: <FileSearch size={isMobile ? 20 : 24} />
+      icon: <FileSearch size={isMobile ? 20 : 24} />,
+      color: 'from-orange-400/20 to-orange-500/10'
     },
     {
       id: 'coding-assistant',
       name: 'AI Coding Assistant',
       description: 'Help developers with programming tasks',
-      icon: <Code size={isMobile ? 20 : 24} />
+      icon: <Code size={isMobile ? 20 : 24} />,
+      color: 'from-cyan-400/20 to-cyan-500/10'
     },
     {
       id: 'education',
       name: 'AI for Education',
       description: 'Educational content & e-learning assistance',
-      icon: <GraduationCap size={isMobile ? 20 : 24} />
+      icon: <GraduationCap size={isMobile ? 20 : 24} />,
+      color: 'from-violet-400/20 to-violet-500/10'
     }
   ];
 
@@ -505,127 +512,140 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     }
   };
 
-  return (
-    <>
-      {showAIAccess && (
-        <div className="ai-systems-panel glass border border-purple/30 shadow-glow-lg overflow-hidden transition-all duration-300">
-          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple to-purple-dark text-white">
-            <div className="flex items-center gap-2">
-              {selectedSystem ? (
-                <>
-                  <button 
-                    onClick={backToSystems}
-                    className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
-                  >
-                    <X size={18} />
-                  </button>
-                  <span className="font-medium">{getSystemName(selectedSystem)}</span>
-                </>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <Lightbulb size={20} />
-                  <span className="font-medium text-lg">WeVersAI Systems</span>
-                </div>
-              )}
+  const renderAISystemsGrid = () => {
+    return (
+      <div className="ai-systems-grid">
+        {aiSystems.map((system, index) => (
+          <div 
+            key={system.id}
+            className={`ai-system-card animate-fade-in`}
+            style={{ animationDelay: `${index * 100}ms` }}
+            onClick={() => selectSystem(system.id)}
+          >
+            <div className={`animated-icon bg-gradient-to-br ${system.color}`}>
+              {system.icon}
             </div>
+            <div className="flex-1">
+              <h3 className="font-medium text-foreground mb-1">{system.name}</h3>
+              <p className="text-sm text-muted-foreground">{system.description}</p>
+              <div className="mt-3">
+                <span className="flex items-center text-xs text-purple hover:underline cursor-pointer">
+                  Access now
+                  <ChevronRight className="h-3 w-3 ml-1" />
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderChatInterface = () => {
+    const system = aiSystems.find(sys => sys.id === selectedSystem);
+    
+    return (
+      <div className="ai-chat-container animate-fade-in">
+        <div className="ai-chat-header">
+          <div className="flex items-center gap-3">
             <button 
-              onClick={closePanel}
+              onClick={backToSystems}
               className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
             >
               <X size={18} />
             </button>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                {system?.icon}
+              </div>
+              <span className="font-medium text-white">{system?.name}</span>
+            </div>
           </div>
-          
-          {!selectedSystem ? (
-            <div className="p-4 max-h-[70vh] overflow-y-auto bg-gradient-to-b from-white to-gray-50">
-              <div className="grid grid-cols-1 gap-3">
-                {aiSystems.map((system) => (
-                  <button
-                    key={system.id}
-                    onClick={() => selectSystem(system.id)}
-                    className="flex items-start gap-3 p-3.5 rounded-xl text-left hover:bg-purple/5 transition-colors border border-gray-100 hover:border-purple/20 hover:shadow-sm bg-white"
-                  >
-                    <div className="bg-purple/10 text-purple rounded-lg p-2.5 flex-shrink-0">
-                      {system.icon}
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-800">{system.name}</h3>
-                      <p className="text-sm text-gray-600 mt-1">{system.description}</p>
-                    </div>
-                  </button>
-                ))}
+          <button 
+            onClick={closePanel}
+            className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
+          >
+            <X size={18} />
+          </button>
+        </div>
+        
+        <div className="ai-chat-messages">
+          {messages.filter(msg => msg.role !== 'system').map((message, index) => (
+            <div 
+              key={index}
+              className={`mb-4 ${
+                message.role === 'assistant' 
+                  ? 'flex justify-start' 
+                  : 'flex justify-end'
+              }`}
+            >
+              <div 
+                className={`max-w-[85%] p-3 rounded-xl shadow-sm ${
+                  message.role === 'assistant' 
+                    ? 'bg-gray-100 text-gray-800 animate-fade-in animate-delay-100' 
+                    : 'bg-gradient-to-r from-purple to-purple-dark text-white animate-fade-in'
+                }`}
+                style={{ animationDelay: `${index * 300}ms` }}
+              >
+                <p className="whitespace-pre-wrap text-sm">{message.content}</p>
               </div>
             </div>
-          ) : (
-            <div className="flex flex-col h-[70vh] bg-gradient-to-b from-white to-gray-50">
-              <div className="flex-1 overflow-y-auto p-4">
-                {messages.filter(msg => msg.role !== 'system').map((message, index) => (
-                  <div 
-                    key={index}
-                    className={`mb-4 ${
-                      message.role === 'assistant' 
-                        ? 'flex justify-start' 
-                        : 'flex justify-end'
-                    }`}
-                  >
-                    <div 
-                      className={`max-w-[85%] p-3 rounded-xl ${
-                        message.role === 'assistant' 
-                          ? 'bg-gray-100 text-gray-800 shadow-sm' 
-                          : 'bg-purple text-white shadow-sm'
-                      }`}
-                    >
-                      <p className="whitespace-pre-wrap text-sm">{message.content}</p>
-                    </div>
-                  </div>
-                ))}
-                {isLoading && (
-                  <div className="flex justify-start mb-4">
-                    <div className="max-w-[85%] p-3 rounded-xl bg-gray-100 text-gray-800 shadow-sm">
-                      <div className="flex space-x-2">
-                        <div className="h-2.5 w-2.5 rounded-full bg-purple/50 animate-pulse"></div>
-                        <div className="h-2.5 w-2.5 rounded-full bg-purple/50 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                        <div className="h-2.5 w-2.5 rounded-full bg-purple/50 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              
-              {renderSystemSpecificControls()}
-              
-              <div className="p-3 border-t border-gray-200">
-                <div className="flex items-center gap-2">
-                  {selectedSystem === 'text-summarization' || selectedSystem === 'content-generator' ? (
-                    <textarea 
-                      value={input}
-                      onChange={handleInputChange}
-                      placeholder={`Ask the ${getSystemName(selectedSystem)} AI...`}
-                      className="flex-1 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple/30 text-sm resize-y min-h-[80px] shadow-sm"
-                      disabled={isLoading}
-                    />
-                  ) : (
-                    <input 
-                      type="text" 
-                      value={input}
-                      onChange={handleInputChange}
-                      onKeyDown={handleKeyDown}
-                      placeholder={`Ask the ${getSystemName(selectedSystem)} AI...`}
-                      className="flex-1 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple/30 text-sm shadow-sm"
-                      disabled={isLoading}
-                    />
-                  )}
-                  <button 
-                    onClick={sendMessage}
-                    disabled={isLoading || (!input.trim() && !uploadedFile)}
-                    className={`p-3 rounded-xl bg-purple text-white ${isLoading || (!input.trim() && !uploadedFile) ? 'opacity-50' : 'hover:bg-purple-dark shadow-sm'}`}
-                  >
-                    <Send size={18} />
-                  </button>
+          ))}
+          
+          {isLoading && (
+            <div className="flex justify-start mb-4 animate-fade-in">
+              <div className="max-w-[85%] p-3 rounded-xl bg-gray-100 text-gray-800 shadow-sm">
+                <div className="flex space-x-2">
+                  <div className="h-2.5 w-2.5 rounded-full bg-purple/50 animate-pulse"></div>
+                  <div className="h-2.5 w-2.5 rounded-full bg-purple/50 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="h-2.5 w-2.5 rounded-full bg-purple/50 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                 </div>
               </div>
             </div>
           )}
+        </div>
+        
+        {renderSystemSpecificControls()}
+        
+        <div className="ai-chat-input">
+          <div className="flex items-center gap-2">
+            {selectedSystem === 'text-summarization' || selectedSystem === 'content-generator' ? (
+              <textarea 
+                value={input}
+                onChange={handleInputChange}
+                placeholder={`Ask the ${getSystemName(selectedSystem || '')} AI...`}
+                className="flex-1 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple/30 text-sm resize-y min-h-[80px] shadow-sm"
+                disabled={isLoading}
+              />
+            ) : (
+              <input 
+                type="text" 
+                value={input}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                placeholder={`Ask the ${getSystemName(selectedSystem || '')} AI...`}
+                className="flex-1 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple/30 text-sm shadow-sm"
+                disabled={isLoading}
+              />
+            )}
+            <button 
+              onClick={sendMessage}
+              disabled={isLoading || (!input.trim() && !uploadedFile)}
+              className={`btn-animated p-3 rounded-xl ${isLoading || (!input.trim() && !uploadedFile) ? 'opacity-50' : ''}`}
+            >
+              <Send size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <>
+      {showAIAccess && (
+        <div className="ai-systems-panel glass border border-purple/30 shadow-glow-lg overflow-hidden transition-all duration-300">
+          {selectedSystem ? renderChatInterface() : renderAISystemsGrid()}
         </div>
       )}
     </>
