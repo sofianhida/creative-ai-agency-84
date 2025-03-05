@@ -44,6 +44,11 @@
   html {
     scroll-behavior: smooth;
     @apply overflow-x-hidden;
+    cursor: none;
+  }
+
+  a, button, [role="button"] {
+    cursor: none;
   }
 
   body {
@@ -76,6 +81,86 @@
     @apply border border-purple text-purple bg-transparent px-6 py-3 rounded-full font-medium 
            transition-all hover:bg-purple/10 active:scale-95
            disabled:opacity-70 disabled:cursor-not-allowed;
+  }
+  
+  .btn-glow {
+    @apply relative bg-purple text-white px-6 py-3 rounded-full font-medium
+           transition-all overflow-hidden hover:shadow-glow active:scale-95;
+  }
+  
+  .btn-glow::after {
+    @apply content-[''] absolute inset-0 bg-white/20 scale-x-0 
+           transition-transform duration-500 origin-left;
+  }
+  
+  .btn-glow:hover::after {
+    @apply scale-x-100;
+  }
+  
+  .card-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  .card-3d:hover {
+    transform: translateY(-10px) rotateX(10deg) rotateY(10deg);
+  }
+  
+  .shiny-border {
+    @apply relative rounded-xl overflow-hidden;
+  }
+  
+  .shiny-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+      rgba(155, 135, 245, 0) 0%, 
+      rgba(155, 135, 245, 0.5) 50%, 
+      rgba(155, 135, 245, 0) 100%);
+    z-index: -1;
+    background-size: 200% 200%;
+    animation: shine 3s linear infinite;
+    border-radius: inherit;
+  }
+  
+  @keyframes shine {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 200%; }
+  }
+  
+  .gradient-text {
+    @apply font-bold;
+    background: linear-gradient(90deg, #9b87f5, #7E69AB, #b29ef5, #9b87f5);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    animation: gradient-text 8s ease infinite;
+  }
+  
+  @keyframes gradient-text {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .animate-pulse-light {
+    animation: pulse-light 3s infinite;
+  }
+  
+  @keyframes pulse-light {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
   }
   
   .section {
@@ -244,6 +329,109 @@
   
   .btn-animated:hover::after {
     @apply scale-x-100 opacity-100;
+  }
+  
+  .typing-animation::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .liquid-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .liquid-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(155, 135, 245, 0.3);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    transform: translate(-100%, 0) rotate(0);
+    transition: all 0.8s ease;
+    z-index: -1;
+  }
+
+  .liquid-button:hover::before {
+    transform: translate(0, 0) rotate(45deg);
+    border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+  }
+
+  .gooey {
+    filter: url('#gooey');
+  }
+
+  .glitch {
+    position: relative;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 #ff00c1;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+  }
+
+  .glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 #00fff9;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim2 5s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-anim {
+    0% {
+      clip: rect(31px, 9999px, 94px, 0);
+    }
+    4.166666667% {
+      clip: rect(91px, 9999px, 43px, 0);
+    }
+    8.333333333% {
+      clip: rect(21px, 9999px, 73px, 0);
+    }
+    95.833333333% {
+      clip: rect(5px, 9999px, 57px, 0);
+    }
+    100% {
+      clip: rect(23px, 9999px, 94px, 0);
+    }
+  }
+
+  @keyframes glitch-anim2 {
+    0% {
+      clip: rect(65px, 9999px, 119px, 0);
+    }
+    4.166666667% {
+      clip: rect(142px, 9999px, 28px, 0);
+    }
+    8.333333333% {
+      clip: rect(63px, 9999px, 51px, 0);
+    }
+    95.833333333% {
+      clip: rect(82px, 9999px, 41px, 0);
+    }
+    100% {
+      clip: rect(128px, 9999px, 92px, 0);
+    }
   }
 }
 

@@ -1,25 +1,60 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ArrowDown, Sparkles } from 'lucide-react';
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const parallaxRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     setIsLoaded(true);
+    
+    // Add parallax effect on mouse move
+    const handleMouseMove = (e: MouseEvent) => {
+      if (parallaxRef.current) {
+        const x = (window.innerWidth - e.pageX * 2) / 100;
+        const y = (window.innerHeight - e.pageY * 2) / 100;
+        
+        parallaxRef.current.style.transform = `translateX(${x}px) translateY(${y}px)`;
+      }
+    };
+    
+    document.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   return (
     <section id="home" className="relative overflow-hidden flex items-center min-h-[calc(100vh-4rem)] py-8 md:py-12">
-      {/* Background Elements */}
+      {/* Background Elements with enhanced effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple/5 to-background/80 -z-10"></div>
-      <div className="absolute top-1/4 right-0 w-80 h-80 bg-purple/5 rounded-full filter blur-3xl -z-10"></div>
-      <div className="absolute bottom-0 left-10 w-64 h-64 bg-purple/5 rounded-full filter blur-3xl -z-10"></div>
+      <div className="absolute top-1/4 right-0 w-80 h-80 bg-purple/5 rounded-full filter blur-3xl -z-10 animate-pulse-light"></div>
+      <div className="absolute bottom-0 left-10 w-64 h-64 bg-purple/5 rounded-full filter blur-3xl -z-10 animate-pulse-light"></div>
+      
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden -z-5">
+        {[...Array(15)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute rounded-full bg-purple/10"
+            style={{
+              width: `${Math.random() * 15 + 5}px`,
+              height: `${Math.random() * 15 + 5}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDuration: `${Math.random() * 10 + 10}s`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          ></div>
+        ))}
+      </div>
       
       <div className="section py-10 md:py-20">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
           <div className={`space-y-5 md:space-y-6 text-center md:text-left ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
-            <div className="inline-flex items-center space-x-2 bg-purple/10 rounded-full px-4 py-2 text-sm text-purple-dark">
+            <div className="inline-flex items-center space-x-2 bg-purple/10 rounded-full px-4 py-2 text-sm text-purple-dark animate-pulse-light">
               <Sparkles size={16} className="text-purple" />
               <span>Leading AI Solutions Provider</span>
             </div>
@@ -35,34 +70,38 @@ const HeroSection = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-4 justify-center md:justify-start">
-              <a href="#services" className="btn-primary py-3 px-6">
-                Explore Services
+              <a href="#services" className="btn-primary py-3 px-6 group">
+                <span className="group-hover:translate-x-1 inline-block transition-transform">
+                  Explore Services
+                </span>
               </a>
-              <a href="#contact" className="btn-outline py-3 px-6">
-                Get Free Consultation
+              <a href="#contact" className="btn-outline py-3 px-6 group">
+                <span className="group-hover:translate-x-1 inline-block transition-transform">
+                  Get Free Consultation
+                </span>
               </a>
             </div>
           </div>
           
           <div className={`relative mt-10 md:mt-0 ${isLoaded ? 'animate-fade-in animate-delay-200' : 'opacity-0'}`}>
-            <div className="relative mx-auto max-w-md">
-              {/* Main image/graphic */}
-              <div className="relative z-10 bg-gradient-to-br from-purple-light/90 to-purple/80 rounded-2xl overflow-hidden shadow-glow-lg aspect-square max-w-xs sm:max-w-sm mx-auto">
+            <div className="relative mx-auto max-w-md" ref={parallaxRef}>
+              {/* Main image/graphic with enhanced 3D effect */}
+              <div className="relative z-10 bg-gradient-to-br from-purple-light/90 to-purple/80 rounded-2xl overflow-hidden shadow-glow-lg aspect-square max-w-xs sm:max-w-sm mx-auto hover:shadow-glow-lg transition-all duration-500">
                 <img 
                   src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
                   alt="WeVersAI Logo" 
                   className="absolute inset-0 h-full w-full object-contain p-12 animate-float"
                 />
                 
-                {/* Floating elements */}
-                <div className="absolute -top-8 -left-8 h-16 w-16 bg-white/10 rounded-full"></div>
-                <div className="absolute top-1/4 -right-5 h-10 w-10 bg-white/20 rounded-full"></div>
-                <div className="absolute bottom-1/3 -left-3 h-6 w-6 bg-white/30 rounded-full"></div>
+                {/* Enhanced floating elements with animation */}
+                <div className="absolute -top-8 -left-8 h-16 w-16 bg-white/10 rounded-full animate-float"></div>
+                <div className="absolute top-1/4 -right-5 h-10 w-10 bg-white/20 rounded-full animate-float animate-delay-200"></div>
+                <div className="absolute bottom-1/3 -left-3 h-6 w-6 bg-white/30 rounded-full animate-float animate-delay-300"></div>
               </div>
               
-              {/* Backdrop blurs */}
-              <div className="absolute -bottom-8 -right-8 h-40 w-40 bg-purple/20 rounded-full filter blur-2xl -z-10"></div>
-              <div className="absolute -top-10 -left-10 h-40 w-40 bg-purple/10 rounded-full filter blur-2xl -z-10"></div>
+              {/* Backdrop blurs with enhanced effects */}
+              <div className="absolute -bottom-8 -right-8 h-40 w-40 bg-purple/20 rounded-full filter blur-2xl -z-10 animate-pulse-light"></div>
+              <div className="absolute -top-10 -left-10 h-40 w-40 bg-purple/10 rounded-full filter blur-2xl -z-10 animate-pulse-light animate-delay-200"></div>
             </div>
           </div>
         </div>

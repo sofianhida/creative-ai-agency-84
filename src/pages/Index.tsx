@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
@@ -10,15 +10,18 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import AISystemsAccess from '@/components/AISystemsAccess';
 import AIChatbot from '@/components/AIChatbot';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, ZapIcon, StarIcon } from 'lucide-react';
 
 const Index = () => {
   const [showAIAccess, setShowAIAccess] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [isScrolling, setIsScrolling] = useState(false);
+  const mainRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     document.title = "WeVersAI | Best AI Solutions";
     
-    // Add scroll reveal effect
+    // Add scroll reveal effect with enhanced animations
     const observerOptions = {
       root: null,
       rootMargin: '0px',
@@ -45,7 +48,7 @@ const Index = () => {
     const createParticles = () => {
       const particlesContainer = document.querySelector('.particles');
       if (particlesContainer) {
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 25; i++) {
           const size = Math.random() * 20 + 5;
           const particle = document.createElement('div');
           particle.classList.add('particle');
@@ -62,15 +65,46 @@ const Index = () => {
     
     createParticles();
     
+    // Add cursor following effect
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    };
+    
+    document.addEventListener('mousemove', handleMouseMove);
+    
+    // Detect scrolling for animation
+    const handleScroll = () => {
+      setIsScrolling(true);
+      clearTimeout(scrollTimeout);
+      const scrollTimeout = setTimeout(() => {
+        setIsScrolling(false);
+      }, 100);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
     return () => {
       sections.forEach(section => {
         observer.unobserve(section);
       });
+      document.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
   
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background overflow-x-hidden" ref={mainRef}>
+      {/* Custom cursor effect */}
+      <div 
+        className="fixed w-6 h-6 rounded-full bg-purple/30 pointer-events-none mix-blend-multiply z-50 transition-transform duration-100"
+        style={{ 
+          left: `${cursorPosition.x}px`, 
+          top: `${cursorPosition.y}px`,
+          transform: `translate(-50%, -50%) scale(${isScrolling ? 2 : 1})`,
+          opacity: isScrolling ? 0.5 : 0.3
+        }}
+      ></div>
+      
       <Navbar showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
       
       <main className="pt-16 relative z-0">
@@ -80,9 +114,14 @@ const Index = () => {
         <TestimonialsSection />
         <ContactSection />
         
-        {/* Enhanced AI Systems Section with ID for scrolling */}
+        {/* Enhanced AI Systems Section with 3D effect and floating elements */}
         <section id="ai-systems-section" className="ai-dashboard-section">
           <div className="particles"></div>
+          
+          {/* 3D floating decorative elements */}
+          <div className="absolute left-[10%] top-[20%] w-32 h-32 rounded-full border border-purple/20 animate-slow-rotate"></div>
+          <div className="absolute right-[15%] bottom-[25%] w-24 h-24 rounded-full border border-purple/10 animate-slow-rotate" style={{ animationDuration: '15s' }}></div>
+          
           <div className="container mx-auto px-4 ai-dashboard-content">
             <div className="text-center mb-12">
               <div className="inline-block mb-4">
@@ -101,12 +140,40 @@ const Index = () => {
               <div className="hidden sm:block w-24 h-1 bg-gradient-to-r from-purple/30 to-purple mx-auto mb-12 rounded-full"></div>
             </div>
             
+            {/* Enhanced dashboard access with animated cards */}
+            <div className="mb-16">
+              <div className="flex flex-wrap justify-center gap-4 mb-10">
+                {/* Quick access cards with hover effects */}
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-64 text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+                  <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
+                    <ZapIcon size={24} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">Quick Analysis</h3>
+                  <p className="text-sm text-foreground/70">Instant data insights with our AI analytics tools</p>
+                </div>
+                
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-64 text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+                  <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
+                    <StarIcon size={24} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">Smart Assistant</h3>
+                  <p className="text-sm text-foreground/70">AI-powered virtual assistant for daily tasks</p>
+                </div>
+              </div>
+            </div>
+            
             <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
           </div>
           
-          {/* Decorative elements */}
+          {/* Enhanced decorative elements */}
           <div className="absolute right-0 top-20 w-64 h-64 rounded-full bg-purple/5 animate-float"></div>
           <div className="absolute -left-32 bottom-32 w-64 h-64 rounded-full border border-purple/10 animate-slow-rotate"></div>
+          
+          {/* Animated light beams */}
+          <div className="absolute inset-0 overflow-hidden z-0 opacity-30 pointer-events-none">
+            <div className="absolute top-1/4 left-1/2 w-[40rem] h-1 bg-gradient-to-r from-purple/0 via-purple/50 to-purple/0 rotate-45 animate-pulse-light"></div>
+            <div className="absolute bottom-1/3 left-1/4 w-[30rem] h-0.5 bg-gradient-to-r from-purple/0 via-purple/30 to-purple/0 -rotate-30 animate-pulse-light" style={{ animationDelay: '1s' }}></div>
+          </div>
         </section>
       </main>
       
