@@ -1,16 +1,14 @@
 
 import { useState, useEffect } from 'react';
-import { Menu, X, ShoppingCart, Settings } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   const { toast } = useToast();
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,30 +59,16 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Services', href: '/#services' },
-    { name: 'About', href: '/#about' },
-    { name: 'Testimonials', href: '/#testimonials' },
-    { name: 'Contact', href: '/#contact' },
-    { name: 'Marketplace', href: '/marketplace' },
-    { name: 'AI Builder', href: '/builder' },
+    { name: 'Home', href: '#home' },
+    { name: 'Services', href: '#services' },
+    { name: 'About', href: '#about' },
+    { name: 'Testimonials', href: '#testimonials' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   const handleNavLinkClick = (href: string) => {
     setIsMenuOpen(false);
-    if (href.startsWith('/#') && location.pathname === '/') {
-      window.location.href = href;
-    }
-  };
-
-  const isActive = (href: string) => {
-    if (href === '/') {
-      return location.pathname === '/';
-    }
-    if (href.startsWith('/#')) {
-      return location.pathname === '/' && window.location.hash === href.substring(1);
-    }
-    return location.pathname === href;
+    window.location.href = href;
   };
 
   return (
@@ -94,7 +78,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2 z-20">
+          <a href="#home" className="flex items-center gap-2 z-20">
             <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-purple/80 flex items-center justify-center overflow-hidden">
               <img 
                 src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
@@ -103,41 +87,23 @@ const Navbar = () => {
               />
             </div>
             <span className="font-display font-bold text-lg sm:text-xl">WeVersAI</span>
-          </Link>
+          </a>
           
           {!isMobile && (
-            <nav className="hidden md:flex space-x-6 lg:space-x-8">
+            <nav className="hidden md:flex space-x-8 lg:space-x-10">
               {navLinks.map((link) => (
-                link.href.startsWith('/#') ? 
                 <a 
                   key={link.name}
                   href={link.href}
-                  className={`nav-link text-sm font-medium tracking-wide relative ${isActive(link.href) ? 'text-purple' : 'hover:text-purple'}`}
+                  className="nav-link text-sm font-medium tracking-wide"
                 >
                   {link.name}
-                  {isActive(link.href) && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-purple"></span>}
                 </a>
-                :
-                <Link 
-                  key={link.name}
-                  to={link.href}
-                  className={`nav-link text-sm font-medium tracking-wide relative ${isActive(link.href) ? 'text-purple' : 'hover:text-purple'}`}
-                  onClick={() => handleNavLinkClick(link.href)}
-                >
-                  {link.name}
-                  {isActive(link.href) && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-purple"></span>}
-                </Link>
               ))}
             </nav>
           )}
           
           <div className="flex items-center gap-4">
-            {!isMobile && (
-              <Link to="/marketplace" className="text-foreground hover:text-purple">
-                <ShoppingCart size={20} />
-              </Link>
-            )}
-            
             <button 
               className="md:hidden text-foreground z-50" 
               onClick={toggleMenu}
@@ -161,7 +127,6 @@ const Navbar = () => {
           <div className="flex flex-col items-center justify-center h-full">
             <div className="flex flex-col items-center w-full py-6 gap-4">
               {navLinks.map((link) => (
-                link.href.startsWith('/#') ? 
                 <a
                   key={link.name}
                   href={link.href}
@@ -173,17 +138,6 @@ const Navbar = () => {
                 >
                   {link.name}
                 </a>
-                :
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className="py-2 text-lg font-medium text-foreground hover:text-purple transition-colors w-40 text-center"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  {link.name}
-                </Link>
               ))}
               
               <button 
