@@ -59,16 +59,8 @@ const Index = () => {
       </main>
       <Footer />
       
-      {/* AI components positioned on sides with better spacing */}
-      <div className="ai-buttons-column">
-        <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
-      </div>
-      
-      <div className="fixed right-6 bottom-6 z-50">
-        <AIChatbot />
-      </div>
-
-      {/* WhatsApp button is handled by its own fixed positioning */}
+      {/* Let's move the WhatsApp and AISystemsAccess to be grouped with AIChatbot */}
+      {/* We'll rely on the fixed positioning in CSS instead */}
     </div>
   );
 };
