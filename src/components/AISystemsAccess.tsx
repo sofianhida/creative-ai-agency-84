@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Lightbulb, X, Send, FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
@@ -527,13 +526,13 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
 
   return (
     <>
-      {/* AI Access Button */}
+      {/* Enhanced AI Access Button */}
       <button
         onClick={toggleAIAccess}
         className="ai-access-button bg-white text-purple border-2 border-purple hover:bg-purple/5"
         aria-label="Access AI Systems"
       >
-        <Lightbulb size={24} />
+        <Lightbulb size={32} />
       </button>
       
       {/* AI Systems Panel */}

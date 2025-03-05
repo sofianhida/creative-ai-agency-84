@@ -59,7 +59,7 @@ const Index = () => {
       </main>
       <Footer />
       
-      {/* AI components with fixed positioning */}
+      {/* AI components with fixed positioning - enhanced UI for better visibility */}
       <div className="fixed-ai-controls">
         <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
         <AIChatbot />
