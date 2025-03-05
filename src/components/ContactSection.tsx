@@ -52,7 +52,7 @@ const ContactSection = () => {
     {
       icon: <MapPin size={24} className="text-purple" />,
       title: "Location",
-      details: "Jakarta, Indonesia",
+      details: "Indonesia, Central Java, Batang Regency",
       action: null
     }
   ];
