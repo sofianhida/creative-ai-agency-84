@@ -77,20 +77,13 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
-  // New state for file upload in document analyzer
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  // New state for code language selector in coding assistant
   const [codeLanguage, setCodeLanguage] = useState('javascript');
-  // New state for language selector in translation
   const [sourceLang, setSourceLang] = useState('auto');
   const [targetLang, setTargetLang] = useState('english');
-  // New state for summary length in text summarization
   const [summaryLength, setSummaryLength] = useState('medium');
-  // New state for content type in content generator
   const [contentType, setContentType] = useState('article');
-  // New state for visualization type in data analytics
   const [visualizationType, setVisualizationType] = useState('chart');
-  // New state for education format
   const [educationFormat, setEducationFormat] = useState('lesson');
 
   const aiSystems = [
@@ -138,17 +131,15 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     }
   ];
 
-  const toggleAIAccess = () => {
-    if (showAIAccess && selectedSystem) {
-      // Close the system panel first, but keep the main panel open
+  const closePanel = () => {
+    if (selectedSystem) {
       setSelectedSystem(null);
       resetSystemStates();
     } else {
-      setShowAIAccess(!showAIAccess);
+      setShowAIAccess(false);
     }
   };
   
-  // Reset all system-specific states when changing systems
   const resetSystemStates = () => {
     setUploadedFile(null);
     setCodeLanguage('javascript');
@@ -166,7 +157,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     setSelectedSystem(systemId);
     resetSystemStates();
     
-    // Initialize messages with system context
     const systemContext = SYSTEM_CONTEXTS[systemId as keyof typeof SYSTEM_CONTEXTS];
     const systemName = getSystemName(systemId);
     
@@ -212,7 +202,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     
     let messageContent = input;
     
-    // Prepare different prompts based on the selected system
     switch (selectedSystem) {
       case 'text-summarization':
         messageContent = `Please provide a ${summaryLength} length summary of the following text: ${input}`;
@@ -245,18 +234,14 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     setIsLoading(true);
 
     try {
-      // Initialize the Generative AI with the API key
       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
       
-      // Get the model
       const model = genAI.getGenerativeModel({ 
         model: "gemini-1.5-flash-latest"
       });
       
-      // Get the current system context
       const systemContext = SYSTEM_CONTEXTS[selectedSystem as keyof typeof SYSTEM_CONTEXTS];
       
-      // Create a chat session
       const chat = model.startChat({
         history: [
           {
@@ -278,12 +263,10 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       
       console.log("Sending message to Gemini chat API");
       
-      // Send the user message and get the response
       const result = await chat.sendMessage(messageContent);
       const response = await result.response;
       let assistantResponse = response.text();
       
-      // Clean markdown formatting (remove asterisks for bold/italic)
       assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
       assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
       
@@ -294,7 +277,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
         { role: 'assistant', content: assistantResponse }
       ]);
       
-      // Clear file upload after sending
       if (selectedSystem === 'document-analyzer' && uploadedFile) {
         setUploadedFile(null);
       }
@@ -319,7 +301,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     resetSystemStates();
   };
   
-  // Render specialized controls based on the selected system
   const renderSystemSpecificControls = () => {
     if (!selectedSystem) return null;
     
@@ -526,7 +507,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
 
   return (
     <>
-      {/* Enhanced AI Access Button with improved design */}
       <button
         onClick={toggleAIAccess}
         className="ai-access-button bg-white text-purple border-2 border-purple hover:bg-purple/5"
@@ -538,7 +518,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
         </div>
       </button>
       
-      {/* Enhanced AI Systems Panel with improved styling */}
       {showAIAccess && (
         <div className="ai-systems-panel glass border border-purple/30 shadow-glow-lg overflow-hidden transition-all duration-300">
           <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple to-purple-dark text-white">
@@ -561,7 +540,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
               )}
             </div>
             <button 
-              onClick={toggleAIAccess}
+              onClick={closePanel}
               className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
             >
               <X size={18} />
@@ -569,7 +548,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
           </div>
           
           {!selectedSystem ? (
-            // Enhanced AI Systems Selection Grid
             <div className="p-4 max-h-[70vh] overflow-y-auto bg-gradient-to-b from-white to-gray-50">
               <div className="grid grid-cols-1 gap-3">
                 {aiSystems.map((system) => (
@@ -590,9 +568,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
               </div>
             </div>
           ) : (
-            // Enhanced AI System Interaction UI
             <div className="flex flex-col h-[70vh] bg-gradient-to-b from-white to-gray-50">
-              {/* Messages Area with improved styling */}
               <div className="flex-1 overflow-y-auto p-4">
                 {messages.filter(msg => msg.role !== 'system').map((message, index) => (
                   <div 
@@ -627,10 +603,8 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
                 )}
               </div>
               
-              {/* System-specific controls with improved styling */}
               {renderSystemSpecificControls()}
               
-              {/* Enhanced Input Area */}
               <div className="p-3 border-t border-gray-200">
                 <div className="flex items-center gap-2">
                   {selectedSystem === 'text-summarization' || selectedSystem === 'content-generator' ? (

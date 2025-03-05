@@ -1,10 +1,15 @@
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Lightbulb } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-const Navbar = () => {
+interface NavbarProps {
+  showAIAccess: boolean;
+  setShowAIAccess: (show: boolean) => void;
+}
+
+const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -57,6 +62,10 @@ const Navbar = () => {
     });
     window.open(`https://wa.me/6285183978011`, '_blank');
   };
+  
+  const toggleAIAccess = () => {
+    setShowAIAccess(!showAIAccess);
+  };
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -104,6 +113,16 @@ const Navbar = () => {
           )}
           
           <div className="flex items-center gap-4">
+            {/* AI Systems Button in Navbar */}
+            <button
+              onClick={toggleAIAccess}
+              className="hidden md:flex items-center gap-2 px-4 py-2 text-purple border-2 border-purple rounded-full bg-white hover:bg-purple/5 transition-all"
+              aria-label="Access AI Systems"
+            >
+              <Lightbulb size={20} />
+              <span className="font-medium">AI Systems</span>
+            </button>
+            
             <button 
               className="md:hidden text-foreground z-50" 
               onClick={toggleMenu}
@@ -139,6 +158,18 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
+              
+              {/* AI Systems Button in Mobile Menu */}
+              <button
+                onClick={() => {
+                  toggleAIAccess();
+                  setIsMenuOpen(false);
+                }}
+                className="py-2 text-lg font-medium text-foreground hover:text-purple transition-colors w-40 text-center flex items-center justify-center gap-2"
+              >
+                <Lightbulb size={20} />
+                <span>AI Systems</span>
+              </button>
               
               <button 
                 onClick={() => {

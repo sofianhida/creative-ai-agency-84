@@ -49,7 +49,7 @@ const Index = () => {
   
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <Navbar />
+      <Navbar showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
       <main className="pt-16 relative z-0">
         <HeroSection />
         <ServicesSection />
@@ -59,12 +59,14 @@ const Index = () => {
       </main>
       <Footer />
       
-      {/* AI components with fixed positioning - enhanced UI for better visibility */}
+      {/* AI components with fixed positioning */}
       <div className="fixed-ai-controls">
-        <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
         <AIChatbot />
         <WhatsAppButton />
       </div>
+      
+      {/* AI Systems Panel (not the button anymore) */}
+      <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
     </div>
   );
 };
