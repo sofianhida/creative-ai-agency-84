@@ -1,3 +1,4 @@
+
 /* Reset some default styles that might be causing layout issues */
 #root {
   width: 100%;
@@ -382,3 +383,64 @@ input, textarea, select, button {
     padding-top: 3rem; /* Add extra top padding on mobile */
   }
 }
+
+/* New Animated Gradient Background */
+.animated-gradient {
+  background: linear-gradient(-45deg, #9b87f5, #b29ef5, #7E69AB, #E5DEFF);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -20;
+  opacity: 0.1;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Rotating 3D object animation */
+@keyframes rotate-3d {
+  0% {
+    transform: rotate3d(1, 1, 1, 0deg);
+  }
+  100% {
+    transform: rotate3d(1, 1, 1, 360deg);
+  }
+}
+
+.rotate-3d {
+  animation: rotate-3d 20s linear infinite;
+  transform-style: preserve-3d;
+}
+
+/* Subtle parallax effect */
+.parallax-wrapper {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.parallax-layer {
+  transform: translateZ(0);
+  transition: transform 0.2s ease-out;
+}
+
+.parallax-layer-back {
+  transform: translateZ(-10px) scale(1.5);
+}
+
+.parallax-layer-deep {
+  transform: translateZ(-20px) scale(2);
+}
+
