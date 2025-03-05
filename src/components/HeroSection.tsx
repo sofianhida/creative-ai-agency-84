@@ -5,7 +5,6 @@ import { ArrowDown, Sparkles } from 'lucide-react';
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const parallaxRef = useRef<HTMLDivElement>(null);
-  const parallaxLayersRef = useRef<HTMLDivElement[]>([]);
   
   useEffect(() => {
     setIsLoaded(true);
@@ -18,16 +17,6 @@ const HeroSection = () => {
         
         parallaxRef.current.style.transform = `translateX(${x}px) translateY(${y}px)`;
       }
-      
-      // Enhanced parallax effect for additional layers
-      parallaxLayersRef.current.forEach((layer, index) => {
-        if (layer) {
-          const depth = (index + 1) * 5;
-          const moveX = (e.clientX - window.innerWidth / 2) / depth;
-          const moveY = (e.clientY - window.innerHeight / 2) / depth;
-          layer.style.transform = `translate(${moveX}px, ${moveY}px)`;
-        }
-      });
     };
     
     document.addEventListener('mousemove', handleMouseMove);
@@ -37,27 +26,12 @@ const HeroSection = () => {
     };
   }, []);
 
-  // Function to add elements to the parallax layers ref
-  const addToParallaxRefs = (el: HTMLDivElement | null) => {
-    if (el && !parallaxLayersRef.current.includes(el)) {
-      parallaxLayersRef.current.push(el);
-    }
-  };
-
   return (
     <section id="home" className="relative overflow-hidden flex items-center min-h-[calc(100vh-4rem)] py-8 md:py-12">
-      {/* New Animated Gradient Background */}
-      <div className="animated-gradient"></div>
-      
       {/* Background Elements with enhanced effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple/5 to-background/80 -z-10"></div>
       <div className="absolute top-1/4 right-0 w-80 h-80 bg-purple/5 rounded-full filter blur-3xl -z-10 animate-pulse-light"></div>
       <div className="absolute bottom-0 left-10 w-64 h-64 bg-purple/5 rounded-full filter blur-3xl -z-10 animate-pulse-light"></div>
-      
-      {/* Enhanced parallax floating elements */}
-      <div ref={(el) => addToParallaxRefs(el)} className="absolute right-1/4 top-1/4 w-12 h-12 rounded-full border border-purple/30 parallax-layer"></div>
-      <div ref={(el) => addToParallaxRefs(el)} className="absolute left-1/4 bottom-1/3 w-16 h-16 rounded-full border-2 border-purple/20 parallax-layer"></div>
-      <div ref={(el) => addToParallaxRefs(el)} className="absolute right-1/3 bottom-1/4 w-8 h-8 rounded-full bg-purple/10 parallax-layer"></div>
       
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden -z-5">
@@ -110,7 +84,7 @@ const HeroSection = () => {
           </div>
           
           <div className={`relative mt-10 md:mt-0 ${isLoaded ? 'animate-fade-in animate-delay-200' : 'opacity-0'}`}>
-            <div className="relative mx-auto max-w-md parallax-wrapper" ref={parallaxRef}>
+            <div className="relative mx-auto max-w-md" ref={parallaxRef}>
               {/* Main image/graphic with enhanced 3D effect */}
               <div className="relative z-10 bg-gradient-to-br from-purple-light/90 to-purple/80 rounded-2xl overflow-hidden shadow-glow-lg aspect-square max-w-xs sm:max-w-sm mx-auto hover:shadow-glow-lg transition-all duration-500">
                 <img 
@@ -123,12 +97,6 @@ const HeroSection = () => {
                 <div className="absolute -top-8 -left-8 h-16 w-16 bg-white/10 rounded-full animate-float"></div>
                 <div className="absolute top-1/4 -right-5 h-10 w-10 bg-white/20 rounded-full animate-float animate-delay-200"></div>
                 <div className="absolute bottom-1/3 -left-3 h-6 w-6 bg-white/30 rounded-full animate-float animate-delay-300"></div>
-                
-                {/* New rotating 3D element */}
-                <div className="absolute bottom-8 right-8 w-12 h-12 rotate-3d">
-                  <div className="absolute inset-0 border-2 border-white/20 rounded-lg transform rotate-45"></div>
-                  <div className="absolute inset-0 border-2 border-white/10 rounded-lg transform rotate-90"></div>
-                </div>
               </div>
               
               {/* Backdrop blurs with enhanced effects */}
