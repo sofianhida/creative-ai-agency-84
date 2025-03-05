@@ -17,6 +17,7 @@ const Index = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isScrolling, setIsScrolling] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<number | null>(null);
   
   useEffect(() => {
     document.title = "WeVersAI | Best AI Solutions";
@@ -75,9 +76,16 @@ const Index = () => {
     // Detect scrolling for animation
     const handleScroll = () => {
       setIsScrolling(true);
-      clearTimeout(scrollTimeout);
-      const scrollTimeout = setTimeout(() => {
+      
+      // Clear any existing timeout
+      if (scrollTimeoutRef.current !== null) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
+      
+      // Set a new timeout
+      scrollTimeoutRef.current = window.setTimeout(() => {
         setIsScrolling(false);
+        scrollTimeoutRef.current = null;
       }, 100);
     };
     
@@ -89,6 +97,11 @@ const Index = () => {
       });
       document.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
+      
+      // Clear any existing timeout on cleanup
+      if (scrollTimeoutRef.current !== null) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
     };
   }, []);
   
