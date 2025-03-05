@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X, Lightbulb } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface NavbarProps {
   showAIAccess: boolean;
@@ -136,11 +137,11 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
             </button>
             
             <button 
-              className="md:hidden text-foreground z-50" 
+              className="md:hidden text-foreground z-50 w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all" 
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={24} className="text-purple" /> : <Menu size={24} />}
             </button>
             
             <button 
@@ -153,49 +154,76 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
         </div>
       </div>
       
-      {isMobile && (
-        <div className={`mobile-menu-container md:hidden fixed inset-0 z-40 bg-background/95 backdrop-blur-lg transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex flex-col items-center justify-center h-full">
-            <div className="flex flex-col items-center w-full py-6 gap-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="py-2 text-lg font-medium text-foreground hover:text-purple transition-colors w-40 text-center"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavLinkClick(link.href);
+      {/* New mobile menu with overlay animation and better styling */}
+      <AnimatePresence>
+        {isMobile && isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40"
+          >
+            <motion.div 
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.3, staggerChildren: 0.1, delayChildren: 0.1 }}
+              className="flex flex-col items-center justify-center h-full"
+            >
+              <div className="flex flex-col items-center w-full py-6 gap-6">
+                {navLinks.map((link, index) => (
+                  <motion.a
+                    key={link.name}
+                    href={link.href}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 20, opacity: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="py-3 text-xl font-medium text-foreground hover:text-purple transition-colors w-full text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick(link.href);
+                    }}
+                  >
+                    {link.name}
+                  </motion.a>
+                ))}
+                
+                {/* AI Systems Button in Mobile Menu */}
+                <motion.button
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 20, opacity: 0 }}
+                  transition={{ delay: navLinks.length * 0.05 }}
+                  onClick={() => {
+                    scrollToAISection();
+                    setIsMenuOpen(false);
                   }}
+                  className="py-3 text-xl font-medium text-foreground hover:text-purple transition-colors w-full text-center flex items-center justify-center gap-2"
                 >
-                  {link.name}
-                </a>
-              ))}
-              
-              {/* AI Systems Button in Mobile Menu */}
-              <button
-                onClick={() => {
-                  scrollToAISection();
-                  setIsMenuOpen(false);
-                }}
-                className="py-2 text-lg font-medium text-foreground hover:text-purple transition-colors w-40 text-center flex items-center justify-center gap-2"
-              >
-                <Lightbulb size={20} />
-                <span>AI Systems</span>
-              </button>
-              
-              <button 
-                onClick={() => {
-                  contactUs();
-                  setIsMenuOpen(false);
-                }}
-                className="btn-primary mt-4 py-2.5 w-40 text-center text-base"
-              >
-                Contact Us
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+                  <Lightbulb size={20} />
+                  <span>AI Systems</span>
+                </motion.button>
+                
+                <motion.button 
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 20, opacity: 0 }}
+                  transition={{ delay: (navLinks.length + 1) * 0.05 }}
+                  onClick={() => {
+                    contactUs();
+                    setIsMenuOpen(false);
+                  }}
+                  className="mt-4 py-3 px-8 rounded-full bg-purple text-white font-medium shadow-md hover:shadow-lg transition-all"
+                >
+                  Contact Us
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
