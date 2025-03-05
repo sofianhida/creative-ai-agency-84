@@ -59,12 +59,16 @@ const Index = () => {
       </main>
       <Footer />
       
-      {/* AI components moved to left side with fixed positioning */}
-      <div className="fixed-ai-controls left-side">
+      {/* AI components positioned on sides */}
+      <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col gap-6">
         <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
-        <AIChatbot />
-        <WhatsAppButton />
       </div>
+      
+      <div className="fixed right-6 bottom-6 z-50">
+        <AIChatbot />
+      </div>
+
+      {/* WhatsApp button is handled by its own fixed positioning */}
     </div>
   );
 };

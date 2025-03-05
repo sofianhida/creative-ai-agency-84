@@ -3,14 +3,14 @@ import { MessageSquare } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const WhatsAppButton = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.scrollY > 300) {
         setIsVisible(true);
       } else {
-        setIsVisible(false);
+        setIsVisible(true); // Always visible now
       }
     };
     
@@ -25,9 +25,9 @@ const WhatsAppButton = () => {
   return (
     <button
       onClick={openWhatsApp}
-      className={`whatsapp-button bg-green-500 text-white p-3 rounded-full shadow-glow 
-                transition-all duration-300 hover:bg-green-600 hover:scale-105 
-                ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'}`}
+      className={`whatsapp-button bg-green-500 text-white p-3 rounded-full shadow-lg 
+                transition-all duration-300 hover:bg-green-600 hover:scale-105
+                fixed left-6 bottom-24 z-50`}
       aria-label="Chat on WhatsApp"
     >
       <MessageSquare size={24} className="animate-pulse-light" />
