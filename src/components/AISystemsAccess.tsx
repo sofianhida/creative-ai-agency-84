@@ -507,17 +507,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
 
   return (
     <>
-      <button
-        onClick={toggleAIAccess}
-        className="ai-access-button bg-white text-purple border-2 border-purple hover:bg-purple/5"
-        aria-label="Access AI Systems"
-      >
-        <div className="flex flex-col items-center justify-center">
-          <Lightbulb size={36} strokeWidth={1.5} />
-          <span className="text-[10px] font-medium mt-1">AI Systems</span>
-        </div>
-      </button>
-      
       {showAIAccess && (
         <div className="ai-systems-panel glass border border-purple/30 shadow-glow-lg overflow-hidden transition-all duration-300">
           <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple to-purple-dark text-white">
