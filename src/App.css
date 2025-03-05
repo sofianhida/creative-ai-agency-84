@@ -45,10 +45,10 @@
 
 /* Improved fixed button positions with better spacing */
 .ai-chatbot-container {
-  z-index: 50;
+  z-index: 10;
   position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
+  bottom: 7rem; /* Increased from 5rem to create more space */
+  right: 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -56,8 +56,8 @@
 
 @media (max-width: 640px) {
   .ai-chatbot-container {
-    bottom: 1.5rem;
-    right: 1rem;
+    bottom: 5.5rem; /* Increased to avoid overlap */
+    right: 0.75rem;
   }
   
   .ai-chatbot-container .chatbot-button {
@@ -72,90 +72,54 @@
   }
 }
 
-/* Enhanced AI controls positioning */
+/* New fixed AI controls container for better spacing */
 .fixed-ai-controls {
   position: fixed;
-  left: 1.5rem;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 1.5rem;
+  right: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 2.5rem; /* Increased gap for more spacing between buttons */
+  gap: 2rem; /* Increased spacing between buttons even more */
   z-index: 50;
 }
 
 @media (max-width: 640px) {
   .fixed-ai-controls {
-    left: 1rem;
-    gap: 2rem; /* Increased gap for mobile as well */
+    bottom: 1rem;
+    right: 1rem;
+    gap: 1.5rem; /* Slightly reduced on mobile, but still more space */
   }
 }
 
-/* AI buttons styling improvements */
-.ai-button {
-  width: 3.5rem;
-  height: 3.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-}
-
-.ai-button:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-.ai-button:active {
-  transform: scale(0.95);
-}
-
-/* Prevent fixed elements from overlapping */
+/* Prevent fixed elements from overlapping - adjusted positioning */
 .whatsapp-button {
-  z-index: 50;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  position: fixed;
-  left: 1.5rem;
-  bottom: 24px;
+  z-index: 20;
 }
 
-/* AI systems access button positioning */
+/* AI systems access button positioning - now relative to container */
 .ai-systems-button {
-  z-index: 50;
+  z-index: 40;
 }
 
 /* AI systems panel positioning */
 .ai-systems-panel {
   position: fixed;
-  left: 5.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 40;
-  width: 320px;
-  max-width: calc(100vw - 7rem);
-  border-radius: 1rem;
+  bottom: 9rem; /* Positioned above both buttons with more spacing */
+  right: 1.5rem;
+  z-index: 30;
+  width: 400px;
+  max-width: 92vw;
+  border-radius: 0.75rem; /* Increased border radius */
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-50%) translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(-50%) translateX(0);
-  }
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 640px) {
   .ai-systems-panel {
-    left: 4.5rem;
-    width: calc(100vw - 5.5rem);
+    bottom: 8rem; /* More space on mobile too */
+    right: 1rem;
+    width: calc(100vw - 2rem);
   }
 }
 
@@ -175,7 +139,7 @@ input, textarea, select, button {
   }
 }
 
-/* Fix for navbar mobile menu issue - locking scroll */
+/* Fix for navbar mobile menu issue - more compact styling */
 .mobile-menu-container {
   height: 100vh;
   position: fixed;
@@ -185,28 +149,40 @@ input, textarea, select, button {
   z-index: 40;
   overflow-y: auto;
   overscroll-behavior: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-body.menu-open {
-  overflow: hidden;
+/* New setting to prevent mobile menu issues */
+.mobile-menu-container.translate-x-full {
+  display: none;
+}
+
+/* Ensure proper spacing between components */
+.fixed-chat-controls {
+  display: flex;
+  flex-direction: column;
   position: fixed;
-  width: 100%;
-  height: 100%;
+  right: 1rem;
+  bottom: 1rem;
+  gap: 1rem;
+  z-index: 30;
 }
 
-/* Button styling improvements */
+/* Smaller nav items for mobile */
+@media (max-width: 768px) {
+  .mobile-menu-container a {
+    margin: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* Improved button styling */
 .btn-primary {
-  background: linear-gradient(135deg, #9b87f5 0%, #7E69AB 100%);
-  @apply text-white font-medium rounded-full 
-         transition-all duration-300 shadow-md hover:shadow-lg;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
+  @apply bg-purple hover:bg-purple-dark text-white font-medium rounded-full 
+         transition-all duration-300 shadow-sm hover:shadow;
 }
 
 .btn-outline {
@@ -258,126 +234,23 @@ body.menu-open {
   background: rgba(155, 135, 245, 0.8);
 }
 
-/* Marketplace styles - improved */
-.marketplace-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
-}
-
-.marketplace-card {
-  background: white;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(155, 135, 245, 0.1);
-}
-
-.marketplace-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border-color: rgba(155, 135, 245, 0.3);
-}
-
-.marketplace-card-image {
-  height: 200px;
-  overflow: hidden;
-  position: relative;
-}
-
-.marketplace-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.marketplace-card:hover .marketplace-card-image img {
-  transform: scale(1.05);
-}
-
-.marketplace-card-content {
-  padding: 1.5rem;
-}
-
-.marketplace-card-price {
-  font-weight: bold;
-  color: #9b87f5;
-  margin-top: 0.5rem;
-}
-
-.marketplace-card-category {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  background: rgba(155, 135, 245, 0.1);
-  color: #9b87f5;
-  font-size: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-/* AI Builder Styles - improved */
-.builder-canvas {
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 1rem;
-  min-height: 400px;
-  border: 2px dashed rgba(155, 135, 245, 0.3);
-  padding: 2rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
-}
-
-.builder-canvas.active {
-  border-color: rgba(155, 135, 245, 0.8);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 6px 20px rgba(155, 135, 245, 0.1);
-}
-
-.component-palette {
+/* Vertical AI buttons spacing - updated for better separation */
+.ai-buttons-stack {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
+  flex-direction: column;
+  gap: 1.5rem; /* Increased from 1rem for better spacing */
+  z-index: 30;
 }
 
-.draggable-component {
-  padding: 0.75rem 1.25rem;
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  cursor: grab;
-  transition: all 0.2s ease;
-  border: 1px solid rgba(155, 135, 245, 0.1);
-  user-select: none;
+/* Animation for AI systems panel */
+.ai-systems-panel {
+  animation: fadeInUp 0.3s ease-out forwards;
 }
 
-.draggable-component:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-color: rgba(155, 135, 245, 0.5);
-  background: rgba(155, 135, 245, 0.03);
-}
-
-.draggable-component:active {
-  cursor: grabbing;
-  transform: translateY(0) scale(0.98);
-}
-
-.dropped-component {
-  padding: 1rem;
-  margin-bottom: 1rem;
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
-  position: relative;
-  animation: componentDrop 0.3s ease-out;
-}
-
-@keyframes componentDrop {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -385,217 +258,64 @@ body.menu-open {
   }
 }
 
-.dropped-component .controls {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  display: flex;
-  gap: 0.5rem;
+/* Make sure AI system buttons don't overlap on small screens */
+@media (max-width: 640px) {
+  .ai-buttons-stack {
+    gap: 1.25rem; /* Slightly reduced on mobile but still spacious */
+  }
 }
 
-.builder-templates {
+/* New styles for AI Systems Access panel */
+.ai-systems-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
 }
 
-.builder-template {
-  padding: 1.5rem;
-  background: white;
-  border-radius: 1rem;
-  text-align: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-  position: relative;
-  overflow: hidden;
-}
-
-.builder-template:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #9b87f5, #7E69AB);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.builder-template:hover {
-  border-color: rgba(155, 135, 245, 0.3);
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-.builder-template:hover:before {
-  opacity: 1;
-}
-
-.builder-template.active {
-  border-color: rgba(155, 135, 245, 1);
-  background: rgba(155, 135, 245, 0.03);
-}
-
-.builder-template.active:before {
-  opacity: 1;
-}
-
-.builder-template-icon {
-  width: 55px;
-  height: 55px;
-  margin: 0 auto 1rem;
+.ai-system-card {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(155, 135, 245, 0.1);
-  border-radius: 50%;
-  color: rgba(155, 135, 245, 1);
-  transition: all 0.3s ease;
-}
-
-.builder-template:hover .builder-template-icon {
-  transform: scale(1.1);
-}
-
-/* Marketplace Dashboard - Coming Soon styles */
-.dashboard-coming-soon {
-  background: linear-gradient(135deg, rgba(155, 135, 245, 0.1) 0%, rgba(126, 105, 171, 0.1) 100%);
-  border-radius: 1rem;
-  padding: 4rem 2rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.dashboard-coming-soon:before {
-  content: '';
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: rgba(155, 135, 245, 0.1);
-  top: -100px;
-  right: -100px;
-}
-
-.dashboard-coming-soon:after {
-  content: '';
-  position: absolute;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: rgba(126, 105, 171, 0.1);
-  bottom: -70px;
-  left: -70px;
-}
-
-.dashboard-coming-soon h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #9b87f5 0%, #7E69AB 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.dashboard-coming-soon p {
-  font-size: 1.125rem;
-  color: #666;
-  max-width: 600px;
-  margin: 0 auto 2rem;
-}
-
-.coming-soon-animation {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin: 2rem auto;
-}
-
-.coming-soon-animation .circle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 4px solid rgba(155, 135, 245, 0.2);
-  border-top: 4px solid #9b87f5;
-  border-radius: 50%;
-  animation: spin 1.5s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Marketplace filter styles */
-.filter-item {
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
+  align-items: flex-start;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
-  cursor: pointer;
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-  border: 1px solid transparent;
 }
 
-.filter-item:hover {
-  background: rgba(155, 135, 245, 0.1);
+.ai-system-card:hover {
+  background-color: rgba(155, 135, 245, 0.05);
+  transform: translateY(-2px);
 }
 
-.filter-item.active {
-  background: #9b87f5;
-  color: white;
-}
-
-/* New styles for the fixed AI button column */
-.ai-buttons-column {
-  position: fixed;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  z-index: 50;
-}
-
-.ai-circular-button {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+.ai-system-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(155, 135, 245, 0.1);
+  border-radius: 0.375rem;
+  margin-right: 1rem;
+  color: rgb(155, 135, 245);
 }
 
-.ai-circular-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+/* New styles for better button separation */
+.ai-access-button {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 0.75rem;
 }
 
-.ai-circular-button.purple {
-  background-color: #9b87f5;
-  color: white;
+.ai-access-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.ai-circular-button.light-purple {
-  background-color: #b29ef5;
-  border: 1px solid #9b87f5;
-  color: white;
+.ai-access-button:active {
+  transform: translateY(0);
 }
-
-.ai-circular-button.green {
-  background-color: #4CAF50;
-  color: white;
-}
-
-/* ... keep existing code */
