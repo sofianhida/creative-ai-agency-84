@@ -77,22 +77,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
-  // New state for file upload in document analyzer
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  // New state for code language selector in coding assistant
-  const [codeLanguage, setCodeLanguage] = useState('javascript');
-  // New state for language selector in translation
-  const [sourceLang, setSourceLang] = useState('auto');
-  const [targetLang, setTargetLang] = useState('english');
-  // New state for summary length in text summarization
-  const [summaryLength, setSummaryLength] = useState('medium');
-  // New state for content type in content generator
-  const [contentType, setContentType] = useState('article');
-  // New state for visualization type in data analytics
-  const [visualizationType, setVisualizationType] = useState('chart');
-  // New state for education format
-  const [educationFormat, setEducationFormat] = useState('lesson');
 
   const aiSystems = [
     {
@@ -143,30 +127,13 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     if (showAIAccess && selectedSystem) {
       // Close the system panel first, but keep the main panel open
       setSelectedSystem(null);
-      resetSystemStates();
     } else {
       setShowAIAccess(!showAIAccess);
     }
   };
-  
-  // Reset all system-specific states when changing systems
-  const resetSystemStates = () => {
-    setUploadedFile(null);
-    setCodeLanguage('javascript');
-    setSourceLang('auto');
-    setTargetLang('english');
-    setSummaryLength('medium');
-    setContentType('article');
-    setVisualizationType('chart');
-    setEducationFormat('lesson');
-    setMessages([]);
-    setInput('');
-  };
 
   const selectSystem = (systemId: string) => {
     setSelectedSystem(systemId);
-    resetSystemStates();
-    
     // Initialize messages with system context
     const systemContext = SYSTEM_CONTEXTS[systemId as keyof typeof SYSTEM_CONTEXTS];
     const systemName = getSystemName(systemId);
@@ -187,7 +154,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     return system ? system.name : 'AI System';
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
@@ -197,50 +164,11 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       sendMessage();
     }
   };
-  
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setUploadedFile(e.target.files[0]);
-      toast({
-        title: "File Uploaded",
-        description: `${e.target.files[0].name} is ready for analysis`,
-      });
-    }
-  };
 
   const sendMessage = async () => {
-    if ((!input.trim() && !uploadedFile) || !selectedSystem) return;
+    if (!input.trim() || !selectedSystem) return;
     
-    let messageContent = input;
-    
-    // Prepare different prompts based on the selected system
-    switch (selectedSystem) {
-      case 'text-summarization':
-        messageContent = `Please provide a ${summaryLength} length summary of the following text: ${input}`;
-        break;
-      case 'translation':
-        messageContent = `Translate the following text from ${sourceLang} to ${targetLang}: ${input}`;
-        break;
-      case 'content-generator':
-        messageContent = `Generate a ${contentType} about: ${input}`;
-        break;
-      case 'data-analytics':
-        messageContent = `Analyze this data and provide insights with ${visualizationType} visualization recommendations: ${input}`;
-        break;
-      case 'document-analyzer':
-        messageContent = uploadedFile 
-          ? `I've uploaded a file named ${uploadedFile.name}. Please analyze it and ${input}`
-          : `Analyze this text as if it were a document: ${input}`;
-        break;
-      case 'coding-assistant':
-        messageContent = `Using ${codeLanguage}, ${input}`;
-        break;
-      case 'education':
-        messageContent = `Create a ${educationFormat} about: ${input}`;
-        break;
-    }
-    
-    const userMessage = { role: 'user' as const, content: messageContent };
+    const userMessage = { role: 'user' as const, content: input };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
@@ -280,7 +208,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       console.log("Sending message to Gemini chat API");
       
       // Send the user message and get the response
-      const result = await chat.sendMessage(messageContent);
+      const result = await chat.sendMessage(input);
       const response = await result.response;
       let assistantResponse = response.text();
       
@@ -294,11 +222,6 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
         ...prev, 
         { role: 'assistant', content: assistantResponse }
       ]);
-      
-      // Clear file upload after sending
-      if (selectedSystem === 'document-analyzer' && uploadedFile) {
-        setUploadedFile(null);
-      }
     } catch (error) {
       console.error('Error sending message to Gemini:', error);
       toast({
@@ -317,212 +240,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
 
   const backToSystems = () => {
     setSelectedSystem(null);
-    resetSystemStates();
-  };
-  
-  // Render specialized controls based on the selected system
-  const renderSystemSpecificControls = () => {
-    if (!selectedSystem) return null;
-    
-    switch (selectedSystem) {
-      case 'document-analyzer':
-        return (
-          <div className="mb-2 p-2 border-t">
-            <p className="text-xs text-muted-foreground mb-2">Upload a document for analysis</p>
-            <input 
-              type="file" 
-              accept=".pdf,.doc,.docx,.txt,.csv,.xlsx"
-              onChange={handleFileUpload}
-              className="w-full text-xs"
-            />
-            {uploadedFile && (
-              <div className="mt-2 text-xs bg-muted p-1 rounded flex justify-between items-center">
-                <span>{uploadedFile.name}</span>
-                <button 
-                  onClick={() => setUploadedFile(null)}
-                  className="text-muted-foreground hover:text-destructive"
-                >
-                  <X size={14} />
-                </button>
-              </div>
-            )}
-          </div>
-        );
-        
-      case 'coding-assistant':
-        return (
-          <div className="mb-2 p-2 border-t">
-            <p className="text-xs text-muted-foreground mb-2">Select programming language</p>
-            <select
-              value={codeLanguage}
-              onChange={(e) => setCodeLanguage(e.target.value)}
-              className="w-full p-1 text-xs border rounded"
-            >
-              <option value="javascript">JavaScript</option>
-              <option value="python">Python</option>
-              <option value="java">Java</option>
-              <option value="csharp">C#</option>
-              <option value="cpp">C++</option>
-              <option value="php">PHP</option>
-              <option value="ruby">Ruby</option>
-              <option value="go">Go</option>
-              <option value="rust">Rust</option>
-              <option value="swift">Swift</option>
-              <option value="kotlin">Kotlin</option>
-              <option value="typescript">TypeScript</option>
-              <option value="sql">SQL</option>
-              <option value="html">HTML/CSS</option>
-            </select>
-          </div>
-        );
-        
-      case 'translation':
-        return (
-          <div className="mb-2 p-2 border-t">
-            <div className="flex justify-between gap-2">
-              <div className="flex-1">
-                <p className="text-xs text-muted-foreground mb-1">Source Language</p>
-                <select
-                  value={sourceLang}
-                  onChange={(e) => setSourceLang(e.target.value)}
-                  className="w-full p-1 text-xs border rounded"
-                >
-                  <option value="auto">Auto-detect</option>
-                  <option value="english">English</option>
-                  <option value="spanish">Spanish</option>
-                  <option value="french">French</option>
-                  <option value="german">German</option>
-                  <option value="italian">Italian</option>
-                  <option value="portuguese">Portuguese</option>
-                  <option value="russian">Russian</option>
-                  <option value="japanese">Japanese</option>
-                  <option value="korean">Korean</option>
-                  <option value="chinese">Chinese</option>
-                  <option value="arabic">Arabic</option>
-                  <option value="hindi">Hindi</option>
-                  <option value="indonesian">Indonesian</option>
-                </select>
-              </div>
-              
-              <div className="flex-1">
-                <p className="text-xs text-muted-foreground mb-1">Target Language</p>
-                <select
-                  value={targetLang}
-                  onChange={(e) => setTargetLang(e.target.value)}
-                  className="w-full p-1 text-xs border rounded"
-                >
-                  <option value="english">English</option>
-                  <option value="spanish">Spanish</option>
-                  <option value="french">French</option>
-                  <option value="german">German</option>
-                  <option value="italian">Italian</option>
-                  <option value="portuguese">Portuguese</option>
-                  <option value="russian">Russian</option>
-                  <option value="japanese">Japanese</option>
-                  <option value="korean">Korean</option>
-                  <option value="chinese">Chinese</option>
-                  <option value="arabic">Arabic</option>
-                  <option value="hindi">Hindi</option>
-                  <option value="indonesian">Indonesian</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        );
-        
-      case 'text-summarization':
-        return (
-          <div className="mb-2 p-2 border-t">
-            <p className="text-xs text-muted-foreground mb-2">Summary Length</p>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setSummaryLength('short')}
-                className={`text-xs px-2 py-1 rounded flex-1 ${summaryLength === 'short' 
-                  ? 'bg-purple text-white' 
-                  : 'bg-muted hover:bg-muted/80'}`}
-              >
-                Short
-              </button>
-              <button
-                onClick={() => setSummaryLength('medium')}
-                className={`text-xs px-2 py-1 rounded flex-1 ${summaryLength === 'medium' 
-                  ? 'bg-purple text-white' 
-                  : 'bg-muted hover:bg-muted/80'}`}
-              >
-                Medium
-              </button>
-              <button
-                onClick={() => setSummaryLength('long')}
-                className={`text-xs px-2 py-1 rounded flex-1 ${summaryLength === 'long' 
-                  ? 'bg-purple text-white' 
-                  : 'bg-muted hover:bg-muted/80'}`}
-              >
-                Long
-              </button>
-            </div>
-          </div>
-        );
-        
-      case 'content-generator':
-        return (
-          <div className="mb-2 p-2 border-t">
-            <p className="text-xs text-muted-foreground mb-2">Content Type</p>
-            <select
-              value={contentType}
-              onChange={(e) => setContentType(e.target.value)}
-              className="w-full p-1 text-xs border rounded"
-            >
-              <option value="article">Article</option>
-              <option value="ad copy">Ad Copy</option>
-              <option value="social media post">Social Media Post</option>
-              <option value="email">Email</option>
-              <option value="product description">Product Description</option>
-              <option value="blog post">Blog Post</option>
-              <option value="press release">Press Release</option>
-            </select>
-          </div>
-        );
-        
-      case 'data-analytics':
-        return (
-          <div className="mb-2 p-2 border-t">
-            <p className="text-xs text-muted-foreground mb-2">Visualization Type</p>
-            <select
-              value={visualizationType}
-              onChange={(e) => setVisualizationType(e.target.value)}
-              className="w-full p-1 text-xs border rounded"
-            >
-              <option value="chart">Chart</option>
-              <option value="table">Table</option>
-              <option value="dashboard">Dashboard</option>
-              <option value="report">Report</option>
-              <option value="infographic">Infographic</option>
-            </select>
-          </div>
-        );
-        
-      case 'education':
-        return (
-          <div className="mb-2 p-2 border-t">
-            <p className="text-xs text-muted-foreground mb-2">Education Format</p>
-            <select
-              value={educationFormat}
-              onChange={(e) => setEducationFormat(e.target.value)}
-              className="w-full p-1 text-xs border rounded"
-            >
-              <option value="lesson">Lesson Plan</option>
-              <option value="quiz">Quiz</option>
-              <option value="flashcards">Flashcards</option>
-              <option value="study guide">Study Guide</option>
-              <option value="presentation">Presentation</option>
-              <option value="interactive activity">Interactive Activity</option>
-            </select>
-          </div>
-        );
-        
-      default:
-        return null;
-    }
+    setMessages([]);
   };
 
   return (
@@ -585,7 +303,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
               </div>
             </div>
           ) : (
-            // AI System Interaction with specialized interfaces
+            // AI System Interaction
             <div className="flex flex-col h-[60vh]">
               {/* Messages Area */}
               <div className="flex-1 overflow-y-auto p-3">
@@ -622,35 +340,22 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
                 )}
               </div>
               
-              {/* System-specific controls */}
-              {renderSystemSpecificControls()}
-              
               {/* Input Area */}
               <div className="p-2 border-t">
                 <div className="flex items-center gap-2">
-                  {selectedSystem === 'text-summarization' || selectedSystem === 'content-generator' ? (
-                    <textarea 
-                      value={input}
-                      onChange={handleInputChange}
-                      placeholder={`Ask the ${getSystemName(selectedSystem)} AI...`}
-                      className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple text-sm resize-y min-h-[80px]"
-                      disabled={isLoading}
-                    />
-                  ) : (
-                    <input 
-                      type="text" 
-                      value={input}
-                      onChange={handleInputChange}
-                      onKeyDown={handleKeyDown}
-                      placeholder={`Ask the ${getSystemName(selectedSystem)} AI...`}
-                      className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple text-sm"
-                      disabled={isLoading}
-                    />
-                  )}
+                  <input 
+                    type="text" 
+                    value={input}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder={`Ask the ${getSystemName(selectedSystem)} AI...`}
+                    className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple text-sm"
+                    disabled={isLoading}
+                  />
                   <button 
                     onClick={sendMessage}
-                    disabled={isLoading || (!input.trim() && !uploadedFile)}
-                    className={`p-2 rounded-md bg-purple text-white ${isLoading || (!input.trim() && !uploadedFile) ? 'opacity-50' : 'hover:bg-purple-dark'}`}
+                    disabled={isLoading || !input.trim()}
+                    className={`p-2 rounded-md bg-purple text-white ${isLoading || !input.trim() ? 'opacity-50' : 'hover:bg-purple-dark'}`}
                   >
                     <Send size={16} />
                   </button>
