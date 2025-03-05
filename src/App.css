@@ -80,14 +80,14 @@
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2.5rem; /* Increased gap for more spacing between buttons */
   z-index: 50;
 }
 
 @media (max-width: 640px) {
   .fixed-ai-controls {
     left: 1rem;
-    gap: 1.25rem;
+    gap: 2rem; /* Increased gap for mobile as well */
   }
 }
 
@@ -116,6 +116,9 @@
 .whatsapp-button {
   z-index: 50;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  left: 1.5rem;
+  bottom: 24px;
 }
 
 /* AI systems access button positioning */
@@ -548,6 +551,50 @@ body.menu-open {
 
 .filter-item.active {
   background: #9b87f5;
+  color: white;
+}
+
+/* New styles for the fixed AI button column */
+.ai-buttons-column {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 50;
+}
+
+.ai-circular-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.ai-circular-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ai-circular-button.purple {
+  background-color: #9b87f5;
+  color: white;
+}
+
+.ai-circular-button.light-purple {
+  background-color: #b29ef5;
+  border: 1px solid #9b87f5;
+  color: white;
+}
+
+.ai-circular-button.green {
+  background-color: #4CAF50;
   color: white;
 }
 

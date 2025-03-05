@@ -59,8 +59,8 @@ const Index = () => {
       </main>
       <Footer />
       
-      {/* AI components positioned on sides */}
-      <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col gap-6">
+      {/* AI components positioned on sides with better spacing */}
+      <div className="ai-buttons-column">
         <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
       </div>
       

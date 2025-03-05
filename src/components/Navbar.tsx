@@ -77,12 +77,13 @@ const Navbar = () => {
     }
   };
 
+  // Active link logic
   const isActive = (href: string) => {
     if (href === '/') {
-      return location.pathname === '/';
+      return location.pathname === '/' && !location.hash;
     }
     if (href.startsWith('/#')) {
-      return location.pathname === '/' && window.location.hash === href.substring(1);
+      return location.pathname === '/' && location.hash === href.substring(1);
     }
     return location.pathname === href;
   };

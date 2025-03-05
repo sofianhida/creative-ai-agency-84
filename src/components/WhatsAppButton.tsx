@@ -25,9 +25,7 @@ const WhatsAppButton = () => {
   return (
     <button
       onClick={openWhatsApp}
-      className={`whatsapp-button bg-green-500 text-white p-3 rounded-full shadow-lg 
-                transition-all duration-300 hover:bg-green-600 hover:scale-105
-                fixed left-6 bottom-24 z-50`}
+      className="ai-circular-button green fixed left-6 bottom-6 z-50"
       aria-label="Chat on WhatsApp"
     >
       <MessageSquare size={24} className="animate-pulse-light" />
