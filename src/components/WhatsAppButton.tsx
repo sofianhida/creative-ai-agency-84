@@ -25,9 +25,9 @@ const WhatsAppButton = () => {
   return (
     <button
       onClick={openWhatsApp}
-      className={`fixed bottom-6 right-6 z-40 bg-green-500 text-white p-3 rounded-full shadow-glow 
+      className={`whatsapp-button bg-green-500 text-white p-3 rounded-full shadow-glow 
                 transition-all duration-300 hover:bg-green-600 hover:scale-105 
-                ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
+                ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'}`}
       aria-label="Chat on WhatsApp"
     >
       <MessageSquare size={24} className="animate-pulse-light" />

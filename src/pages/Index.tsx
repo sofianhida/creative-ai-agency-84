@@ -59,8 +59,8 @@ const Index = () => {
       </main>
       <Footer />
       
-      {/* AI components with fixed positioning */}
-      <div className="fixed-ai-controls">
+      {/* AI components moved to left side with fixed positioning */}
+      <div className="fixed-ai-controls left-side">
         <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
         <AIChatbot />
         <WhatsAppButton />
