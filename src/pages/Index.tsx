@@ -59,8 +59,8 @@ const Index = () => {
       </main>
       <Footer />
       
-      {/* Let's move the WhatsApp and AISystemsAccess to be grouped with AIChatbot */}
-      {/* We'll rely on the fixed positioning in CSS instead */}
+      {/* Make sure the AI components are always rendered */}
+      <AIChatbot />
     </div>
   );
 };
