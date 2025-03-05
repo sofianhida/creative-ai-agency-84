@@ -56,6 +56,11 @@ const Index = () => {
         <AboutSection />
         <TestimonialsSection />
         <ContactSection />
+        
+        {/* AI Systems Section with ID for scrolling */}
+        <section id="ai-systems-section" className="py-8">
+          <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
+        </section>
       </main>
       <Footer />
       
@@ -64,9 +69,6 @@ const Index = () => {
         <AIChatbot />
         <WhatsAppButton />
       </div>
-      
-      {/* AI Systems Panel (not the button anymore) */}
-      <AISystemsAccess showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
     </div>
   );
 };

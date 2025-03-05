@@ -63,8 +63,20 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
     window.open(`https://wa.me/6285183978011`, '_blank');
   };
   
-  const toggleAIAccess = () => {
-    setShowAIAccess(!showAIAccess);
+  const scrollToAISection = () => {
+    // Show the AI access panel
+    setShowAIAccess(true);
+    
+    // Close the mobile menu if it's open
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+    
+    // Scroll to the AI Systems section at the bottom
+    const aiSystemsSection = document.getElementById('ai-systems-section');
+    if (aiSystemsSection) {
+      aiSystemsSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const navLinks = [
@@ -115,7 +127,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
           <div className="flex items-center gap-4">
             {/* AI Systems Button in Navbar */}
             <button
-              onClick={toggleAIAccess}
+              onClick={scrollToAISection}
               className="hidden md:flex items-center gap-2 px-4 py-2 text-purple border-2 border-purple rounded-full bg-white hover:bg-purple/5 transition-all"
               aria-label="Access AI Systems"
             >
@@ -162,7 +174,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
               {/* AI Systems Button in Mobile Menu */}
               <button
                 onClick={() => {
-                  toggleAIAccess();
+                  scrollToAISection();
                   setIsMenuOpen(false);
                 }}
                 className="py-2 text-lg font-medium text-foreground hover:text-purple transition-colors w-40 text-center flex items-center justify-center gap-2"
