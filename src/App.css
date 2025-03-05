@@ -1,3 +1,4 @@
+
 /* Reset some default styles that might be causing layout issues */
 #root {
   width: 100%;
@@ -78,7 +79,7 @@
   right: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem; /* Increased spacing between buttons */
+  gap: 2.5rem; /* Increased spacing between buttons */
   z-index: 50;
 }
 
@@ -86,7 +87,7 @@
   .fixed-ai-controls {
     bottom: 1rem;
     right: 1rem;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 }
 
@@ -100,23 +101,23 @@
   z-index: 40;
 }
 
-/* AI systems panel positioning */
+/* Enhanced AI systems panel with modern styling */
 .ai-systems-panel {
   position: fixed;
-  bottom: 9rem;
+  bottom: 10rem;
   right: 1.5rem;
   z-index: 30;
-  width: 400px;
+  width: 450px;
   max-width: 92vw;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15), 0 4px 10px -5px rgba(155, 135, 245, 0.2);
   transition: all 0.3s ease;
 }
 
 @media (max-width: 640px) {
   .ai-systems-panel {
-    bottom: 8rem;
+    bottom: 9rem;
     right: 1rem;
     width: calc(100vw - 2rem);
   }
@@ -191,7 +192,7 @@ input, textarea, select, button {
 
 /* Modern glass effect */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -297,33 +298,45 @@ input, textarea, select, button {
   color: rgb(155, 135, 245);
 }
 
-/* New styles for better button separation */
+/* Enhanced AI access button with better visibility */
 .ai-access-button {
-  width: 4.5rem; /* Increased from 3.5rem */
-  height: 4.5rem; /* Increased from 3.5rem */
+  width: 5.5rem; /* Increased for better visibility */
+  height: 5.5rem; /* Increased for better visibility */
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+  border-radius: 1rem; /* Changed to rounded square for modern look */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(155, 135, 245, 0.3); /* Enhanced shadow */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-bottom: 0.75rem;
-  border: 2px solid #9b87f5; /* Added border for more visibility */
+  border: 2px solid #9b87f5; /* Border for more visibility */
+  background: linear-gradient(135deg, #fff 0%, #f8f7ff 100%); /* Subtle gradient */
 }
 
 .ai-access-button:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(155, 135, 245, 0.4); /* Enhanced hover shadow */
+  border-color: #8a70f3; /* Darker border on hover */
 }
 
 .ai-access-button:active {
   transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(155, 135, 245, 0.3);
+}
+
+/* Shadow glow effect */
+.shadow-glow-lg {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+              0 8px 10px -6px rgba(0, 0, 0, 0.1),
+              0 0 0 1px rgba(155, 135, 245, 0.1),
+              0 0 15px 2px rgba(155, 135, 245, 0.15);
 }
 
 /* Responsive adjustment for mobile */
 @media (max-width: 640px) {
   .ai-access-button {
-    width: 4rem;
-    height: 4rem;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 0.875rem;
   }
 }

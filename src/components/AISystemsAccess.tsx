@@ -526,82 +526,88 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
 
   return (
     <>
-      {/* Enhanced AI Access Button */}
+      {/* Enhanced AI Access Button with improved design */}
       <button
         onClick={toggleAIAccess}
         className="ai-access-button bg-white text-purple border-2 border-purple hover:bg-purple/5"
         aria-label="Access AI Systems"
       >
-        <Lightbulb size={32} />
+        <div className="flex flex-col items-center justify-center">
+          <Lightbulb size={36} strokeWidth={1.5} />
+          <span className="text-[10px] font-medium mt-1">AI Systems</span>
+        </div>
       </button>
       
-      {/* AI Systems Panel */}
+      {/* Enhanced AI Systems Panel with improved styling */}
       {showAIAccess && (
-        <div className="ai-systems-panel bg-white rounded-lg shadow-glow-lg border border-gray-200 overflow-hidden transition-all duration-300">
-          <div className="flex items-center justify-between p-3 bg-purple text-white">
+        <div className="ai-systems-panel glass border border-purple/30 shadow-glow-lg overflow-hidden transition-all duration-300">
+          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple to-purple-dark text-white">
             <div className="flex items-center gap-2">
               {selectedSystem ? (
                 <>
                   <button 
                     onClick={backToSystems}
-                    className="p-1 hover:bg-white/10 rounded"
+                    className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
                   >
                     <X size={18} />
                   </button>
                   <span className="font-medium">{getSystemName(selectedSystem)}</span>
                 </>
               ) : (
-                <span className="font-medium">AI Systems</span>
+                <div className="flex items-center gap-2">
+                  <Lightbulb size={20} />
+                  <span className="font-medium text-lg">WeVersAI Systems</span>
+                </div>
               )}
             </div>
             <button 
               onClick={toggleAIAccess}
-              className="p-1 hover:bg-white/10 rounded"
+              className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
             >
               <X size={18} />
             </button>
           </div>
           
           {!selectedSystem ? (
-            // AI Systems Selection
-            <div className="p-3 max-h-[60vh] overflow-y-auto">
+            // Enhanced AI Systems Selection Grid
+            <div className="p-4 max-h-[70vh] overflow-y-auto bg-gradient-to-b from-white to-gray-50">
               <div className="grid grid-cols-1 gap-3">
                 {aiSystems.map((system) => (
                   <button
                     key={system.id}
                     onClick={() => selectSystem(system.id)}
-                    className="flex items-start gap-3 p-3 rounded-lg text-left hover:bg-purple/5 transition-colors"
+                    className="flex items-start gap-3 p-3.5 rounded-xl text-left hover:bg-purple/5 transition-colors border border-gray-100 hover:border-purple/20 hover:shadow-sm bg-white"
                   >
-                    <div className="bg-purple/10 text-purple rounded-md p-2 flex-shrink-0">
+                    <div className="bg-purple/10 text-purple rounded-lg p-2.5 flex-shrink-0">
                       {system.icon}
                     </div>
                     <div>
-                      <h3 className="font-medium">{system.name}</h3>
-                      <p className="text-sm text-foreground/70 mt-1">{system.description}</p>
+                      <h3 className="font-medium text-gray-800">{system.name}</h3>
+                      <p className="text-sm text-gray-600 mt-1">{system.description}</p>
                     </div>
                   </button>
                 ))}
               </div>
             </div>
           ) : (
-            // AI System Interaction with specialized interfaces
-            <div className="flex flex-col h-[60vh]">
-              {/* Messages Area */}
-              <div className="flex-1 overflow-y-auto p-3">
+            // Enhanced AI System Interaction UI
+            <div className="flex flex-col h-[70vh] bg-gradient-to-b from-white to-gray-50">
+              {/* Messages Area with improved styling */}
+              <div className="flex-1 overflow-y-auto p-4">
                 {messages.filter(msg => msg.role !== 'system').map((message, index) => (
                   <div 
                     key={index}
-                    className={`mb-3 ${
+                    className={`mb-4 ${
                       message.role === 'assistant' 
                         ? 'flex justify-start' 
                         : 'flex justify-end'
                     }`}
                   >
                     <div 
-                      className={`max-w-[85%] p-2.5 rounded-lg ${
+                      className={`max-w-[85%] p-3 rounded-xl ${
                         message.role === 'assistant' 
-                          ? 'bg-muted text-foreground' 
-                          : 'bg-purple text-white'
+                          ? 'bg-gray-100 text-gray-800 shadow-sm' 
+                          : 'bg-purple text-white shadow-sm'
                       }`}
                     >
                       <p className="whitespace-pre-wrap text-sm">{message.content}</p>
@@ -609,30 +615,30 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
                   </div>
                 ))}
                 {isLoading && (
-                  <div className="flex justify-start mb-3">
-                    <div className="max-w-[85%] p-2.5 rounded-lg bg-muted text-foreground">
+                  <div className="flex justify-start mb-4">
+                    <div className="max-w-[85%] p-3 rounded-xl bg-gray-100 text-gray-800 shadow-sm">
                       <div className="flex space-x-2">
-                        <div className="h-2 w-2 rounded-full bg-purple/50 animate-pulse"></div>
-                        <div className="h-2 w-2 rounded-full bg-purple/50 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                        <div className="h-2 w-2 rounded-full bg-purple/50 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                        <div className="h-2.5 w-2.5 rounded-full bg-purple/50 animate-pulse"></div>
+                        <div className="h-2.5 w-2.5 rounded-full bg-purple/50 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="h-2.5 w-2.5 rounded-full bg-purple/50 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
               
-              {/* System-specific controls */}
+              {/* System-specific controls with improved styling */}
               {renderSystemSpecificControls()}
               
-              {/* Input Area */}
-              <div className="p-2 border-t">
+              {/* Enhanced Input Area */}
+              <div className="p-3 border-t border-gray-200">
                 <div className="flex items-center gap-2">
                   {selectedSystem === 'text-summarization' || selectedSystem === 'content-generator' ? (
                     <textarea 
                       value={input}
                       onChange={handleInputChange}
                       placeholder={`Ask the ${getSystemName(selectedSystem)} AI...`}
-                      className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple text-sm resize-y min-h-[80px]"
+                      className="flex-1 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple/30 text-sm resize-y min-h-[80px] shadow-sm"
                       disabled={isLoading}
                     />
                   ) : (
@@ -642,16 +648,16 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
                       onChange={handleInputChange}
                       onKeyDown={handleKeyDown}
                       placeholder={`Ask the ${getSystemName(selectedSystem)} AI...`}
-                      className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple text-sm"
+                      className="flex-1 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple/30 text-sm shadow-sm"
                       disabled={isLoading}
                     />
                   )}
                   <button 
                     onClick={sendMessage}
                     disabled={isLoading || (!input.trim() && !uploadedFile)}
-                    className={`p-2 rounded-md bg-purple text-white ${isLoading || (!input.trim() && !uploadedFile) ? 'opacity-50' : 'hover:bg-purple-dark'}`}
+                    className={`p-3 rounded-xl bg-purple text-white ${isLoading || (!input.trim() && !uploadedFile) ? 'opacity-50' : 'hover:bg-purple-dark shadow-sm'}`}
                   >
-                    <Send size={16} />
+                    <Send size={18} />
                   </button>
                 </div>
               </div>
