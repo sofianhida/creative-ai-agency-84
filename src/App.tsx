@@ -7,7 +7,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import AIChatbot from "./components/AIChatbot";
+import AIMarketplace from "./pages/AIMarketplace";
+import AIBuilder from "./pages/AIBuilder";
+import MarketDashboard from "./components/MarketDashboard";
 
 const queryClient = new QueryClient();
 
@@ -36,9 +38,11 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/marketplace" element={<AIMarketplace />} />
+            <Route path="/builder" element={<AIBuilder />} />
+            <Route path="/dashboard" element={<MarketDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <AIChatbot />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
