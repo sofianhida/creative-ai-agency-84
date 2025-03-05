@@ -40,17 +40,41 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Enhanced body lock effect that prevents scrolling but maintains scroll position
   useEffect(() => {
+    if (!isMobile) return;
+    
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      // Store the current scroll position
+      const scrollY = window.scrollY;
+      
+      // Apply fixed positioning to body with the current scroll position
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflowY = 'hidden';
     } else {
-      document.body.style.overflow = '';
+      // Get the scroll position from the body's top property
+      const scrollY = document.body.style.top ? parseInt(document.body.style.top || '0') * -1 : 0;
+      
+      // Reset body styling
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflowY = '';
+      
+      // Restore scroll position
+      window.scrollTo(0, scrollY);
     }
     
     return () => {
-      document.body.style.overflow = '';
+      // Clean up body styles when component unmounts
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflowY = '';
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isMobile]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -154,7 +178,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
         </div>
       </div>
       
-      {/* New mobile menu with overlay animation and better styling */}
+      {/* Mobile menu with enhanced positioning to prevent body scroll */}
       <AnimatePresence>
         {isMobile && isMenuOpen && (
           <motion.div 
@@ -162,16 +186,16 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40"
+            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 overflow-hidden"
           >
             <motion.div 
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.3, staggerChildren: 0.1, delayChildren: 0.1 }}
-              className="flex flex-col items-center justify-center h-full"
+              className="flex flex-col items-center justify-center h-full max-h-screen overflow-hidden"
             >
-              <div className="flex flex-col items-center w-full py-6 gap-6">
+              <div className="flex flex-col items-center w-full py-6 gap-6 overflow-y-auto no-scrollbar">
                 {navLinks.map((link, index) => (
                   <motion.a
                     key={link.name}
