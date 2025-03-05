@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect } from 'react';
-import { Bot, Code, MessageSquare, Layers, Plus, Trash2, Settings, Save, Play, Zap, Download, PanelLeft, Bot as BotIcon, GraduationCap, Brain, MessageCircle, MessagesSquare, PencilRuler, BookOpen, Sparkles } from 'lucide-react';
+import { Bot, Code, MessageSquare, Layers, Plus, Trash2, Settings, Save, Play, Zap, Download, PanelLeft, Bot as BotIcon, GraduationCap, Brain, MessageCircle, MessagesSquare, PencilRuler, BookOpen, Sparkles, X } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
