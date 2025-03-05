@@ -10,7 +10,6 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import AISystemsAccess from '@/components/AISystemsAccess';
 import AIChatbot from '@/components/AIChatbot';
-import BackToTop from '@/components/BackToTop';
 import { Sparkles, ZapIcon, StarIcon } from 'lucide-react';
 
 const Index = () => {
@@ -198,9 +197,6 @@ const Index = () => {
         <AIChatbot />
         <WhatsAppButton />
       </div>
-      
-      {/* Back to Top Button */}
-      <BackToTop />
     </div>
   );
 };

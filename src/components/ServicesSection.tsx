@@ -1,6 +1,6 @@
 
 import { 
-  BrainCircuit, Bot, LineChart, Database, Search, Globe, Code, Lightbulb, ArrowRight 
+  BrainCircuit, Bot, LineChart, Database, Search, Globe, Code, Lightbulb 
 } from 'lucide-react';
 import { useState } from 'react';
 

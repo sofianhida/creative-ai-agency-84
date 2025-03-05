@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AIChatbot from "./components/AIChatbot";
-import ParticleBackground from "./components/ParticleBackground";
 
 const queryClient = new QueryClient();
 
@@ -35,7 +34,6 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ParticleBackground />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="*" element={<NotFound />} />
