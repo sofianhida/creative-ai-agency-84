@@ -368,3 +368,17 @@ input, textarea, select, button {
 .card-3d:hover {
   transform: rotateX(5deg) rotateY(5deg);
 }
+
+/* Enhanced AI Systems section for better mobile visibility */
+.ai-dashboard-section {
+  scroll-margin-top: 5rem; /* Ensures section isn't hidden behind fixed header when scrolled to */
+  min-height: 60vh; /* Ensures the section has enough height to be visible */
+  padding-bottom: 8rem; /* Extra padding to ensure content isn't hidden by fixed elements */
+}
+
+@media (max-width: 768px) {
+  .ai-dashboard-section {
+    scroll-margin-top: 4rem;
+    padding-top: 3rem; /* Add extra top padding on mobile */
+  }
+}

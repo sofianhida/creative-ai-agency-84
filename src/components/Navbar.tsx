@@ -97,11 +97,22 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
       setIsMenuOpen(false);
     }
     
-    // Scroll to the AI Systems section at the bottom
-    const aiSystemsSection = document.getElementById('ai-systems-section');
-    if (aiSystemsSection) {
-      aiSystemsSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Add a small delay before scrolling when in mobile to ensure menu closing animation completes
+    setTimeout(() => {
+      // Scroll to the AI Systems section at the bottom
+      const aiSystemsSection = document.getElementById('ai-systems-section');
+      if (aiSystemsSection) {
+        aiSystemsSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Force focus on the section for accessibility
+        aiSystemsSection.focus({ preventScroll: false });
+        
+        // Log for debugging
+        console.log('Scrolling to AI Systems section');
+      } else {
+        console.error('AI Systems section not found');
+      }
+    }, isMobile ? 300 : 0); // Add delay only on mobile
   };
 
   const navLinks = [
@@ -114,7 +125,11 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
 
   const handleNavLinkClick = (href: string) => {
     setIsMenuOpen(false);
-    window.location.href = href;
+    
+    // Add small delay for mobile navigation to ensure menu closes before scrolling
+    setTimeout(() => {
+      window.location.href = href;
+    }, isMobile ? 300 : 0);
   };
 
   return (
@@ -186,7 +201,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 overflow-hidden"
+            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 overflow-hidden mobile-menu-container"
           >
             <motion.div 
               initial={{ y: -20, opacity: 0 }}
@@ -214,17 +229,14 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
                   </motion.a>
                 ))}
                 
-                {/* AI Systems Button in Mobile Menu */}
+                {/* AI Systems Button in Mobile Menu - Modified for better functionality */}
                 <motion.button
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: 20, opacity: 0 }}
                   transition={{ delay: navLinks.length * 0.05 }}
-                  onClick={() => {
-                    scrollToAISection();
-                    setIsMenuOpen(false);
-                  }}
-                  className="py-3 text-xl font-medium text-foreground hover:text-purple transition-colors w-full text-center flex items-center justify-center gap-2"
+                  onClick={scrollToAISection}
+                  className="py-3 text-xl font-medium text-purple hover:text-purple/80 transition-colors w-full text-center flex items-center justify-center gap-2"
                 >
                   <Lightbulb size={20} />
                   <span>AI Systems</span>

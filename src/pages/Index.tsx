@@ -17,6 +17,7 @@ const Index = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isScrolling, setIsScrolling] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
+  const aiSystemsSectionRef = useRef<HTMLElement>(null);
   const scrollTimeoutRef = useRef<number | null>(null);
   
   useEffect(() => {
@@ -128,7 +129,12 @@ const Index = () => {
         <ContactSection />
         
         {/* Enhanced AI Systems Section with 3D effect and floating elements */}
-        <section id="ai-systems-section" className="ai-dashboard-section">
+        <section 
+          id="ai-systems-section" 
+          className="ai-dashboard-section py-16 relative" 
+          ref={aiSystemsSectionRef}
+          tabIndex={-1} // Make focusable for scrollIntoView
+        >
           <div className="particles"></div>
           
           {/* 3D floating decorative elements */}
