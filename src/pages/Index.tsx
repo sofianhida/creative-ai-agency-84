@@ -14,7 +14,7 @@ import { Sparkles, ZapIcon, StarIcon } from 'lucide-react';
 
 const Index = () => {
   const [showAIAccess, setShowAIAccess] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  // Removed cursorPosition state
   const [isScrolling, setIsScrolling] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const aiSystemsSectionRef = useRef<HTMLElement>(null);
@@ -67,12 +67,7 @@ const Index = () => {
     
     createParticles();
     
-    // Add cursor following effect
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-    };
-    
-    document.addEventListener('mousemove', handleMouseMove);
+    // Removed handleMouseMove event and listener
     
     // Detect scrolling for animation
     const handleScroll = () => {
@@ -96,7 +91,7 @@ const Index = () => {
       sections.forEach(section => {
         observer.unobserve(section);
       });
-      document.removeEventListener('mousemove', handleMouseMove);
+      // Removed mousemove event listener
       window.removeEventListener('scroll', handleScroll);
       
       // Clear any existing timeout on cleanup
@@ -108,16 +103,7 @@ const Index = () => {
   
   return (
     <div className="min-h-screen bg-background overflow-x-hidden" ref={mainRef}>
-      {/* Custom cursor effect */}
-      <div 
-        className="fixed w-6 h-6 rounded-full bg-purple/30 pointer-events-none mix-blend-multiply z-50 transition-transform duration-100"
-        style={{ 
-          left: `${cursorPosition.x}px`, 
-          top: `${cursorPosition.y}px`,
-          transform: `translate(-50%, -50%) scale(${isScrolling ? 2 : 1})`,
-          opacity: isScrolling ? 0.5 : 0.3
-        }}
-      ></div>
+      {/* Removed custom cursor div */}
       
       <Navbar showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
       

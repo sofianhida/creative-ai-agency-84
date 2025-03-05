@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
@@ -44,11 +45,11 @@
   html {
     scroll-behavior: smooth;
     @apply overflow-x-hidden;
-    cursor: none;
+    /* Removed cursor: none; */
   }
 
   a, button, [role="button"] {
-    cursor: none;
+    /* Removed cursor: none; */
   }
 
   body {
