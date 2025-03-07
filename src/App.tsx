@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Portfolio from "./pages/Portfolio";
 import Products from "./pages/Products";
+import Game from "./pages/Game";
 import AIChatbot from "./components/AIChatbot";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/game" element={<Game />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <AIChatbot />
