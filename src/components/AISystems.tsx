@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { 
   FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, X, ChevronRight,
   Image, MessageSquare, Music, Brain, Shapes, Flower2, ShieldCheck, 
-  Calculator, Line, Microscope, Map, Landmark, HeartPulse, Shirt, School,
+  Calculator, Minus, Microscope, Map, Landmark, HeartPulse, Shirt, School,
   Award, Plane, Coffee, DollarSign, Film, Cpu, LineChart
 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
@@ -62,7 +61,6 @@ const AISystems = ({ isOpen, setIsOpen, onSelectSystem }: AISystemProps) => {
       description: 'Educational content & e-learning assistance',
       icon: <GraduationCap size={isMobile ? 16 : 20} />
     },
-    // New AI systems
     {
       id: 'image-description',
       name: 'AI Image Description',
@@ -105,7 +103,6 @@ const AISystems = ({ isOpen, setIsOpen, onSelectSystem }: AISystemProps) => {
       description: 'Guidance on digital security best practices',
       icon: <ShieldCheck size={isMobile ? 16 : 20} />
     },
-    // New AI systems
     {
       id: 'math-solver',
       name: 'AI Math Solver',
@@ -116,7 +113,7 @@ const AISystems = ({ isOpen, setIsOpen, onSelectSystem }: AISystemProps) => {
       id: 'poem-generator',
       name: 'AI Poem Generator',
       description: 'Create poems in various styles and on any topic',
-      icon: <Line size={isMobile ? 16 : 20} />
+      icon: <Minus size={isMobile ? 16 : 20} />
     },
     {
       id: 'science-tutor',
