@@ -2,7 +2,9 @@
 import { useState } from 'react';
 import { 
   FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, X, ChevronRight,
-  Image, MessageSquare, Music, Brain, Shapes, Flower2, ShieldCheck
+  Image, MessageSquare, Music, Brain, Shapes, Flower2, ShieldCheck, 
+  Calculator, Line, Microscope, Map, Landmark, HeartPulse, Shirt, School,
+  Award, Plane, Coffee, DollarSign, Film, Cpu, LineChart
 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -102,6 +104,97 @@ const AISystems = ({ isOpen, setIsOpen, onSelectSystem }: AISystemProps) => {
       name: 'AI Security Advisor',
       description: 'Guidance on digital security best practices',
       icon: <ShieldCheck size={isMobile ? 16 : 20} />
+    },
+    // New AI systems
+    {
+      id: 'math-solver',
+      name: 'AI Math Solver',
+      description: 'Solve mathematical problems and equations',
+      icon: <Calculator size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'poem-generator',
+      name: 'AI Poem Generator',
+      description: 'Create poems in various styles and on any topic',
+      icon: <Line size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'science-tutor',
+      name: 'AI Science Tutor',
+      description: 'Learn about science concepts and experiments',
+      icon: <Microscope size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'travel-planner',
+      name: 'AI Travel Planner',
+      description: 'Get travel itineraries and destination recommendations',
+      icon: <Map size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'history-explorer',
+      name: 'AI History Explorer',
+      description: 'Discover historical events, people, and cultures',
+      icon: <Landmark size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'health-advisor',
+      name: 'AI Health Advisor',
+      description: 'General wellness and health information',
+      icon: <HeartPulse size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'fashion-consultant',
+      name: 'AI Fashion Consultant',
+      description: 'Style advice and fashion recommendations',
+      icon: <Shirt size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'language-tutor',
+      name: 'AI Language Tutor',
+      description: 'Learn vocabulary and practice conversations',
+      icon: <School size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'interview-coach',
+      name: 'AI Interview Coach',
+      description: 'Prepare for job interviews with practice questions',
+      icon: <Award size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'travel-translator',
+      name: 'AI Travel Translator',
+      description: 'Instant translation for travelers in any country',
+      icon: <Plane size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'recipe-creator',
+      name: 'AI Recipe Creator',
+      description: 'Generate recipes based on ingredients or cuisine',
+      icon: <Coffee size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'financial-advisor',
+      name: 'AI Financial Advisor',
+      description: 'Basic financial planning and budgeting tips',
+      icon: <DollarSign size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'movie-recommender',
+      name: 'AI Movie Recommender',
+      description: 'Get personalized film and TV show recommendations',
+      icon: <Film size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'tech-explainer',
+      name: 'AI Tech Explainer',
+      description: 'Explain technical concepts in simple terms',
+      icon: <Cpu size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'marketing-strategist',
+      name: 'AI Marketing Strategist',
+      description: 'Generate marketing ideas and campaign strategies',
+      icon: <LineChart size={isMobile ? 16 : 20} />
     }
   ];
 

@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -9,7 +10,10 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import AISystemsAccess from '@/components/AISystemsAccess';
 import AIChatbot from '@/components/AIChatbot';
-import { Sparkles, ZapIcon, StarIcon, FileSearch, Brain, Image, Shield } from 'lucide-react';
+import { 
+  Sparkles, Brain, FileSearch, Image, Calculator, 
+  BookOpen, MessageSquare, Music
+} from 'lucide-react';
 
 const Index = () => {
   const [showAIAccess, setShowAIAccess] = useState(false);
@@ -130,8 +134,9 @@ const Index = () => {
             </div>
             
             <div className="mb-16">
-              <div className="flex flex-wrap justify-center gap-4 mb-10">
-                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-64 text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                {/* Featured AI systems cards */}
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-full text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
                   <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
                     <Brain size={24} />
                   </div>
@@ -139,7 +144,7 @@ const Index = () => {
                   <p className="text-sm text-foreground/70">Generate creative ideas for any project or business</p>
                 </div>
                 
-                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-64 text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-full text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
                   <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
                     <FileSearch size={24} />
                   </div>
@@ -147,12 +152,46 @@ const Index = () => {
                   <p className="text-sm text-foreground/70">Extract data from documents and images with our enhanced AI</p>
                 </div>
                 
-                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-64 text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-full text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
                   <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
                     <Image size={24} />
                   </div>
                   <h3 className="font-bold text-lg mb-2">Image Description</h3>
                   <p className="text-sm text-foreground/70">Generate detailed descriptions from images</p>
+                </div>
+                
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-full text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+                  <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
+                    <Calculator size={24} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">Math Solver</h3>
+                  <p className="text-sm text-foreground/70">Solve complex mathematical problems with step-by-step explanations</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-full text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+                  <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
+                    <BookOpen size={24} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">Text Summarization</h3>
+                  <p className="text-sm text-foreground/70">Condense long documents into concise, accurate summaries</p>
+                </div>
+                
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-full text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+                  <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
+                    <MessageSquare size={24} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">Creative Writing</h3>
+                  <p className="text-sm text-foreground/70">Generate stories, poems, and other creative content</p>
+                </div>
+                
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-full text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+                  <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
+                    <Music size={24} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">Music Lyrics</h3>
+                  <p className="text-sm text-foreground/70">Create custom song lyrics in various genres and styles</p>
                 </div>
               </div>
             </div>
