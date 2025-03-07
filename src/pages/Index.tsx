@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -177,7 +176,6 @@ const Index = () => {
       <div className="fixed-ai-controls">
         <AIChatbot />
         <WhatsAppButton />
-        <PortfolioButton />
       </div>
     </div>
   );
