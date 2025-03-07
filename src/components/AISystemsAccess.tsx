@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+import { useState, useRef, useEffect } from 'react';
 import { Lightbulb, X, Send, FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, ChevronRight } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -38,7 +39,7 @@ const SYSTEM_CONTEXTS = {
     Do not use markdown formatting like asterisks (*) in your responses.
   `,
   'document-analyzer': `
-    You are WeVersAI's Document Analyzer AI assistant.
+    You are WeVersAI's Document Analyzer AI assistant. 
     You specialize in extracting and analyzing information from documents like PDFs, Word files, images of documents, and spreadsheets.
     Help users extract specific data points, convert documents to structured formats, and analyze document content.
     Focus on accuracy and structure in document processing.
@@ -78,6 +79,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
   const [isLoading, setIsLoading] = useState(false);
   
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [fileContent, setFileContent] = useState<string | ArrayBuffer | null>(null);
   const [codeLanguage, setCodeLanguage] = useState('javascript');
   const [sourceLang, setSourceLang] = useState('auto');
   const [targetLang, setTargetLang] = useState('english');
@@ -85,6 +87,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
   const [contentType, setContentType] = useState('article');
   const [visualizationType, setVisualizationType] = useState('chart');
   const [educationFormat, setEducationFormat] = useState('lesson');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const aiSystems = [
     {
@@ -149,6 +152,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
   
   const resetSystemStates = () => {
     setUploadedFile(null);
+    setFileContent(null);
     setCodeLanguage('javascript');
     setSourceLang('auto');
     setTargetLang('english');
@@ -158,6 +162,9 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     setEducationFormat('lesson');
     setMessages([]);
     setInput('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const selectSystem = (systemId: string) => {
@@ -196,16 +203,38 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
   
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setUploadedFile(e.target.files[0]);
-      toast({
-        title: "File Uploaded",
-        description: `${e.target.files[0].name} is ready for analysis`,
-      });
+      const file = e.target.files[0];
+      setUploadedFile(file);
+      
+      // Read file content
+      const reader = new FileReader();
+      
+      if (file.type.includes('image')) {
+        reader.readAsDataURL(file);
+      } else {
+        reader.readAsText(file);
+      }
+      
+      reader.onload = () => {
+        setFileContent(reader.result);
+        toast({
+          title: "File Uploaded",
+          description: `${file.name} is ready for analysis`,
+        });
+      };
+      
+      reader.onerror = () => {
+        toast({
+          title: "Error",
+          description: "Failed to read file",
+          variant: "destructive",
+        });
+      };
     }
   };
 
   const sendMessage = async () => {
-    if ((!input.trim() && !uploadedFile) || !selectedSystem) return;
+    if ((!input.trim() && !uploadedFile && !fileContent) || !selectedSystem) return;
     
     let messageContent = input;
     
@@ -224,7 +253,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
         break;
       case 'document-analyzer':
         messageContent = uploadedFile 
-          ? `I've uploaded a file named ${uploadedFile.name}. Please analyze it and ${input}`
+          ? `I've uploaded a file named ${uploadedFile.name}. ${input ? input : 'Please analyze it and extract the key information'}`
           : `Analyze this text as if it were a document: ${input}`;
         break;
       case 'coding-assistant':
@@ -249,43 +278,99 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       
       const systemContext = SYSTEM_CONTEXTS[selectedSystem as keyof typeof SYSTEM_CONTEXTS];
       
-      const chat = model.startChat({
-        history: [
-          {
-            role: "user",
-            parts: [{ text: systemContext }],
+      if (selectedSystem === 'document-analyzer' && uploadedFile && fileContent) {
+        let parts = [];
+        
+        // Add file content to parts
+        if (uploadedFile.type.includes('image')) {
+          // For image files
+          parts.push({ text: systemContext });
+          parts.push({ text: messageContent });
+          
+          // Add image data as inline data
+          if (typeof fileContent === 'string') {
+            parts.push({
+              inlineData: {
+                mimeType: uploadedFile.type,
+                data: fileContent.split(',')[1] // Remove the data:image/jpeg;base64, prefix
+              }
+            });
+          }
+        } else {
+          // For text files
+          parts.push({ text: systemContext });
+          parts.push({ text: messageContent });
+          if (typeof fileContent === 'string') {
+            parts.push({ text: `File content:\n${fileContent}` });
+          }
+        }
+        
+        console.log("Sending document to Gemini with content and message");
+        
+        const result = await model.generateContent({
+          contents: [{ role: "user", parts }],
+          generationConfig: {
+            temperature: 0.7,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 2048,
           },
-          {
-            role: "model",
-            parts: [{ text: "I understand. I'll act as the WeVersAI assistant with the guidelines you've provided." }],
+        });
+        
+        const response = await result.response;
+        let assistantResponse = response.text();
+        
+        assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
+        assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
+        
+        setMessages(prev => [
+          ...prev, 
+          { role: 'assistant', content: assistantResponse }
+        ]);
+      } else {
+        // Regular chat for other systems
+        const chat = model.startChat({
+          history: [
+            {
+              role: "user",
+              parts: [{ text: systemContext }],
+            },
+            {
+              role: "model",
+              parts: [{ text: "I understand. I'll act as the WeVersAI assistant with the guidelines you've provided." }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.7,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 1024,
           },
-        ],
-        generationConfig: {
-          temperature: 0.7,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 1024,
-        },
-      });
-      
-      console.log("Sending message to Gemini chat API");
-      
-      const result = await chat.sendMessage(messageContent);
-      const response = await result.response;
-      let assistantResponse = response.text();
-      
-      assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
-      assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
-      
-      console.log("Received response from Gemini:", assistantResponse);
-      
-      setMessages(prev => [
-        ...prev, 
-        { role: 'assistant', content: assistantResponse }
-      ]);
+        });
+        
+        console.log("Sending message to Gemini chat API");
+        
+        const result = await chat.sendMessage(messageContent);
+        const response = await result.response;
+        let assistantResponse = response.text();
+        
+        assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
+        assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
+        
+        console.log("Received response from Gemini:", assistantResponse);
+        
+        setMessages(prev => [
+          ...prev, 
+          { role: 'assistant', content: assistantResponse }
+        ]);
+      }
       
       if (selectedSystem === 'document-analyzer' && uploadedFile) {
         setUploadedFile(null);
+        setFileContent(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
       }
     } catch (error) {
       console.error('Error sending message to Gemini:', error);
@@ -318,7 +403,8 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
             <p className="text-xs text-muted-foreground mb-2">Upload a document for analysis</p>
             <input 
               type="file" 
-              accept=".pdf,.doc,.docx,.txt,.csv,.xlsx"
+              ref={fileInputRef}
+              accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.jpg,.jpeg,.png"
               onChange={handleFileUpload}
               className="w-full text-xs"
             />
@@ -326,7 +412,13 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
               <div className="mt-2 text-xs bg-muted p-1 rounded flex justify-between items-center">
                 <span>{uploadedFile.name}</span>
                 <button 
-                  onClick={() => setUploadedFile(null)}
+                  onClick={() => {
+                    setUploadedFile(null);
+                    setFileContent(null);
+                    if (fileInputRef.current) {
+                      fileInputRef.current.value = '';
+                    }
+                  }}
                   className="text-muted-foreground hover:text-destructive"
                 >
                   <X size={14} />

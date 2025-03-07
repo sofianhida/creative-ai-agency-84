@@ -10,7 +10,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import AISystemsAccess from '@/components/AISystemsAccess';
 import AIChatbot from '@/components/AIChatbot';
-import { Sparkles, ZapIcon, StarIcon } from 'lucide-react';
+import { Sparkles, ZapIcon, StarIcon, FileSearch } from 'lucide-react';
 
 const Index = () => {
   const [showAIAccess, setShowAIAccess] = useState(false);
@@ -155,6 +155,14 @@ const Index = () => {
                   </div>
                   <h3 className="font-bold text-lg mb-2">Quick Analysis</h3>
                   <p className="text-sm text-foreground/70">Instant data insights with our AI analytics tools</p>
+                </div>
+                
+                <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-64 text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
+                  <div className="w-14 h-14 rounded-full bg-purple/10 text-purple flex items-center justify-center mx-auto mb-4">
+                    <FileSearch size={24} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">Document Analysis</h3>
+                  <p className="text-sm text-foreground/70">Extract data from documents and images with our enhanced AI</p>
                 </div>
                 
                 <div className="card-3d bg-white p-5 rounded-xl shadow-sm hover:shadow-glow-lg w-64 text-center transition-all duration-300 border border-purple/10 hover:border-purple/30">
