@@ -33,7 +33,7 @@ const Footer = () => {
               <a href="https://x.com/WeverseAI?t=KimD49BVPRN_3dRpheaRZQ&s=09" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-purple transition-colors" aria-label="Twitter">
                 <X size={20} />
               </a>
-              <a href="#" className="text-foreground/60 hover:text-purple transition-colors" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/weversai/" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-purple transition-colors" aria-label="LinkedIn">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -55,8 +55,8 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><a href="#about" className="text-foreground/70 hover:text-purple underline-animation">About Us</a></li>
               <li><a href="#testimonials" className="text-foreground/70 hover:text-purple underline-animation">Testimonials</a></li>
-              <li><a href="#" className="text-foreground/70 hover:text-purple underline-animation">Blog</a></li>
-              <li><a href="#" className="text-foreground/70 hover:text-purple underline-animation">Careers</a></li>
+              <li><a href="/products" className="text-foreground/70 hover:text-purple underline-animation">Our Products</a></li>
+              <li><a href="/portfolio" className="text-foreground/70 hover:text-purple underline-animation">Portfolio</a></li>
               <li><a href="#contact" className="text-foreground/70 hover:text-purple underline-animation">Contact</a></li>
             </ul>
           </div>

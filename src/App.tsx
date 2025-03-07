@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Portfolio from "./pages/Portfolio";
+import Products from "./pages/Products";
 import AIChatbot from "./components/AIChatbot";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/products" element={<Products />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <AIChatbot />

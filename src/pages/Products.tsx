@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { ArrowLeftIcon, Clock } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
-const Portfolio = () => {
+const Products = () => {
   useEffect(() => {
     // Set page title
-    document.title = "Portfolio | WeVersAI";
+    document.title = "Our Products | WeVersAI";
     // Scroll to top when page loads
     window.scrollTo(0, 0);
   }, []);
@@ -28,13 +28,13 @@ const Portfolio = () => {
         </div>
         
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-6">
-          Our Portfolio
+          Our Products
         </h1>
         
         <div className="w-24 h-1 bg-gradient-to-r from-purple/30 to-purple mx-auto mb-8 rounded-full"></div>
         
         <p className="text-xl text-muted-foreground mb-8">
-          We're currently working on something amazing. Our portfolio page will be available soon!
+          We're currently working on something amazing. Our products page will be available soon!
         </p>
         
         <div className="space-y-2">
@@ -51,4 +51,4 @@ const Portfolio = () => {
   );
 };
 
-export default Portfolio;
+export default Products;

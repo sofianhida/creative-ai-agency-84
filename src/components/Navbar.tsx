@@ -4,6 +4,7 @@ import { Menu, X, Lightbulb } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 interface NavbarProps {
   showAIAccess: boolean;
@@ -120,6 +121,8 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
     { name: 'Services', href: '#services' },
     { name: 'About', href: '#about' },
     { name: 'Testimonials', href: '#testimonials' },
+    { name: 'Products', href: '/products' },
+    { name: 'Portfolio', href: '/portfolio' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -128,7 +131,10 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
     
     // Add small delay for mobile navigation to ensure menu closes before scrolling
     setTimeout(() => {
-      window.location.href = href;
+      if (href.startsWith('#')) {
+        window.location.href = href;
+      }
+      // For regular links, navigation will happen through the React Router Link component
     }, isMobile ? 300 : 0);
   };
 
@@ -139,7 +145,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <a href="#home" className="flex items-center gap-2 z-20">
+          <Link to="/" className="flex items-center gap-2 z-20">
             <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-purple/80 flex items-center justify-center overflow-hidden">
               <img 
                 src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
@@ -148,18 +154,28 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
               />
             </div>
             <span className="font-display font-bold text-lg sm:text-xl">WeVersAI</span>
-          </a>
+          </Link>
           
           {!isMobile && (
             <nav className="hidden md:flex space-x-8 lg:space-x-10">
               {navLinks.map((link) => (
-                <a 
-                  key={link.name}
-                  href={link.href}
-                  className="nav-link text-sm font-medium tracking-wide"
-                >
-                  {link.name}
-                </a>
+                link.href.startsWith('#') ? (
+                  <a 
+                    key={link.name}
+                    href={link.href}
+                    className="nav-link text-sm font-medium tracking-wide"
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link 
+                    key={link.name}
+                    to={link.href}
+                    className="nav-link text-sm font-medium tracking-wide"
+                  >
+                    {link.name}
+                  </Link>
+                )
               ))}
             </nav>
           )}
@@ -212,21 +228,39 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
             >
               <div className="flex flex-col items-center w-full py-6 gap-6 overflow-y-auto no-scrollbar">
                 {navLinks.map((link, index) => (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 20, opacity: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="py-3 text-xl font-medium text-foreground hover:text-purple transition-colors w-full text-center"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavLinkClick(link.href);
-                    }}
-                  >
-                    {link.name}
-                  </motion.a>
+                  link.href.startsWith('#') ? (
+                    <motion.a
+                      key={link.name}
+                      href={link.href}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: 20, opacity: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="py-3 text-xl font-medium text-foreground hover:text-purple transition-colors w-full text-center"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavLinkClick(link.href);
+                      }}
+                    >
+                      {link.name}
+                    </motion.a>
+                  ) : (
+                    <motion.div
+                      key={link.name}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: 20, opacity: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="py-3 text-xl font-medium text-foreground hover:text-purple transition-colors w-full text-center"
+                    >
+                      <Link 
+                        to={link.href}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  )
                 ))}
                 
                 {/* AI Systems Button in Mobile Menu - Modified for better functionality */}
