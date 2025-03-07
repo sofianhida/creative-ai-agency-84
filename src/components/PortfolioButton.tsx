@@ -23,7 +23,7 @@ const PortfolioButton = () => {
   return (
     <Link 
       to="/portfolio" 
-      className={`fixed right-6 bottom-20 z-40 transition-all duration-300
+      className={`fixed right-24 bottom-6 z-40 transition-all duration-300
                   ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
     >
       <Button className="rounded-full shadow-glow bg-purple text-white hover:bg-white hover:text-purple border border-purple/30 p-3 h-auto">
