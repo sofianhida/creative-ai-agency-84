@@ -1,7 +1,8 @@
 
 import { useState } from 'react';
 import { 
-  FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, X, ChevronRight 
+  FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, X, ChevronRight,
+  Image, MessageSquare, Music, Brain, Shapes, Flower2, ShieldCheck
 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -58,6 +59,49 @@ const AISystems = ({ isOpen, setIsOpen, onSelectSystem }: AISystemProps) => {
       name: 'AI for Education',
       description: 'Educational content & e-learning assistance',
       icon: <GraduationCap size={isMobile ? 16 : 20} />
+    },
+    // New AI systems
+    {
+      id: 'image-description',
+      name: 'AI Image Description',
+      description: 'Generate detailed descriptions of images',
+      icon: <Image size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'creative-writing',
+      name: 'AI Creative Writing',
+      description: 'Generate stories, poems, scripts, and creative content',
+      icon: <MessageSquare size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'music-lyrics',
+      name: 'AI Music Lyrics',
+      description: 'Create song lyrics in various genres and styles',
+      icon: <Music size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'brainstorming',
+      name: 'AI Brainstorming',
+      description: 'Generate ideas for projects, businesses, and more',
+      icon: <Brain size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'pattern-recognition',
+      name: 'AI Pattern Recognition',
+      description: 'Identify patterns and insights in text data',
+      icon: <Shapes size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'nature-guide',
+      name: 'AI Nature Guide',
+      description: 'Information about plants, animals, and natural phenomena',
+      icon: <Flower2 size={isMobile ? 16 : 20} />
+    },
+    {
+      id: 'security-advisor',
+      name: 'AI Security Advisor',
+      description: 'Guidance on digital security best practices',
+      icon: <ShieldCheck size={isMobile ? 16 : 20} />
     }
   ];
 

@@ -1,6 +1,6 @@
-
 import { useState, useRef, useEffect } from 'react';
-import { Lightbulb, X, Send, FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, ChevronRight } from 'lucide-react';
+import { Lightbulb, X, Send, FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, ChevronRight,
+  Image, MessageSquare, Music, Brain, Shapes, Flower2, ShieldCheck } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -58,6 +58,62 @@ const SYSTEM_CONTEXTS = {
     Help educators and students with explanations of complex topics, quiz generation, and personalized learning materials.
     Focus on making learning engaging, accessible, and effective for various learning styles.
     Do not use markdown formatting like asterisks (*) in your responses.
+  `,
+  'image-description': `
+    You are WeVersAI's Image Description AI assistant.
+    You specialize in providing detailed, accurate descriptions of images.
+    When images are uploaded, describe them in detail, including objects, people, scenes, colors, and other visual elements.
+    If no image is provided, offer guidance on what kinds of images you can describe and how to upload them.
+    Your descriptions should be objective, detailed, and useful for understanding the visual content.
+    Do not use markdown formatting like asterisks (*) in your responses.
+  `,
+  'creative-writing': `
+    You are WeVersAI's Creative Writing AI assistant.
+    You specialize in generating creative content like stories, poems, scripts, dialogues, and other literary forms.
+    Adapt your writing to different genres, styles, and tones based on user requests.
+    Maintain narrative consistency, character development, and engaging language in your creative outputs.
+    Offer creative variations when requested and be open to iterative refinement.
+    Do not use markdown formatting like asterisks (*) in your responses.
+  `,
+  'music-lyrics': `
+    You are WeVersAI's Music Lyrics AI assistant.
+    You specialize in creating song lyrics across various genres, styles, and themes.
+    Consider rhythm, rhyme, structure, and musical conventions when writing lyrics.
+    Adapt to specific genre requests like pop, rock, hip-hop, country, etc.
+    Create lyrics that convey emotions, tell stories, or explore themes as requested.
+    Do not use markdown formatting like asterisks (*) in your responses.
+  `,
+  'brainstorming': `
+    You are WeVersAI's Brainstorming AI assistant.
+    You specialize in generating creative ideas for projects, businesses, marketing, content creation, and problem-solving.
+    Provide diverse, innovative, and practical ideas tailored to the user's specific needs.
+    Consider different angles, approaches, and possibilities for each brainstorming request.
+    Help refine and expand on ideas when needed, offering constructive feedback and alternatives.
+    Do not use markdown formatting like asterisks (*) in your responses.
+  `,
+  'pattern-recognition': `
+    You are WeVersAI's Pattern Recognition AI assistant.
+    You specialize in identifying patterns, trends, and insights in text data and information.
+    Analyze text to identify recurring themes, relationships, correlations, and anomalies.
+    Provide clear explanations of detected patterns and their potential implications.
+    Help users understand complex information through pattern identification and analysis.
+    Do not use markdown formatting like asterisks (*) in your responses.
+  `,
+  'nature-guide': `
+    You are WeVersAI's Nature Guide AI assistant.
+    You specialize in providing information about plants, animals, ecosystems, natural phenomena, and environmental topics.
+    Offer accurate, educational content about species identification, habitats, behaviors, and ecological relationships.
+    Address questions about conservation, sustainability, and human interaction with nature.
+    Provide engaging, informative responses that foster appreciation for the natural world.
+    Do not use markdown formatting like asterisks (*) in your responses.
+  `,
+  'security-advisor': `
+    You are WeVersAI's Security Advisor AI assistant.
+    You specialize in providing guidance on digital security, privacy, and best practices for online safety.
+    Offer practical advice on password management, account security, safe browsing, and protection against common threats.
+    Explain security concepts in clear, accessible terms for users with varying levels of technical knowledge.
+    Provide educational information about current security trends and emerging threats.
+    Do not use markdown formatting like asterisks (*) in your responses.
   `
 };
 
@@ -87,7 +143,15 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
   const [contentType, setContentType] = useState('article');
   const [visualizationType, setVisualizationType] = useState('chart');
   const [educationFormat, setEducationFormat] = useState('lesson');
+  const [creativeFormat, setCreativeFormat] = useState('short story');
+  const [musicGenre, setMusicGenre] = useState('pop');
+  const [ideaCategory, setIdeaCategory] = useState('business');
+  const [patternType, setPatternType] = useState('themes');
+  const [natureCategory, setNatureCategory] = useState('animals');
+  const [securityTopic, setSecurityTopic] = useState('passwords');
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   const aiSystems = [
     {
@@ -138,6 +202,55 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       description: 'Educational content & e-learning assistance',
       icon: <GraduationCap size={isMobile ? 20 : 24} />,
       color: 'from-violet-400/20 to-violet-500/10'
+    },
+    {
+      id: 'image-description',
+      name: 'AI Image Description',
+      description: 'Generate detailed descriptions of images',
+      icon: <Image size={isMobile ? 20 : 24} />,
+      color: 'from-indigo-400/20 to-indigo-500/10'
+    },
+    {
+      id: 'creative-writing',
+      name: 'AI Creative Writing',
+      description: 'Generate stories, poems, scripts, and creative content',
+      icon: <MessageSquare size={isMobile ? 20 : 24} />,
+      color: 'from-teal-400/20 to-teal-500/10'
+    },
+    {
+      id: 'music-lyrics',
+      name: 'AI Music Lyrics',
+      description: 'Create song lyrics in various genres and styles',
+      icon: <Music size={isMobile ? 20 : 24} />,
+      color: 'from-rose-400/20 to-rose-500/10'
+    },
+    {
+      id: 'brainstorming',
+      name: 'AI Brainstorming',
+      description: 'Generate ideas for projects, businesses, and more',
+      icon: <Brain size={isMobile ? 20 : 24} />,
+      color: 'from-emerald-400/20 to-emerald-500/10'
+    },
+    {
+      id: 'pattern-recognition',
+      name: 'AI Pattern Recognition',
+      description: 'Identify patterns and insights in text data',
+      icon: <Shapes size={isMobile ? 20 : 24} />,
+      color: 'from-sky-400/20 to-sky-500/10'
+    },
+    {
+      id: 'nature-guide',
+      name: 'AI Nature Guide',
+      description: 'Information about plants, animals, and natural phenomena',
+      icon: <Flower2 size={isMobile ? 20 : 24} />,
+      color: 'from-lime-400/20 to-lime-500/10'
+    },
+    {
+      id: 'security-advisor',
+      name: 'AI Security Advisor',
+      description: 'Guidance on digital security best practices',
+      icon: <ShieldCheck size={isMobile ? 20 : 24} />,
+      color: 'from-amber-400/20 to-amber-500/10'
     }
   ];
 
@@ -160,10 +273,19 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     setContentType('article');
     setVisualizationType('chart');
     setEducationFormat('lesson');
+    setCreativeFormat('short story');
+    setMusicGenre('pop');
+    setIdeaCategory('business');
+    setPatternType('themes');
+    setNatureCategory('animals');
+    setSecurityTopic('passwords');
     setMessages([]);
     setInput('');
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+    if (imageInputRef.current) {
+      imageInputRef.current.value = '';
     }
   };
 
@@ -233,6 +355,33 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     }
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setUploadedFile(file);
+      
+      // Read file content
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      
+      reader.onload = () => {
+        setFileContent(reader.result);
+        toast({
+          title: "Image Uploaded",
+          description: `${file.name} is ready for analysis`,
+        });
+      };
+      
+      reader.onerror = () => {
+        toast({
+          title: "Error",
+          description: "Failed to read image file",
+          variant: "destructive",
+        });
+      };
+    }
+  };
+
   const sendMessage = async () => {
     if ((!input.trim() && !uploadedFile && !fileContent) || !selectedSystem) return;
     
@@ -262,6 +411,29 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       case 'education':
         messageContent = `Create a ${educationFormat} about: ${input}`;
         break;
+      case 'image-description':
+        messageContent = uploadedFile 
+          ? `I've uploaded an image named ${uploadedFile.name}. ${input ? input : 'Please describe it in detail'}`
+          : `Describe this hypothetical image based on my description: ${input}`;
+        break;
+      case 'creative-writing':
+        messageContent = `Write a ${creativeFormat} about: ${input}`;
+        break;
+      case 'music-lyrics':
+        messageContent = `Write ${musicGenre} song lyrics about: ${input}`;
+        break;
+      case 'brainstorming':
+        messageContent = `Generate creative ideas in the ${ideaCategory} category about: ${input}`;
+        break;
+      case 'pattern-recognition':
+        messageContent = `Analyze this text and identify ${patternType} patterns: ${input}`;
+        break;
+      case 'nature-guide':
+        messageContent = `Provide information about this ${natureCategory} topic: ${input}`;
+        break;
+      case 'security-advisor':
+        messageContent = `Provide security advice about ${securityTopic}: ${input}`;
+        break;
     }
     
     const userMessage = { role: 'user' as const, content: messageContent };
@@ -278,7 +450,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
       
       const systemContext = SYSTEM_CONTEXTS[selectedSystem as keyof typeof SYSTEM_CONTEXTS];
       
-      if (selectedSystem === 'document-analyzer' && uploadedFile && fileContent) {
+      if ((selectedSystem === 'document-analyzer' || selectedSystem === 'image-description') && uploadedFile && fileContent) {
         let parts = [];
         
         // Add file content to parts
@@ -305,7 +477,7 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
           }
         }
         
-        console.log("Sending document to Gemini with content and message");
+        console.log("Sending document/image to Gemini with content and message");
         
         const result = await model.generateContent({
           contents: [{ role: "user", parts }],
@@ -365,11 +537,14 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
         ]);
       }
       
-      if (selectedSystem === 'document-analyzer' && uploadedFile) {
+      if ((selectedSystem === 'document-analyzer' || selectedSystem === 'image-description') && uploadedFile) {
         setUploadedFile(null);
         setFileContent(null);
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
+        }
+        if (imageInputRef.current) {
+          imageInputRef.current.value = '';
         }
       }
     } catch (error) {
@@ -599,6 +774,171 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
           </div>
         );
         
+      case 'image-description':
+        return (
+          <div className="mb-2 p-2 border-t">
+            <p className="text-xs text-muted-foreground mb-2">Upload an image to describe</p>
+            <input 
+              type="file" 
+              ref={imageInputRef}
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="w-full text-xs"
+            />
+            {uploadedFile && (
+              <div className="mt-2 text-xs bg-muted p-1 rounded flex justify-between items-center">
+                <span>{uploadedFile.name}</span>
+                <button 
+                  onClick={() => {
+                    setUploadedFile(null);
+                    setFileContent(null);
+                    if (imageInputRef.current) {
+                      imageInputRef.current.value = '';
+                    }
+                  }}
+                  className="text-muted-foreground hover:text-destructive"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            )}
+          </div>
+        );
+        
+      case 'creative-writing':
+        return (
+          <div className="mb-2 p-2 border-t">
+            <p className="text-xs text-muted-foreground mb-2">Creative Format</p>
+            <select
+              value={creativeFormat}
+              onChange={(e) => setCreativeFormat(e.target.value)}
+              className="w-full p-1 text-xs border rounded"
+            >
+              <option value="short story">Short Story</option>
+              <option value="poem">Poem</option>
+              <option value="script">Script</option>
+              <option value="dialogue">Dialogue</option>
+              <option value="flash fiction">Flash Fiction</option>
+              <option value="sci-fi story">Sci-Fi Story</option>
+              <option value="fantasy story">Fantasy Story</option>
+              <option value="horror story">Horror Story</option>
+              <option value="fairy tale">Fairy Tale</option>
+            </select>
+          </div>
+        );
+        
+      case 'music-lyrics':
+        return (
+          <div className="mb-2 p-2 border-t">
+            <p className="text-xs text-muted-foreground mb-2">Music Genre</p>
+            <select
+              value={musicGenre}
+              onChange={(e) => setMusicGenre(e.target.value)}
+              className="w-full p-1 text-xs border rounded"
+            >
+              <option value="pop">Pop</option>
+              <option value="rock">Rock</option>
+              <option value="hip-hop">Hip-Hop/Rap</option>
+              <option value="country">Country</option>
+              <option value="r&b">R&B/Soul</option>
+              <option value="electronic">Electronic/Dance</option>
+              <option value="folk">Folk</option>
+              <option value="jazz">Jazz</option>
+              <option value="classical">Classical</option>
+              <option value="indie">Indie</option>
+              <option value="metal">Metal</option>
+              <option value="reggae">Reggae</option>
+            </select>
+          </div>
+        );
+        
+      case 'brainstorming':
+        return (
+          <div className="mb-2 p-2 border-t">
+            <p className="text-xs text-muted-foreground mb-2">Idea Category</p>
+            <select
+              value={ideaCategory}
+              onChange={(e) => setIdeaCategory(e.target.value)}
+              className="w-full p-1 text-xs border rounded"
+            >
+              <option value="business">Business Ideas</option>
+              <option value="marketing">Marketing Strategies</option>
+              <option value="content">Content Creation</option>
+              <option value="product">Product Development</option>
+              <option value="creative">Creative Projects</option>
+              <option value="education">Educational Activities</option>
+              <option value="event">Event Planning</option>
+              <option value="research">Research Topics</option>
+              <option value="problem-solving">Problem Solving</option>
+            </select>
+          </div>
+        );
+        
+      case 'pattern-recognition':
+        return (
+          <div className="mb-2 p-2 border-t">
+            <p className="text-xs text-muted-foreground mb-2">Pattern Type</p>
+            <select
+              value={patternType}
+              onChange={(e) => setPatternType(e.target.value)}
+              className="w-full p-1 text-xs border rounded"
+            >
+              <option value="themes">Themes & Topics</option>
+              <option value="relationships">Relationships & Connections</option>
+              <option value="trends">Trends & Changes</option>
+              <option value="anomalies">Anomalies & Outliers</option>
+              <option value="sentiment">Sentiment & Emotions</option>
+              <option value="structure">Structure & Organization</option>
+              <option value="language">Language Patterns</option>
+            </select>
+          </div>
+        );
+        
+      case 'nature-guide':
+        return (
+          <div className="mb-2 p-2 border-t">
+            <p className="text-xs text-muted-foreground mb-2">Nature Category</p>
+            <select
+              value={natureCategory}
+              onChange={(e) => setNatureCategory(e.target.value)}
+              className="w-full p-1 text-xs border rounded"
+            >
+              <option value="animals">Animals</option>
+              <option value="plants">Plants</option>
+              <option value="ecosystems">Ecosystems</option>
+              <option value="weather">Weather & Climate</option>
+              <option value="geology">Geology & Earth Science</option>
+              <option value="conservation">Conservation</option>
+              <option value="astronomy">Astronomy & Space</option>
+              <option value="oceans">Oceans & Marine Life</option>
+              <option value="forests">Forests & Trees</option>
+            </select>
+          </div>
+        );
+        
+      case 'security-advisor':
+        return (
+          <div className="mb-2 p-2 border-t">
+            <p className="text-xs text-muted-foreground mb-2">Security Topic</p>
+            <select
+              value={securityTopic}
+              onChange={(e) => setSecurityTopic(e.target.value)}
+              className="w-full p-1 text-xs border rounded"
+            >
+              <option value="passwords">Password Security</option>
+              <option value="accounts">Account Protection</option>
+              <option value="browsing">Safe Browsing</option>
+              <option value="phishing">Phishing Defense</option>
+              <option value="malware">Malware Protection</option>
+              <option value="privacy">Online Privacy</option>
+              <option value="social-media">Social Media Security</option>
+              <option value="devices">Device Security</option>
+              <option value="networks">Network Security</option>
+              <option value="data">Data Protection</option>
+            </select>
+          </div>
+        );
+      
       default:
         return null;
     }
