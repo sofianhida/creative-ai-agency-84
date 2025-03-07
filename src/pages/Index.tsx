@@ -94,7 +94,7 @@ const Index = () => {
   }, []);
   
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden" ref={mainRef}>
+    <div className="min-h-screen bg-white text-foreground overflow-x-hidden" ref={mainRef}>
       <Navbar showAIAccess={showAIAccess} setShowAIAccess={setShowAIAccess} />
       
       <main className="pt-16 relative z-0">
@@ -104,6 +104,7 @@ const Index = () => {
         <TestimonialsSection />
         <ContactSection />
         
+        {/* AISystemsSection */}
         <section 
           id="ai-systems-section" 
           className="ai-dashboard-section py-16 relative" 
