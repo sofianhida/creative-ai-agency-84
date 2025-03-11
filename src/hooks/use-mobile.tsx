@@ -14,6 +14,7 @@ export function useIsMobile() {
       setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
     }
     
+    // Use more modern approach with addEventListener
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
     mql.addEventListener("change", handleResize)
     
@@ -84,4 +85,21 @@ export function useIsLargeDesktop() {
   }, [])
 
   return !!isLargeDesktop
+}
+
+// Add new hook for dynamic responsive values
+export function useResponsiveValue<T>(
+  mobileValue: T,
+  tabletValue: T,
+  desktopValue: T,
+  largeDesktopValue?: T
+): T {
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
+  const isLargeDesktop = useIsLargeDesktop();
+  
+  if (isMobile) return mobileValue;
+  if (isTablet) return tabletValue;
+  if (isLargeDesktop && largeDesktopValue !== undefined) return largeDesktopValue;
+  return desktopValue;
 }

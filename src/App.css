@@ -29,11 +29,12 @@
   color: #888;
 }
 
-/* Mobile responsiveness helpers */
+/* Enhanced Mobile responsiveness helpers */
 .mobile-container {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   width: 100%;
+  transition: padding 0.3s ease;
 }
 
 @media (min-width: 640px) {
@@ -43,7 +44,7 @@
   }
 }
 
-/* Improved fixed button positions with better spacing */
+/* Improved fixed button positions with better spacing and transitions */
 .ai-chatbot-container {
   z-index: 10;
   position: fixed;
@@ -52,6 +53,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 @media (max-width: 640px) {
@@ -72,7 +74,7 @@
   }
 }
 
-/* Enhanced fixed AI controls container for better visibility */
+/* Enhanced fixed AI controls container for better visibility and transitions */
 .fixed-ai-controls {
   position: fixed;
   bottom: 1.5rem;
@@ -81,6 +83,7 @@
   flex-direction: column;
   gap: 2.5rem; /* Increased spacing between buttons */
   z-index: 50;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 @media (max-width: 640px) {
@@ -91,12 +94,17 @@
   }
 }
 
-/* Prevent fixed elements from overlapping - adjusted positioning */
+/* Prevent fixed elements from overlapping - adjusted positioning with smooth transitions */
 .whatsapp-button {
   z-index: 20;
+  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* Enhanced AI systems panel with modern styling */
+.whatsapp-button:hover {
+  transform: translateY(-5px);
+}
+
+/* Enhanced AI systems panel with modern styling and transitions */
 .ai-systems-panel {
   position: relative;
   z-index: 40;
@@ -105,7 +113,12 @@
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15), 0 4px 10px -5px rgba(155, 135, 245, 0.2);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.ai-systems-panel:hover {
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.2), 0 8px 15px -5px rgba(155, 135, 245, 0.3);
+  transform: translateY(-2px);
 }
 
 /* Ensure no content gets cut off on smaller screens */
@@ -116,6 +129,12 @@ section {
 /* Improve forms on mobile */
 input, textarea, select, button {
   font-size: 16px !important; /* Prevents zoom on focus in iOS */
+  transition: all 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 2px rgba(155, 135, 245, 0.25);
+  outline: none;
 }
 
 @media (min-width: 768px) {
@@ -124,7 +143,7 @@ input, textarea, select, button {
   }
 }
 
-/* Fix for navbar mobile menu issue - more compact styling */
+/* Fix for navbar mobile menu issue - more compact styling with enhanced animations */
 .mobile-menu-container {
   height: 100vh;
   position: fixed;
@@ -137,6 +156,10 @@ input, textarea, select, button {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 /* New setting to prevent mobile menu issues */
@@ -155,7 +178,7 @@ input, textarea, select, button {
   scrollbar-width: none;  /* Firefox */
 }
 
-/* Ensure proper spacing between components */
+/* Ensure proper spacing between components with smooth transitions */
 .fixed-chat-controls {
   display: flex;
   flex-direction: column;
@@ -164,62 +187,73 @@ input, textarea, select, button {
   bottom: 1rem;
   gap: 1rem;
   z-index: 30;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* Smaller nav items for mobile */
+/* Smaller nav items for mobile with better transitions */
 @media (max-width: 768px) {
   .mobile-menu-container a {
     margin: 0;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .mobile-menu-container a:hover {
+    transform: translateX(5px);
   }
 }
 
-/* New responsive navbar styling */
+/* New responsive navbar styling with improved spacing and transitions */
 @media (min-width: 768px) and (max-width: 1023px) {
   /* Medium screens - more compact navbar */
   .nav-link {
-    font-size: 0.75rem !important;
-    padding-left: 0.2rem !important;
-    padding-right: 0.2rem !important;
+    font-size: 0.8rem !important;
+    padding-left: 0.4rem !important;
+    padding-right: 0.4rem !important;
+    margin: 0 0.1rem !important;
+    transition: all 0.2s ease;
   }
   
   /* Reduce padding for buttons on medium screens */
   .btn-primary, .navbar-ai-button {
-    padding-left: 0.6rem !important;
-    padding-right: 0.6rem !important;
-    font-size: 0.75rem !important;
+    padding-left: 0.7rem !important;
+    padding-right: 0.7rem !important;
+    font-size: 0.8rem !important;
   }
 }
 
 @media (min-width: 1024px) and (max-width: 1279px) {
   /* Large screens - slightly more space but still compact */
   .nav-link {
-    font-size: 0.85rem !important;
-    padding-left: 0.3rem !important;
-    padding-right: 0.3rem !important;
+    font-size: 0.9rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    margin: 0 0.15rem !important;
   }
   
   /* Adjusted button size for large screens */
   .btn-primary, .navbar-ai-button {
-    padding-left: 0.8rem !important;
-    padding-right: 0.8rem !important;
-    font-size: 0.85rem !important;
+    padding-left: 0.9rem !important;
+    padding-right: 0.9rem !important;
+    font-size: 0.9rem !important;
   }
 }
 
-/* Prevent button text wrapping */
+/* Prevent button text wrapping with improved transitions */
 .btn-primary, .navbar-ai-button {
   white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* Ensure navbar items don't overflow */
+/* Ensure navbar items don't overflow with better transitions */
 .navbar-container {
   max-width: 100%;
   overflow: visible;
+  transition: all 0.3s ease;
 }
 
-/* Button with pulse animation */
+/* Button with enhanced pulse animation */
 .btn-pulse {
   position: relative;
   overflow: hidden;
@@ -254,12 +288,13 @@ input, textarea, select, button {
   animation: ripple 1s ease-out;
 }
 
-/* Modern glass effect */
+/* Modern glass effect with enhanced blur and transitions */
 .glass {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
 }
 
 .glass-dark {
@@ -267,32 +302,36 @@ input, textarea, select, button {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
-/* Enhanced hover animations */
+/* Enhanced hover animations with smoother transitions */
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), 
+              box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .hover-lift:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 8px 15px -8px rgba(155, 135, 245, 0.25);
 }
 
-/* AI Systems card hover effect */
+/* AI Systems card hover effect with enhanced animations */
 .ai-system-card {
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  border: 1px solid rgba(155, 135, 245, 0.1);
 }
 
 .ai-system-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px -5px rgba(155, 135, 245, 0.2);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1), 0 8px 15px -8px rgba(155, 135, 245, 0.3);
+  border-color: rgba(155, 135, 245, 0.3);
 }
 
-/* Animation for AI systems panel */
+/* Animation for AI systems panel with enhanced timing */
 .ai-systems-panel {
-  animation: fadeInUp 0.5s ease-out forwards;
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
 @keyframes fadeInUp {
@@ -306,15 +345,23 @@ input, textarea, select, button {
   }
 }
 
-/* Shadow glow effect */
+/* Enhanced shadow glow effect */
 .shadow-glow-lg {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
-              0 8px 10px -6px rgba(0, 0, 0, 0.1),
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.12), 
+              0 10px 15px -8px rgba(0, 0, 0, 0.12),
               0 0 0 1px rgba(155, 135, 245, 0.1),
-              0 0 15px 2px rgba(155, 135, 245, 0.15);
+              0 0 20px 3px rgba(155, 135, 245, 0.15);
+  transition: box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* AI Navbar Button Styles */
+.shadow-glow-lg:hover {
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.15), 
+              0 12px 20px -10px rgba(0, 0, 0, 0.15),
+              0 0 0 1px rgba(155, 135, 245, 0.2),
+              0 0 25px 5px rgba(155, 135, 245, 0.25);
+}
+
+/* Enhanced AI Navbar Button Styles */
 .navbar-ai-button {
   display: flex;
   align-items: center;
@@ -325,39 +372,40 @@ input, textarea, select, button {
   background-color: #ffffff;
   color: #9b87f5;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .navbar-ai-button:hover {
-  background-color: rgba(155, 135, 245, 0.05);
-  transform: translateY(-1px);
+  background-color: rgba(155, 135, 245, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px -2px rgba(155, 135, 245, 0.2);
 }
 
 .navbar-ai-button:active {
   transform: translateY(0);
 }
 
-/* Floating animation for decorative elements */
+/* Enhanced floating animation for decorative elements */
 @keyframes float-element {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-10px) translateX(5px);
   }
 }
 
 .float-animation {
-  animation: float-element 5s ease-in-out infinite;
+  animation: float-element 5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
 }
 
-/* Added pulse animation for buttons */
+/* Enhanced pulse animation for buttons */
 @keyframes button-pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(155, 135, 245, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(155, 135, 245, 0);
+    box-shadow: 0 0 0 12px rgba(155, 135, 245, 0);
   }
   100% {
     box-shadow: 0 0 0 0 rgba(155, 135, 245, 0);
@@ -368,15 +416,16 @@ input, textarea, select, button {
   animation: button-pulse 2s infinite;
 }
 
-/* Improved decorative elements */
+/* Enhanced decorative elements with better transitions */
 .decorative-circle {
   position: absolute;
   border-radius: 50%;
   background: linear-gradient(135deg, rgba(178, 158, 245, 0.2) 0%, rgba(155, 135, 245, 0.1) 100%);
   z-index: -1;
+  transition: all 5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* Animations for decorative dots */
+/* Enhanced animations for decorative dots */
 .dots-bg {
   position: absolute;
   width: 100%;
@@ -393,53 +442,23 @@ input, textarea, select, button {
   height: 6px;
   border-radius: 50%;
   background-color: rgba(155, 135, 245, 0.2);
+  transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* Advanced text animations */
+.dot:hover {
+  transform: scale(1.5);
+  background-color: rgba(155, 135, 245, 0.4);
+}
+
+/* Enhanced text animations with better gradients */
 .text-gradient {
-  background: linear-gradient(135deg, #7E69AB 0%, #9b87f5 100%);
+  background: linear-gradient(135deg, #7E69AB 0%, #9b87f5 50%, #b29ef5 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
-}
-
-/* 3D card effect */
-.card-3d {
-  transform-style: preserve-3d;
-  transition: all 0.3s ease;
-}
-
-.card-3d:hover {
-  transform: rotateX(5deg) rotateY(5deg);
-}
-
-/* Enhanced AI Systems section for better mobile visibility */
-.ai-dashboard-section {
-  scroll-margin-top: 5rem; /* Ensures section isn't hidden behind fixed header when scrolled to */
-  min-height: 60vh; /* Ensures the section has enough height to be visible */
-  padding-bottom: 8rem; /* Extra padding to ensure content isn't hidden by fixed elements */
-}
-
-@media (max-width: 768px) {
-  .ai-dashboard-section {
-    scroll-margin-top: 4rem;
-    padding-top: 3rem; /* Add extra top padding on mobile */
-  }
-}
-
-/* New Animated Gradient Background */
-.animated-gradient {
-  background: linear-gradient(-45deg, #9b87f5, #b29ef5, #7E69AB, #E5DEFF);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -20;
-  opacity: 0.1;
+  animation: gradient-shift 5s ease infinite;
 }
 
 @keyframes gradient-shift {
@@ -454,7 +473,52 @@ input, textarea, select, button {
   }
 }
 
-/* Rotating 3D object animation */
+/* Enhanced 3D card effect with smoother transitions */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  backface-visibility: hidden;
+}
+
+.card-3d:hover {
+  transform: rotateX(5deg) rotateY(5deg) translateZ(10px);
+}
+
+/* Improved AI Systems section for better mobile visibility and transitions */
+.ai-dashboard-section {
+  scroll-margin-top: 5rem; /* Ensures section isn't hidden behind fixed header when scrolled to */
+  min-height: 60vh; /* Ensures the section has enough height to be visible */
+  padding-bottom: 8rem; /* Extra padding to ensure content isn't hidden by fixed elements */
+  transition: all 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .ai-dashboard-section {
+    scroll-margin-top: 4rem;
+    padding-top: 3rem; /* Add extra top padding on mobile */
+  }
+}
+
+/* Enhanced Animated Gradient Background */
+.animated-gradient {
+  background: linear-gradient(-45deg, #9b87f5, #b29ef5, #7E69AB, #E5DEFF);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -20;
+  opacity: 0.15;
+  transition: opacity 0.5s ease;
+}
+
+.animated-gradient:hover {
+  opacity: 0.2;
+}
+
+/* Enhanced rotating 3D object animation */
 @keyframes rotate-3d {
   0% {
     transform: rotate3d(1, 1, 1, 0deg);
@@ -467,23 +531,147 @@ input, textarea, select, button {
 .rotate-3d {
   animation: rotate-3d 20s linear infinite;
   transform-style: preserve-3d;
+  transition: animation-duration 1s ease;
 }
 
-/* Subtle parallax effect */
+.rotate-3d:hover {
+  animation-duration: 10s;
+}
+
+/* Enhanced subtle parallax effect */
 .parallax-wrapper {
   transform-style: preserve-3d;
-  perspective: 1000px;
+  perspective: 1200px;
+  transition: perspective 0.5s ease;
 }
 
 .parallax-layer {
   transform: translateZ(0);
-  transition: transform 0.2s ease-out;
+  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .parallax-layer-back {
-  transform: translateZ(-10px) scale(1.5);
+  transform: translateZ(-15px) scale(1.5);
 }
 
 .parallax-layer-deep {
-  transform: translateZ(-20px) scale(2);
+  transform: translateZ(-30px) scale(2);
+}
+
+/* New: Gradient Border Animation */
+.gradient-border {
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    rgba(155, 135, 245, 0) 0%, 
+    rgba(155, 135, 245, 0.8) 50%, 
+    rgba(155, 135, 245, 0) 100%);
+  z-index: -1;
+  background-size: 200% 200%;
+  animation: border-shine 3s linear infinite;
+  border-radius: inherit;
+}
+
+@keyframes border-shine {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 200%; }
+}
+
+/* New: Enhanced Button Styles */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  border: none;
+  background: linear-gradient(45deg, #9b87f5, #7E69AB);
+  color: white;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #9b87f5, #b29ef5, #7E69AB, #9b87f5);
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: border-rotate 3s ease infinite;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-glow:hover::before {
+  opacity: 1;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, #9b87f5, #7E69AB);
+  z-index: -2;
+  border-radius: inherit;
+}
+
+@keyframes border-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* New: Elegant Section Transitions */
+.section-fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section-fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* New: Shimmer Effect */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0.3) 50%, 
+    rgba(255,255,255,0) 100%
+  );
+  animation: shimmer 2s infinite;
+  transform: skewX(-20deg);
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
 }
