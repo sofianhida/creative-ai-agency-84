@@ -9,7 +9,6 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import AISystemsAccess from '@/components/AISystemsAccess';
-import AIChatbot from '@/components/AIChatbot';
 import PortfolioButton from '@/components/PortfolioButton';
 import { Sparkles, ZapIcon, StarIcon, FileSearch, Brain, Image, Shield } from 'lucide-react';
 
@@ -100,8 +99,8 @@ const Index = () => {
         <ServicesSection />
         <AboutSection />
         <TestimonialsSection />
-        <ContactSection />
         
+        {/* AI Systems Section - Moved before Contact Section */}
         <section 
           id="ai-systems-section" 
           className="ai-dashboard-section py-16 relative" 
@@ -170,12 +169,14 @@ const Index = () => {
             <div className="absolute bottom-1/3 left-1/4 w-[30rem] h-0.5 bg-gradient-to-r from-purple/0 via-purple/30 to-purple/0 -rotate-30 animate-pulse-light" style={{ animationDelay: '1s' }}></div>
           </div>
         </section>
+        
+        {/* Contact Section - Now comes after AI Systems Section */}
+        <ContactSection />
       </main>
       
       <Footer />
       
       <div className="fixed-ai-controls">
-        <AIChatbot />
         <WhatsAppButton />
       </div>
     </div>

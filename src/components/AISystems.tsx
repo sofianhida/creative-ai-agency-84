@@ -116,9 +116,9 @@ const AISystems = ({ isOpen, setIsOpen, onSelectSystem }: AISystemProps) => {
   };
 
   return (
-    <div className={`fixed z-40 ${isOpen ? 'bottom-32' : 'bottom-20'} right-6 transition-all duration-300`}>
+    <div className={`ai-systems-container fixed z-40 transition-all duration-300`}>
       {isOpen && (
-        <div className="relative">
+        <div className="relative ai-systems-dropdown">
           <button 
             onClick={() => setIsOpen(false)}
             className="absolute -top-2 -right-2 bg-purple rounded-full p-1 text-white shadow-md"
@@ -165,7 +165,7 @@ const AISystems = ({ isOpen, setIsOpen, onSelectSystem }: AISystemProps) => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-white text-purple border border-purple hover:bg-purple/5 p-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300"
+          className="ai-systems-button bg-white text-purple border border-purple hover:bg-purple/5 p-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300"
           aria-label="View AI Systems"
         >
           <Code size={18} />

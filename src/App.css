@@ -42,6 +42,74 @@
   }
 }
 
+/* ================ FIXED POSITIONING FOR AI ELEMENTS ================ */
+
+/* AI Systems Container */
+.ai-systems-container {
+  bottom: 7.5rem;
+  right: 1.5rem;
+  z-index: 50;
+}
+
+/* AI Chat Button */
+.ai-chat-button {
+  bottom: 1.5rem;
+  right: 1.5rem;
+}
+
+/* AI Chat Window */
+.ai-chat-window {
+  bottom: 5rem;
+  right: 1.5rem;
+}
+
+/* Adjustments for WhatsApp button */
+.whatsapp-button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 5rem; /* Positioned to the left of AI chat button */
+  z-index: 50;
+}
+
+/* Fix for mobile screens */
+@media (max-width: 640px) {
+  .ai-systems-container {
+    bottom: 6.5rem;
+    right: 1rem;
+  }
+  
+  .ai-chat-button {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .ai-chat-window {
+    bottom: 4.5rem;
+    right: 1rem;
+  }
+  
+  .whatsapp-button {
+    bottom: 1rem;
+    right: 4.5rem;
+  }
+}
+
+/* ================ OTHER EXISTING STYLES ================ */
+
+/* Mobile responsiveness helpers */
+.mobile-container {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .mobile-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
 /* Improved fixed button positions with better spacing */
 .ai-chatbot-container {
   z-index: 10;
@@ -382,17 +450,44 @@ input, textarea, select, button {
   }
 }
 
+/* Make sure sections have proper spacing to avoid overlap */
+section {
+  scroll-margin-top: 5rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 1;
+}
+
 /* Enhanced AI Systems section for better mobile visibility */
 .ai-dashboard-section {
-  scroll-margin-top: 5rem; /* Ensures section isn't hidden behind fixed header when scrolled to */
-  min-height: 60vh; /* Ensures the section has enough height to be visible */
-  padding-bottom: 8rem; /* Extra padding to ensure content isn't hidden by fixed elements */
+  scroll-margin-top: 5rem;
+  min-height: 60vh; 
+  padding-bottom: 6rem; /* Reduced padding to avoid excessive space */
 }
 
 @media (max-width: 768px) {
   .ai-dashboard-section {
     scroll-margin-top: 4rem;
-    padding-top: 3rem; /* Add extra top padding on mobile */
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* Ensure Contact section has proper spacing */
+#contact {
+  padding-top: 6rem;
+  padding-bottom: 8rem;
+  margin-top: -2rem; /* Create slight overlap with the AI Systems section */
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  #contact {
+    padding-top: 5rem;
+    padding-bottom: 7rem;
   }
 }
 
