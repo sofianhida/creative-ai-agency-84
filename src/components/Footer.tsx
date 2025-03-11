@@ -1,5 +1,6 @@
 
 import { Facebook, Instagram, X, Linkedin, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -55,8 +56,8 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><a href="#about" className="text-foreground/70 hover:text-purple underline-animation">About Us</a></li>
               <li><a href="#testimonials" className="text-foreground/70 hover:text-purple underline-animation">Testimonials</a></li>
-              <li><a href="/products" className="text-foreground/70 hover:text-purple underline-animation">Our Products</a></li>
-              <li><a href="/portfolio" className="text-foreground/70 hover:text-purple underline-animation">Portfolio</a></li>
+              <li><Link to="/products" className="text-foreground/70 hover:text-purple underline-animation">Our Products</Link></li>
+              <li><Link to="/portfolio" className="text-foreground/70 hover:text-purple underline-animation">Portfolio</Link></li>
               <li><a href="#contact" className="text-foreground/70 hover:text-purple underline-animation">Contact</a></li>
             </ul>
           </div>

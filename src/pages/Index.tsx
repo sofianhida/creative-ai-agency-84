@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -10,7 +9,6 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import AISystemsAccess from '@/components/AISystemsAccess';
 import AIChatbot from '@/components/AIChatbot';
-import PortfolioButton from '@/components/PortfolioButton';
 import { Sparkles, ZapIcon, StarIcon, FileSearch, Brain, Image, Shield } from 'lucide-react';
 
 const Index = () => {
