@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X, Lightbulb } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -42,35 +41,25 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Enhanced body lock effect that prevents scrolling but maintains scroll position
   useEffect(() => {
     if (!isMobile) return;
     
     if (isMenuOpen) {
-      // Store the current scroll position
       const scrollY = window.scrollY;
-      
-      // Apply fixed positioning to body with the current scroll position
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
       document.body.style.overflowY = 'hidden';
     } else {
-      // Get the scroll position from the body's top property
       const scrollY = document.body.style.top ? parseInt(document.body.style.top || '0') * -1 : 0;
-      
-      // Reset body styling
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
       document.body.style.overflowY = '';
-      
-      // Restore scroll position
       window.scrollTo(0, scrollY);
     }
     
     return () => {
-      // Clean up body styles when component unmounts
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
@@ -91,27 +80,21 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
   };
   
   const scrollToAISection = () => {
-    // Show the AI access panel
     setShowAIAccess(true);
     
-    // Close the mobile menu if it's open
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
     
-    // Add a small delay before scrolling when in mobile to ensure menu closing animation completes
     setTimeout(() => {
-      // Scroll to the AI Systems section at the bottom
       const aiSystemsSection = document.getElementById('ai-systems-section');
       if (aiSystemsSection) {
         aiSystemsSection.scrollIntoView({ behavior: 'smooth' });
-        
-        // Force focus on the section for accessibility
         aiSystemsSection.focus({ preventScroll: false });
       } else {
         console.error('AI Systems section not found');
       }
-    }, isMobile ? 300 : 0); // Add delay only on mobile
+    }, isMobile ? 300 : 0);
   };
 
   const navLinks = [
@@ -127,12 +110,14 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
   const handleNavLinkClick = (href: string) => {
     setIsMenuOpen(false);
     
-    // Add small delay for mobile navigation to ensure menu closes before scrolling
     setTimeout(() => {
       if (href.startsWith('#')) {
-        window.location.href = href;
+        if (window.location.pathname !== '/' && href.startsWith('#')) {
+          window.location.href = '/' + href;
+        } else {
+          window.location.href = href;
+        }
       }
-      // For regular links, navigation will happen through the React Router Link component
     }, isMobile ? 300 : 0);
   };
 
@@ -158,7 +143,6 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
             </span>
           </Link>
           
-          {/* Desktop Navigation Links */}
           {!isMobile && (
             <nav className="hidden md:flex space-x-1 lg:space-x-2 xl:space-x-6">
               {navLinks.map((link) => (
@@ -167,6 +151,10 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
                     key={link.name}
                     href={link.href}
                     className="nav-link relative px-2 py-2 text-xs lg:text-sm font-medium tracking-wide whitespace-nowrap group overflow-hidden"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavLinkClick(link.href);
+                    }}
                   >
                     <span className="relative z-10">{link.name}</span>
                     <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-dark to-purple scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
@@ -185,9 +173,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
             </nav>
           )}
           
-          {/* Action Buttons */}
           <div className="flex items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4">
-            {/* AI Systems Button */}
             {!isMobile && (
               <button
                 onClick={scrollToAISection}
@@ -199,7 +185,6 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
               </button>
             )}
             
-            {/* Mobile Menu Toggle */}
             <button 
               className="md:hidden text-foreground z-50 w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white hover:shadow-md transition-all active:scale-95" 
               onClick={toggleMenu}
@@ -211,7 +196,6 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
               }
             </button>
             
-            {/* Contact Button */}
             <button 
               onClick={contactUs}
               className={`${isMobile ? 'hidden' : 'flex'} items-center justify-center bg-gradient-to-r from-purple to-purple-dark text-white text-xs lg:text-sm px-3 lg:px-5 py-1.5 lg:py-2 rounded-full font-medium transition-all duration-300 hover:shadow-glow hover:translate-y-[-2px] active:translate-y-0 whitespace-nowrap shadow-sm`}
@@ -222,7 +206,6 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
         </div>
       </div>
       
-      {/* Mobile menu */}
       <AnimatePresence>
         {isMobile && isMenuOpen && (
           <motion.div 
@@ -276,7 +259,6 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
                   )
                 ))}
                 
-                {/* AI Systems Button in Mobile Menu */}
                 <motion.button
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -289,7 +271,6 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
                   <span>AI Systems</span>
                 </motion.button>
                 
-                {/* Contact Us button in mobile menu */}
                 <motion.button 
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
