@@ -1,8 +1,8 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X, Lightbulb } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useToast } from '@/hooks/use-toast';
+import { useIsMobile, useIsTablet } from '@/hooks/use-mobile';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -107,9 +108,6 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
         
         // Force focus on the section for accessibility
         aiSystemsSection.focus({ preventScroll: false });
-        
-        // Log for debugging
-        console.log('Scrolling to AI Systems section');
       } else {
         console.error('AI Systems section not found');
       }
@@ -141,71 +139,82 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
   return (
     <header 
       className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 
-                 ${scrolled ? 'bg-background/80 backdrop-blur-md shadow-sm py-2' : 'py-4 bg-transparent'}`}
+                 ${scrolled ? 'glass shadow-sm py-2' : 'py-4 bg-transparent'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2 z-20">
-            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-purple/80 flex items-center justify-center overflow-hidden">
+          <Link to="/" className="flex items-center gap-2 z-20 group">
+            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-purple-light/90 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:shadow-glow">
               <img 
                 src="/lovable-uploads/72854016-f636-48a8-92ee-3160952a47cb.png" 
                 alt="WeVersAI Logo" 
-                className="h-7 w-7 sm:h-8 sm:w-8 object-cover rounded-full"
+                className="h-7 w-7 sm:h-8 sm:w-8 object-cover rounded-full transition-transform duration-300 group-hover:scale-110"
               />
             </div>
-            <span className="font-display font-bold text-lg sm:text-xl">WeVersAI</span>
+            <span className="font-display font-bold text-lg sm:text-xl relative overflow-hidden">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-dark via-purple to-purple-light">WeVers</span>
+              <span className="text-purple font-extrabold">AI</span>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-dark to-purple-light scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+            </span>
           </Link>
           
-          {/* Desktop Navigation Links - Now with more adaptive spacing */}
+          {/* Desktop Navigation Links */}
           {!isMobile && (
-            <nav className="hidden md:flex space-x-4 lg:space-x-6 xl:space-x-8">
+            <nav className="hidden md:flex space-x-1 lg:space-x-2 xl:space-x-6">
               {navLinks.map((link) => (
                 link.href.startsWith('#') ? (
                   <a 
                     key={link.name}
                     href={link.href}
-                    className="nav-link text-sm font-medium tracking-wide whitespace-nowrap"
+                    className="nav-link relative px-2 py-2 text-xs lg:text-sm font-medium tracking-wide whitespace-nowrap group overflow-hidden"
                   >
-                    {link.name}
+                    <span className="relative z-10">{link.name}</span>
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-dark to-purple scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                   </a>
                 ) : (
                   <Link 
                     key={link.name}
                     to={link.href}
-                    className="nav-link text-sm font-medium tracking-wide whitespace-nowrap"
+                    className="nav-link relative px-2 py-2 text-xs lg:text-sm font-medium tracking-wide whitespace-nowrap group overflow-hidden"
                   >
-                    {link.name}
+                    <span className="relative z-10">{link.name}</span>
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-dark to-purple scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                   </Link>
                 )
               ))}
             </nav>
           )}
           
-          {/* Action Buttons - Responsive sizing and spacing */}
-          <div className="flex items-center gap-2 md:gap-3 lg:gap-4">
-            {/* AI Systems Button - Hide on smaller screens, more compact on medium */}
-            <button
-              onClick={scrollToAISection}
-              className="hidden md:flex items-center gap-1 lg:gap-2 px-3 lg:px-4 py-1.5 lg:py-2 text-sm text-purple border-2 border-purple rounded-full bg-white hover:bg-purple/5 transition-all whitespace-nowrap"
-              aria-label="Access AI Systems"
-            >
-              <Lightbulb size={16} className="lg:w-5 lg:h-5" />
-              <span className="font-medium text-xs lg:text-sm">AI Systems</span>
-            </button>
+          {/* Action Buttons */}
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+            {/* AI Systems Button */}
+            {!isMobile && (
+              <button
+                onClick={scrollToAISection}
+                className="hidden md:flex items-center gap-1 lg:gap-2 px-2 sm:px-3 lg:px-4 py-1.5 text-xs lg:text-sm text-purple border border-purple/70 rounded-full bg-white/80 backdrop-blur-sm hover:bg-purple/5 transition-all whitespace-nowrap shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
+                aria-label="Access AI Systems"
+              >
+                <Lightbulb size={isTablet ? 14 : 16} className="text-purple" />
+                <span className="font-medium">AI Systems</span>
+              </button>
+            )}
             
             {/* Mobile Menu Toggle */}
             <button 
-              className="md:hidden text-foreground z-50 w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all" 
+              className="md:hidden text-foreground z-50 w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white hover:shadow-md transition-all active:scale-95" 
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X size={24} className="text-purple" /> : <Menu size={24} />}
+              {isMenuOpen ? 
+                <X size={24} className="text-purple" /> : 
+                <Menu size={24} className="text-purple-dark" />
+              }
             </button>
             
-            {/* Contact Button - Hide on small screens, more compact on medium */}
+            {/* Contact Button */}
             <button 
               onClick={contactUs}
-              className="hidden md:flex btn-primary text-xs lg:text-sm px-3 lg:px-5 py-1.5 lg:py-2.5 whitespace-nowrap"
+              className={`${isMobile ? 'hidden' : 'flex'} items-center justify-center bg-gradient-to-r from-purple to-purple-dark text-white text-xs lg:text-sm px-3 lg:px-5 py-1.5 lg:py-2 rounded-full font-medium transition-all duration-300 hover:shadow-glow hover:translate-y-[-2px] active:translate-y-0 whitespace-nowrap shadow-sm`}
             >
               Contact Us
             </button>
@@ -213,7 +222,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
         </div>
       </div>
       
-      {/* Mobile menu with enhanced positioning to prevent body scroll */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isMobile && isMenuOpen && (
           <motion.div 
@@ -221,7 +230,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 overflow-hidden mobile-menu-container"
+            className="fixed inset-0 glass-dark z-40 overflow-hidden mobile-menu-container"
           >
             <motion.div 
               initial={{ y: -20, opacity: 0 }}
@@ -240,7 +249,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: 20, opacity: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="py-3 text-xl font-medium text-foreground hover:text-purple transition-colors w-full text-center"
+                      className="py-3 text-xl font-medium text-white hover:text-purple-light transition-colors w-full text-center"
                       onClick={(e) => {
                         e.preventDefault();
                         handleNavLinkClick(link.href);
@@ -255,7 +264,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: 20, opacity: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="py-3 text-xl font-medium text-foreground hover:text-purple transition-colors w-full text-center"
+                      className="py-3 text-xl font-medium text-white hover:text-purple-light transition-colors w-full text-center"
                     >
                       <Link 
                         to={link.href}
@@ -267,19 +276,20 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
                   )
                 ))}
                 
-                {/* AI Systems Button in Mobile Menu - Modified for better functionality */}
+                {/* AI Systems Button in Mobile Menu */}
                 <motion.button
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: 20, opacity: 0 }}
                   transition={{ delay: navLinks.length * 0.05 }}
                   onClick={scrollToAISection}
-                  className="py-3 text-xl font-medium text-purple hover:text-purple/80 transition-colors w-full text-center flex items-center justify-center gap-2"
+                  className="py-3 text-xl font-medium text-purple-light hover:text-white transition-colors w-full text-center flex items-center justify-center gap-2"
                 >
                   <Lightbulb size={20} />
                   <span>AI Systems</span>
                 </motion.button>
                 
+                {/* Contact Us button in mobile menu */}
                 <motion.button 
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -289,7 +299,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
                     contactUs();
                     setIsMenuOpen(false);
                   }}
-                  className="mt-4 py-3 px-8 rounded-full bg-purple text-white font-medium shadow-md hover:shadow-lg transition-all"
+                  className="mt-4 py-3 px-8 rounded-full bg-gradient-to-r from-purple to-purple-dark text-white font-medium shadow-md hover:shadow-lg transition-all"
                 >
                   Contact Us
                 </motion.button>
