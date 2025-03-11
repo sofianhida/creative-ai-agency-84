@@ -156,14 +156,15 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
             <span className="font-display font-bold text-lg sm:text-xl">WeVersAI</span>
           </Link>
           
+          {/* Desktop Navigation Links - Now with more adaptive spacing */}
           {!isMobile && (
-            <nav className="hidden md:flex space-x-8 lg:space-x-10">
+            <nav className="hidden md:flex space-x-4 lg:space-x-6 xl:space-x-8">
               {navLinks.map((link) => (
                 link.href.startsWith('#') ? (
                   <a 
                     key={link.name}
                     href={link.href}
-                    className="nav-link text-sm font-medium tracking-wide"
+                    className="nav-link text-sm font-medium tracking-wide whitespace-nowrap"
                   >
                     {link.name}
                   </a>
@@ -171,7 +172,7 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
                   <Link 
                     key={link.name}
                     to={link.href}
-                    className="nav-link text-sm font-medium tracking-wide"
+                    className="nav-link text-sm font-medium tracking-wide whitespace-nowrap"
                   >
                     {link.name}
                   </Link>
@@ -180,17 +181,19 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
             </nav>
           )}
           
-          <div className="flex items-center gap-4">
-            {/* AI Systems Button in Navbar */}
+          {/* Action Buttons - Responsive sizing and spacing */}
+          <div className="flex items-center gap-2 md:gap-3 lg:gap-4">
+            {/* AI Systems Button - Hide on smaller screens, more compact on medium */}
             <button
               onClick={scrollToAISection}
-              className="hidden md:flex items-center gap-2 px-4 py-2 text-purple border-2 border-purple rounded-full bg-white hover:bg-purple/5 transition-all"
+              className="hidden md:flex items-center gap-1 lg:gap-2 px-3 lg:px-4 py-1.5 lg:py-2 text-sm text-purple border-2 border-purple rounded-full bg-white hover:bg-purple/5 transition-all whitespace-nowrap"
               aria-label="Access AI Systems"
             >
-              <Lightbulb size={20} />
-              <span className="font-medium">AI Systems</span>
+              <Lightbulb size={16} className="lg:w-5 lg:h-5" />
+              <span className="font-medium text-xs lg:text-sm">AI Systems</span>
             </button>
             
+            {/* Mobile Menu Toggle */}
             <button 
               className="md:hidden text-foreground z-50 w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all" 
               onClick={toggleMenu}
@@ -199,9 +202,10 @@ const Navbar = ({ showAIAccess, setShowAIAccess }: NavbarProps) => {
               {isMenuOpen ? <X size={24} className="text-purple" /> : <Menu size={24} />}
             </button>
             
+            {/* Contact Button - Hide on small screens, more compact on medium */}
             <button 
               onClick={contactUs}
-              className="hidden md:flex btn-primary text-sm px-5 py-2.5"
+              className="hidden md:flex btn-primary text-xs lg:text-sm px-3 lg:px-5 py-1.5 lg:py-2.5 whitespace-nowrap"
             >
               Contact Us
             </button>

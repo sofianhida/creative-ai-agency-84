@@ -175,6 +175,41 @@ input, textarea, select, button {
   }
 }
 
+/* New responsive navbar styling */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Medium screens - more compact navbar */
+  .nav-link {
+    font-size: 0.8rem !important;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+  
+  /* Reduce padding for buttons on medium screens */
+  .btn-primary, .navbar-ai-button {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  /* Large screens - slightly more space but still compact */
+  .nav-link {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Prevent button text wrapping */
+.btn-primary, .navbar-ai-button {
+  white-space: nowrap;
+}
+
+/* Ensure navbar items don't overflow */
+.navbar-container {
+  max-width: 100%;
+  overflow: visible;
+}
+
 /* Button with pulse animation */
 .btn-pulse {
   position: relative;
