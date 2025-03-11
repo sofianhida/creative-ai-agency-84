@@ -1,3 +1,4 @@
+
 /* Reset some default styles that might be causing layout issues */
 #root {
   width: 100%;
@@ -27,74 +28,6 @@
 .read-the-docs {
   color: #888;
 }
-
-/* Mobile responsiveness helpers */
-.mobile-container {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .mobile-container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-/* ================ FIXED POSITIONING FOR AI ELEMENTS ================ */
-
-/* AI Systems Container */
-.ai-systems-container {
-  bottom: 7.5rem;
-  right: 1.5rem;
-  z-index: 50;
-}
-
-/* AI Chat Button */
-.ai-chat-button {
-  bottom: 1.5rem;
-  right: 1.5rem;
-}
-
-/* AI Chat Window */
-.ai-chat-window {
-  bottom: 5rem;
-  right: 1.5rem;
-}
-
-/* Adjustments for WhatsApp button */
-.whatsapp-button {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 5rem; /* Positioned to the left of AI chat button */
-  z-index: 50;
-}
-
-/* Fix for mobile screens */
-@media (max-width: 640px) {
-  .ai-systems-container {
-    bottom: 6.5rem;
-    right: 1rem;
-  }
-  
-  .ai-chat-button {
-    bottom: 1rem;
-    right: 1rem;
-  }
-  
-  .ai-chat-window {
-    bottom: 4.5rem;
-    right: 1rem;
-  }
-  
-  .whatsapp-button {
-    bottom: 1rem;
-    right: 4.5rem;
-  }
-}
-
-/* ================ OTHER EXISTING STYLES ================ */
 
 /* Mobile responsiveness helpers */
 .mobile-container {
@@ -433,61 +366,21 @@ input, textarea, select, button {
   transition: all 0.3s ease;
 }
 
-.card-3d.flipped {
-  transform: rotateY(180deg);
-}
-
-.card-3d.matched {
-  animation: pulse-match 2s ease infinite;
-}
-
-@keyframes pulse-match {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(155, 135, 245, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(155, 135, 245, 0.7);
-  }
-}
-
-/* Make sure sections have proper spacing to avoid overlap */
-section {
-  scroll-margin-top: 5rem;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  overflow-x: hidden;
-  position: relative;
-  z-index: 1;
+.card-3d:hover {
+  transform: rotateX(5deg) rotateY(5deg);
 }
 
 /* Enhanced AI Systems section for better mobile visibility */
 .ai-dashboard-section {
-  scroll-margin-top: 5rem;
-  min-height: 60vh; 
-  padding-bottom: 6rem; /* Reduced padding to avoid excessive space */
+  scroll-margin-top: 5rem; /* Ensures section isn't hidden behind fixed header when scrolled to */
+  min-height: 60vh; /* Ensures the section has enough height to be visible */
+  padding-bottom: 8rem; /* Extra padding to ensure content isn't hidden by fixed elements */
 }
 
 @media (max-width: 768px) {
   .ai-dashboard-section {
     scroll-margin-top: 4rem;
-    padding-top: 3rem;
-    padding-bottom: 5rem;
-  }
-}
-
-/* Ensure Contact section has proper spacing */
-#contact {
-  padding-top: 6rem;
-  padding-bottom: 8rem;
-  margin-top: -2rem; /* Create slight overlap with the AI Systems section */
-  position: relative;
-  z-index: 2;
-}
-
-@media (max-width: 768px) {
-  #contact {
-    padding-top: 5rem;
-    padding-bottom: 7rem;
+    padding-top: 3rem; /* Add extra top padding on mobile */
   }
 }
 
