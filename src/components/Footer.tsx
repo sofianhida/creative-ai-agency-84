@@ -1,5 +1,4 @@
-
-import { Facebook, Instagram, X, Linkedin } from 'lucide-react';
+import { Facebook, Instagram, X, Linkedin, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TikTokIcon from './icons/TikTokIcon';
 
@@ -40,6 +39,9 @@ const Footer = () => {
               </a>
               <a href="https://www.tiktok.com/@weversai?_t=ZS-8v1lCM0FE6U&_r=1" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-purple transition-colors" aria-label="TikTok">
                 <TikTokIcon size={20} />
+              </a>
+              <a href="https://youtube.com/@weversai?si=QbM_i7s0NGCoqJIh" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-purple transition-colors" aria-label="YouTube">
+                <Youtube size={20} />
               </a>
             </div>
           </div>
