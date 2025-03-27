@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeftIcon, Briefcase, ExternalLink } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Portfolio = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +44,34 @@ const Portfolio = () => {
     }
   };
 
+  // Portfolio projects data
+  const portfolioProjects = [
+    {
+      title: "EduVerseAI",
+      description: "An AI-powered educational platform built for a school client.",
+      url: "https://eduverse-ai--eight.vercel.app/",
+      category: "Education"
+    },
+    {
+      title: "Class Scheduler",
+      description: "Intelligent scheduling system built for educational institutions.",
+      url: "https://class-scheduler-ai-05-mszh4haau-sofian-hidayats-projects.vercel.app/",
+      category: "Education"
+    },
+    {
+      title: "N8N Chatbot WA AI",
+      description: "AI customer service chatbot for WhatsApp built for yuanadam.com.",
+      url: "https://www.yuanadam.com/",
+      category: "Customer Service"
+    },
+    {
+      title: "WebJob",
+      description: "AI-powered job matching and recruitment platform for educational institutions.",
+      url: "https://webjob-cyan.vercel.app/",
+      category: "Recruitment"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-purple/5 pt-24 pb-20">
       {/* Back navigation */}
@@ -70,50 +99,60 @@ const Portfolio = () => {
                 <Briefcase className="w-10 h-10 text-purple" />
               </div>
               
-              <h1 className="text-3xl md:text-5xl font-bold font-display mb-6 relative">
+              <h1 className="text-3xl md:text-5xl font-bold font-display mb-6">
                 Our Portfolio
-                <span className="absolute -top-3 -right-3 text-xs bg-purple text-white px-2 py-1 rounded-full">Coming Soon</span>
               </h1>
               
               <div className="w-32 h-1 bg-gradient-to-r from-purple/30 to-purple mx-auto mb-8 rounded-full"></div>
               
               <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-                Explore our upcoming portfolio showcasing successful AI projects we've developed for various industries.
+                Explore our portfolio showcasing successful AI projects we've developed for various industries.
               </p>
             </motion.div>
             
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16"
               variants={containerVariants}
               initial="hidden"
               animate="visible"
             >
-              {Array.from({ length: 6 }).map((_, index) => (
+              {portfolioProjects.map((project, index) => (
                 <motion.div
                   key={index}
-                  className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 relative group"
                   variants={itemVariants}
                 >
-                  <div className="h-48 bg-purple/10 flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple/10 to-purple/30 flex items-center justify-center">
-                      <span className="text-purple font-semibold text-lg">Project {index + 1}</span>
-                    </div>
-                    <div className="absolute inset-0 bg-purple/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <span className="text-white font-medium">Coming Soon</span>
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-bold text-lg mb-2">AI Project {index + 1}</h3>
-                    <p className="text-muted-foreground text-sm">
-                      This project showcase will be available soon. Stay tuned for our innovative AI solutions.
-                    </p>
-                    <div className="mt-4 flex justify-between items-center">
-                      <span className="text-xs text-purple font-medium px-2 py-1 bg-purple/10 rounded-full">AI Solution</span>
-                      <button className="text-purple/70 hover:text-purple" disabled>
-                        <ExternalLink size={18} />
-                      </button>
-                    </div>
-                  </div>
+                  <Card className="h-full hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <CardTitle>{project.title}</CardTitle>
+                        <span className="text-xs bg-purple/10 text-purple px-2 py-1 rounded-full">
+                          {project.category}
+                        </span>
+                      </div>
+                      <CardDescription className="mt-2">{project.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="h-40 bg-gradient-to-br from-purple/10 to-purple/30 rounded-md flex items-center justify-center relative overflow-hidden">
+                        <div className="absolute inset-0 bg-purple/10 flex items-center justify-center">
+                          <span className="text-purple font-medium">{project.title}</span>
+                        </div>
+                        <div className="absolute inset-0 bg-purple/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <span className="text-white font-medium">View Project</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">AI Solution</span>
+                      <a 
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purple hover:text-purple/80 flex items-center gap-1"
+                      >
+                        Visit <ExternalLink size={14} />
+                      </a>
+                    </CardFooter>
+                  </Card>
                 </motion.div>
               ))}
             </motion.div>

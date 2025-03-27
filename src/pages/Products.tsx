@@ -1,11 +1,11 @@
 
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeftIcon, Package, Star, Sparkles, BookOpen, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowLeftIcon, Package, Star, Sparkles, BookOpen, ShieldCheck, Zap, ExternalLink } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Products = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -49,6 +49,31 @@ const Products = () => {
     }
   ];
 
+  // Our products data
+  const ourProducts = [
+    {
+      title: "EduVerseAI",
+      description: "An AI-powered educational platform for interactive learning",
+      url: "https://eduverse-ai--eight.vercel.app/",
+      color: "from-blue-400/20 to-blue-500/40",
+      icon: <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-500"><Sparkles size={20} /></div>
+    },
+    {
+      title: "Class Scheduler",
+      description: "Intelligent scheduling system for educational institutions",
+      url: "https://class-scheduler-ai-05-mszh4haau-sofian-hidayats-projects.vercel.app/",
+      color: "from-green-400/20 to-green-500/40",
+      icon: <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-500"><Zap size={20} /></div>
+    },
+    {
+      title: "WebJob",
+      description: "AI-powered job matching and recruitment platform",
+      url: "https://webjob-cyan.vercel.app/",
+      color: "from-orange-400/20 to-orange-500/40",
+      icon: <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-500"><Star size={20} /></div>
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-white pt-24 pb-20">
       {/* Back navigation */}
@@ -82,13 +107,8 @@ const Products = () => {
             <div className="w-32 h-1 bg-gradient-to-r from-purple/30 to-purple mx-auto mb-8 rounded-full"></div>
             
             <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-              Discover our suite of AI-powered products designed to revolutionize your business operations. Coming soon!
+              Discover our suite of AI-powered products designed to revolutionize your business operations.
             </p>
-            
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple/10 rounded-full text-purple font-medium">
-              <Sparkles className="h-4 w-4" />
-              <span>Products launching Q4 2023</span>
-            </div>
           </motion.div>
           
           <motion.div 
@@ -155,11 +175,8 @@ const Products = () => {
                       <span className="font-display text-2xl font-bold text-white mb-4 block">WeVersAI Suite</span>
                       <div className="w-16 h-1 bg-white/50 mx-auto mb-4"></div>
                       <p className="text-white/80 text-sm mb-6">
-                        Our comprehensive AI solution coming to transform your business
+                        Our comprehensive AI solution to transform your business
                       </p>
-                      <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full py-2 px-4 text-white text-sm">
-                        Coming Soon
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -174,49 +191,42 @@ const Products = () => {
             transition={{ delay: 0.4, duration: 0.5 }}
           >
             <div className="mb-10">
-              <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Additional Products</h2>
+              <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Our AI Products</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[
-                  { 
-                    title: "AI Chatbot", 
-                    description: "Intelligent conversational AI for customer support",
-                    color: "from-blue-400/20 to-blue-500/40",
-                    icon: <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-500"><Sparkles size={20} /></div>
-                  },
-                  { 
-                    title: "Data Analyzer", 
-                    description: "Powerful data processing and visualization tools",
-                    color: "from-green-400/20 to-green-500/40",
-                    icon: <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-500"><Zap size={20} /></div>
-                  },
-                  { 
-                    title: "Vision API", 
-                    description: "Computer vision capabilities for any application",
-                    color: "from-orange-400/20 to-orange-500/40",
-                    icon: <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-500"><Star size={20} /></div>
-                  }
-                ].map((product, index) => (
-                  <div 
+                {ourProducts.map((product, index) => (
+                  <Card 
                     key={index}
-                    className="bg-white rounded-xl shadow p-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300"
+                    className="overflow-hidden group hover:-translate-y-1 transition-transform duration-300"
                   >
                     <div className={`absolute -top-6 -right-6 w-24 h-24 rounded-full bg-gradient-to-br ${product.color} opacity-50 group-hover:opacity-70 transition-opacity`}></div>
-                    <div className="relative">
+                    <CardHeader className="relative">
                       {product.icon}
-                      <h3 className="text-xl font-semibold mt-4 mb-2">{product.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{product.description}</p>
+                      <CardTitle className="mt-4">{product.title}</CardTitle>
+                      <CardDescription>{product.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="pb-2">
+                      <a 
+                        href={product.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-purple hover:text-purple/80 flex items-center gap-2 font-medium"
+                      >
+                        Visit Product <ExternalLink size={16} />
+                      </a>
+                    </CardContent>
+                    <CardFooter className="pt-0">
                       <div className="inline-block bg-gray-100 rounded-full py-1 px-3 text-xs text-gray-600">
-                        Coming Soon
+                        AI Solution
                       </div>
-                    </div>
-                  </div>
+                    </CardFooter>
+                  </Card>
                 ))}
               </div>
             </div>
             
             <div className="text-center mt-16">
               <p className="text-gray-600 mb-6">
-                Want to know more about our upcoming products or need a custom solution?
+                Want to know more about our products or need a custom solution?
               </p>
               
               <Button asChild className="bg-purple hover:bg-purple/90">
