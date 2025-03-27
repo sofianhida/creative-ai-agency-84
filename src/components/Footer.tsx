@@ -1,5 +1,5 @@
 
-import { Facebook, Instagram, X, Linkedin, Heart } from 'lucide-react';
+import { Facebook, Instagram, X, Linkedin, TikTok } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -36,6 +36,9 @@ const Footer = () => {
               </a>
               <a href="https://www.linkedin.com/company/weversai/" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-purple transition-colors" aria-label="LinkedIn">
                 <Linkedin size={20} />
+              </a>
+              <a href="https://www.tiktok.com/@weversai?_t=ZS-8v1lCM0FE6U&_r=1" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-purple transition-colors" aria-label="TikTok">
+                <TikTok size={20} />
               </a>
             </div>
           </div>
