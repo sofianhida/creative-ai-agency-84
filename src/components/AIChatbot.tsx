@@ -156,7 +156,7 @@ const AIChatbot = () => {
       
       // Get the model - using the recommended free model
       const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash-latest"
+        model: "gemini-1.5-flash"
       });
       
       // Get the current system context
