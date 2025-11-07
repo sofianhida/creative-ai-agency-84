@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Bot, Send, X, Minimize2, Maximize2 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 import AISystems from './AISystems';
 
 // Gemini API key
@@ -152,42 +152,34 @@ const AIChatbot = () => {
 
     try {
       // Initialize the Generative AI with the API key
-      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-      
-      // Get the model - using the recommended free model
-      const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash"
-      });
+      const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
       
       // Get the current system context
       const systemContext = SYSTEM_CONTEXTS[currentSystem as keyof typeof SYSTEM_CONTEXTS] || SYSTEM_CONTEXT;
       
-      // Create a chat session
-      const chat = model.startChat({
-        history: [
-          {
-            role: "user",
-            parts: [{ text: systemContext }],
-          },
-          {
-            role: "model",
-            parts: [{ text: "I understand. I'll act as the WeVersAI assistant with the guidelines you've provided." }],
-          },
-        ],
-        generationConfig: {
+      // Build conversation history for context
+      const conversationHistory = messages
+        .filter(msg => msg.role !== 'system')
+        .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
+        .join('\n');
+      
+      const fullPrompt = `${systemContext}\n\nConversation history:\n${conversationHistory}\n\nUser: ${input}\n\nAssistant:`;
+      
+      console.log("Sending message to Gemini API");
+      
+      // Generate response using the new API
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: fullPrompt,
+        config: {
           temperature: 0.7,
           topK: 40,
           topP: 0.95,
           maxOutputTokens: 1024,
-        },
+        }
       });
       
-      console.log("Sending message to Gemini chat API");
-      
-      // Send the user message and get the response
-      const result = await chat.sendMessage(input);
-      const response = await result.response;
-      let assistantResponse = response.text();
+      let assistantResponse = response.text;
       
       // Clean markdown formatting (remove asterisks for bold/italic)
       assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
