@@ -6,7 +6,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import AISystems from './AISystems';
 
 // Gemini API key
-const GEMINI_API_KEY = 'AIzaSyBoxVz22n162WFv53J1JiSksObxCamSBOg';
+const GEMINI_API_KEY = 'AIzaSyC6ZfX-4O8dV1eocXwnMfXIB3mT0J_YW-0';
 
 const WELCOME_MESSAGE = "Hello! I'm an AI Assistant from WeVersAI. How can I help you with our AI services?";
 const SYSTEM_CONTEXT = `
