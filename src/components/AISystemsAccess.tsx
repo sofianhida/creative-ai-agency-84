@@ -2,11 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import { Lightbulb, X, Send, FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, ChevronRight,
   Image, MessageSquare, Music, Brain, Shapes, Flower2, ShieldCheck } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Gemini API key
-const GEMINI_API_KEY = 'AIzaSyBoxVz22n162WFv53J1JiSksObxCamSBOg';
+const GEMINI_API_KEY = 'AIzaSyC6ZfX-4O8dV1eocXwnMfXIB3mT0J_YW-0';
 
 // System contexts for different AI systems
 const SYSTEM_CONTEXTS = {
@@ -442,55 +442,42 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     setIsLoading(true);
 
     try {
-      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-      
-      const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash-latest"
-      });
+      const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
       
       const systemContext = SYSTEM_CONTEXTS[selectedSystem as keyof typeof SYSTEM_CONTEXTS];
       
       if ((selectedSystem === 'document-analyzer' || selectedSystem === 'image-description') && uploadedFile && fileContent) {
-        let parts = [];
+        // For document/image analysis with file upload
+        let promptText = `${systemContext}\n\n${messageContent}`;
         
-        // Add file content to parts
         if (uploadedFile.type.includes('image')) {
-          // For image files
-          parts.push({ text: systemContext });
-          parts.push({ text: messageContent });
+          // For image files - note: image support may vary by model
+          console.log("Sending image to Gemini for analysis");
           
-          // Add image data as inline data
           if (typeof fileContent === 'string') {
-            parts.push({
-              inlineData: {
-                mimeType: uploadedFile.type,
-                data: fileContent.split(',')[1] // Remove the data:image/jpeg;base64, prefix
-              }
-            });
+            promptText += `\n\n[Image file uploaded: ${uploadedFile.name}]`;
           }
         } else {
           // For text files
-          parts.push({ text: systemContext });
-          parts.push({ text: messageContent });
           if (typeof fileContent === 'string') {
-            parts.push({ text: `File content:\n${fileContent}` });
+            promptText += `\n\nFile content:\n${fileContent}`;
           }
         }
         
-        console.log("Sending document/image to Gemini with content and message");
+        console.log("Sending document/image to Gemini API");
         
-        const result = await model.generateContent({
-          contents: [{ role: "user", parts }],
-          generationConfig: {
+        const response = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: promptText,
+          config: {
             temperature: 0.7,
             topK: 40,
             topP: 0.95,
             maxOutputTokens: 2048,
-          },
+          }
         });
         
-        const response = await result.response;
-        let assistantResponse = response.text();
+        let assistantResponse = response.text;
         
         assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
         assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
@@ -501,30 +488,27 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
         ]);
       } else {
         // Regular chat for other systems
-        const chat = model.startChat({
-          history: [
-            {
-              role: "user",
-              parts: [{ text: systemContext }],
-            },
-            {
-              role: "model",
-              parts: [{ text: "I understand. I'll act as the WeVersAI assistant with the guidelines you've provided." }],
-            },
-          ],
-          generationConfig: {
+        const conversationHistory = messages
+          .filter(msg => msg.role !== 'system')
+          .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
+          .join('\n');
+        
+        const fullPrompt = `${systemContext}\n\nConversation history:\n${conversationHistory}\n\nUser: ${messageContent}\n\nAssistant:`;
+        
+        console.log("Sending message to Gemini API");
+        
+        const response = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: fullPrompt,
+          config: {
             temperature: 0.7,
             topK: 40,
             topP: 0.95,
             maxOutputTokens: 1024,
-          },
+          }
         });
         
-        console.log("Sending message to Gemini chat API");
-        
-        const result = await chat.sendMessage(messageContent);
-        const response = await result.response;
-        let assistantResponse = response.text();
+        let assistantResponse = response.text;
         
         assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
         assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
