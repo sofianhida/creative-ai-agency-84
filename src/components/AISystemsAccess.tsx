@@ -2,11 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { Lightbulb, X, Send, FileText, BookOpen, Globe, BarChart, FileSearch, Code, GraduationCap, ChevronRight,
   Image, MessageSquare, Music, Brain, Shapes, Flower2, ShieldCheck } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
-import { GoogleGenAI } from '@google/genai';
 import { useIsMobile } from '@/hooks/use-mobile';
-
-// Gemini API key
-const GEMINI_API_KEY = 'AIzaSyC6ZfX-4O8dV1eocXwnMfXIB3mT0J_YW-0';
+import { supabase } from '@/integrations/supabase/client';
 
 // System contexts for different AI systems
 const SYSTEM_CONTEXTS = {
@@ -442,84 +439,85 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-      
       const systemContext = SYSTEM_CONTEXTS[selectedSystem as keyof typeof SYSTEM_CONTEXTS];
       
-      if ((selectedSystem === 'document-analyzer' || selectedSystem === 'image-description') && uploadedFile && fileContent) {
-        // For document/image analysis with file upload
-        let promptText = `${systemContext}\n\n${messageContent}`;
-        
+      // Prepare messages for backend
+      const apiMessages = [
+        { role: 'system', content: systemContext },
+        ...messages.filter(msg => msg.role !== 'system')
+      ];
+
+      console.log(`Sending to AI backend for ${selectedSystem}`);
+
+      // Extract text content from files if needed
+      let extractedFileContent = null;
+      if (uploadedFile && fileContent) {
         if (uploadedFile.type.includes('image')) {
-          // For image files - note: image support may vary by model
-          console.log("Sending image to Gemini for analysis");
-          
-          if (typeof fileContent === 'string') {
-            promptText += `\n\n[Image file uploaded: ${uploadedFile.name}]`;
-          }
-        } else {
-          // For text files
-          if (typeof fileContent === 'string') {
-            promptText += `\n\nFile content:\n${fileContent}`;
-          }
+          extractedFileContent = `[Image file: ${uploadedFile.name}]\nNote: Image content analysis requires multimodal capabilities.`;
+        } else if (typeof fileContent === 'string') {
+          extractedFileContent = fileContent;
+        }
+      }
+
+      // Call backend edge function with better error handling
+      const { data, error } = await supabase.functions.invoke('ai-chat', {
+        body: { 
+          messages: [...apiMessages, { role: 'user', content: messageContent }],
+          systemId: selectedSystem,
+          fileContent: extractedFileContent
+        }
+      });
+
+      if (error) {
+        console.error('Edge function error:', error);
+        throw new Error(error.message || 'Failed to get AI response');
+      }
+
+      if (data?.error) {
+        console.error('AI error:', data.error);
+        
+        // Handle specific error codes
+        if (data.code === 'RATE_LIMIT') {
+          toast({
+            title: "Rate Limit",
+            description: data.error,
+            variant: "destructive",
+          });
+          setMessages(prev => [
+            ...prev, 
+            { role: 'assistant', content: data.error }
+          ]);
+          return;
         }
         
-        console.log("Sending document/image to Gemini API");
+        if (data.code === 'PAYMENT_REQUIRED') {
+          toast({
+            title: "Usage Limit",
+            description: data.error,
+            variant: "destructive",
+          });
+          setMessages(prev => [
+            ...prev, 
+            { role: 'assistant', content: data.error }
+          ]);
+          return;
+        }
         
-        const response = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: promptText,
-          config: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 2048,
-          }
-        });
-        
-        let assistantResponse = response.text;
-        
-        assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
-        assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
-        
-        setMessages(prev => [
-          ...prev, 
-          { role: 'assistant', content: assistantResponse }
-        ]);
-      } else {
-        // Regular chat for other systems
-        const conversationHistory = messages
-          .filter(msg => msg.role !== 'system')
-          .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
-          .join('\n');
-        
-        const fullPrompt = `${systemContext}\n\nConversation history:\n${conversationHistory}\n\nUser: ${messageContent}\n\nAssistant:`;
-        
-        console.log("Sending message to Gemini API");
-        
-        const response = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: fullPrompt,
-          config: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
-          }
-        });
-        
-        let assistantResponse = response.text;
-        
-        assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
-        assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
-        
-        console.log("Received response from Gemini:", assistantResponse);
-        
-        setMessages(prev => [
-          ...prev, 
-          { role: 'assistant', content: assistantResponse }
-        ]);
+        throw new Error(data.error);
       }
+
+      const assistantResponse = data.response;
+
+      if (!assistantResponse) {
+        throw new Error('Empty response from AI');
+      }
+
+      console.log(`Received response using ${data.model || 'AI model'}`);
+
+      setMessages(prev => [
+        ...prev, 
+        { role: 'assistant', content: assistantResponse }
+      ]);
       
       if ((selectedSystem === 'document-analyzer' || selectedSystem === 'image-description') && uploadedFile) {
         setUploadedFile(null);
@@ -532,15 +530,19 @@ const AISystemsAccess = ({ showAIAccess, setShowAIAccess }: AISystemsAccessProps
         }
       }
     } catch (error) {
-      console.error('Error sending message to Gemini:', error);
+      console.error('Error in AI chat:', error);
+      
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      
       toast({
-        title: "Error",
-        description: "There was an error contacting the AI assistant. Please try again later.",
+        title: "AI Error",
+        description: `${errorMessage}. Our AI is experiencing issues. Please try again.`,
         variant: "destructive",
       });
+      
       setMessages(prev => [
         ...prev, 
-        { role: 'assistant', content: "Sorry, there was an error. Please try again later or contact us via WhatsApp." }
+        { role: 'assistant', content: `I encountered an error: ${errorMessage}. Please try rephrasing your question or contact support via WhatsApp at 085183978011.` }
       ]);
     } finally {
       setIsLoading(false);
